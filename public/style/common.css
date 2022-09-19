@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+/* 기본이 되는 CSS파일에는, 모든 기본 지정컬러,지정크기 등을 집어넣어두자 */
+
+html{
+    --base-background-color :rgb(165, 118, 52);
+    --base-body-background-color: rgb(249, 217, 172);
+    --base-font-color:wheat;
+    --base-font-family : 'Raleway', sans-serif;
+
+    --error-500-color:red;
+    --error-400-color:brown;
+    --erorr-100-color:rgb(132, 34, 34);
+
+    --button-hover-backround-color:rgb(107, 76, 32);;
+    --button-hover-font-color:rgb(250, 210, 136);
+
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  1rem;
+    --space-4:  1.5rem;
+    --sapce-5:  2rem;
+
+    --font-size-1 : 0.5rem;
+    --font-size-2 : 0.75rem;
+    --font-size-3 : 1rem;
+    --font-size-4 : 1.5rem;
+    --font-size-5 : 2rem;
+    --font-size-6 : 3rem;
+
+    --font-weight-1: 400;
+    --font-weight-2: 500;
+    --font-weight-3: 600;
+    --font-weight-4: 800;
+    --font-weight-5: 900;
+
+    --border-radius-1:4px;
+    --border-radius-2:6px;
+    --border-radius-3:8px;
+
+    --shadow-base : 0 2px 10px rgba(27, 27, 27, 0.2);
+
+    font-family: var(--base-font-family);
+}
+
+body{
+    margin: 0;
+    background-color: var(--base-body-background-color);
+}
+
+
+#header{
+    width: 100%;
+    margin: 0;
+    padding: var(--space-3);
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap : var(--sapce-5);
+    background-color: var(--base-background-color)
+}
+
+#header a{
+    text-decoration: none;
+    color: var(--base-font-color);
+    font-weight: 900;
+    font-size:var(--font-size-4);
+}
+
+.btn{
+    padding: var(--space-2);
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-4);
+    color: var(--base-font-color);
+    background-color: var(--base-background-color);
+    border-radius: var(--border-radius-2);
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover, .btn:active{
+    background-color: var(--button-hover-backround-color);
+    color :var(--button-hover-font-color);
+
+}
+
+
+/* 나누는 줄 꾸미기 */
+hr{
+    width: 80%;
+    border-color: var(--base-background-color);
+    background-color: var(--base-background-color);
+    margin: var(--space-3);
+}
+
+form a{
+    padding: var(--space-2);
+    border-radius: var(--border-radius-2);
+    text-decoration: none;
+    background-color: var(--base-background-color);
+    color: var(--base-font-color);
+    font-weight: var(--font-weight-3);
+    font-size:var(--font-size-3);
+}
+
+h1{
+    text-shadow: var(--shadow-base);
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-5);
+    color: var(--base-background-color);
+}
+
+input{
+    width: 50%;
+    height: 2rem;
+    margin: 0 0 1rem 0;
+}
+
+input:hover, input:active{
+    background-color: rgb(255, 232, 217)
+}

@@ -1,0 +1,12 @@
+#signupForm{
+    width: 70%;
+    max-width: 45rem;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns:  1fr;
+    gap: var(--space-1);
+    justify-items: center;
+    box-shadow: var(--shadow-base);
+    border-radius: var(--border-radius-3)
+}
+

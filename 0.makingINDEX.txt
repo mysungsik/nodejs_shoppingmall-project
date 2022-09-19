@@ -1,7 +1,12 @@
-[1. 키페이지 모델링]
-[2. 작업 순서 정하기 (접근방법)]
-[3. NODE작업]
-[4. 리팩토링 동시에, router작업]
+1. 키페이지 모델링
+2. 작업 순서 정하기 (접근방법)
+3. NODE작업
+4. ejs 설치, view engine set
+
+- [ VIEW의 BASE 작업]
+
+5. 인증영역 [대충] <views>, <routes> 대충 작업 [controller에 넣어가면서 작업]
+6. 제대로된 views 만들기 : signup 부터
 
 
 
@@ -61,8 +66,53 @@
         * 
         * 패키지설치   :npm init, express, mongodb, nodemon
 
+4. ejs 설치, view engine set
 
-[4. 리팩토링 동시에, router작업]
+- [ VIEW의 BASE 작업]
 
-    0) ejs 설치, view engine set
-    1) 인증영역 작업
+5. 인증영역 [대충] <views>, <routes> 대충 작업 [controller에 넣어가면서 작업]
+    : get해서 render정도
+        
+    [연결해두고, 렌더대충 걸어두고, 작업시작]
+
+    [내가 나눈 라우트]
+
+    client 사이드 + 기본기능
+        : 쇼핑몰을 이용하는 고객이 들어갈 라우트들 모을것
+
+    admin 사이드
+        : 쇼핑몰 운영할 운영자가 들어갈 라우트 모을것
+
+
+6. 제대로된 views 만들기 : signup 부터
+
+    간단한 <header 작업> + <public> [css]작업 + <app.js> 에서 public을 static으로 배포 
+    <views> - <auth> - [signup] 부터 시작
+
+-   * render 할때, views에 있는 경로 잘 지정하기 [ <app.js> 에서  views 폴더 까지만 지정했기 때문에, 그 이후는 render의 주소로 할것임]
+        function getSignup(req,res){
+            res.render("customer/auth/signup")
+        }
+
+7. 제대로된 CSS 기본 만들기
+    : BASE 의 기본CSS설정들 (--bakcground-color : ...  같은것들) 설정
+    : 기본으로 깔릴 header와  body, html의 설정
+
+-   : 하나하나마다 MAIN DIV들은, 기본 넓이와 함께, max-width를 꼭 지정해둘것.
+
+
+- [ CONTROLLER의 BASE 작업] + [ MODEL 작업 동시에]
+
+8. signup의 post로, 데이터베이스에 값을 집어넣게하기
+
+    : 값 받아와야하니, urlendcoded 추가
+    : model 작업을 통해, 데이터베이스에 넣는 작업 
+
+9. signup의 validation ( confirm 값이 다르다던가, 아이디가 이미 있다던가... 등등) 추가
+
+
+[여기까지 놓친부분1]
+    : <app.js> 의 connectToDatabase의 catch.error
+    : views 폴더의 세분화
+    : 세분화된 views 폴더에, controller에서 render할때의 주소
+    : ejs템플릿에서, heade include할때, 값 넘겨서 title 값 바꾸기
