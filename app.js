@@ -2,6 +2,7 @@ const express = require("express")
 const path = require("path")
 
 const authRoute = require("./routes/auth-route")
+const clientRoute = require("./routes/s")
 const db = require("./database/database")
 
 const app = express()
@@ -14,7 +15,7 @@ app.use(express.urlencoded({extended:false}))
 
 
 app.use(authRoute)
-
+app.use(clientRoute)
 
 db.connectToDatabse().then(function(){
     app.listen(3000)

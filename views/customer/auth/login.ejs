@@ -1,10 +1,24 @@
 <%- include("../../includes/head", {pageTitle : "login"})%>
+<link rel="stylesheet" href="/style/login.css">
 </head>
 
 
 <body>
     <%- include("../../includes/header")%>
-    <p> login</p>
+    <form id="loginForm"  action="/login" method="post">
+        <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
+        <h1 id="mainH1"> Input your information</h1>
+
+        <label for="email"> email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password"> password</label>
+        <input type="password" id="password" name="password"  min="6" max="15" required>
+
+        <button class="btn"> confirm </button>
+
+        <p id="switch-signup"> <a href="/signup"> Signup </a></p>
+    </form>
     
 
     <%- include("../../includes/footer")%>

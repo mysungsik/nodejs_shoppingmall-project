@@ -101,7 +101,7 @@
 -   : 하나하나마다 MAIN DIV들은, 기본 넓이와 함께, max-width를 꼭 지정해둘것.
 
 
-- [ CONTROLLER의 BASE 작업] + [ MODEL 작업 동시에]
+================ [ CONTROLLER의 BASE 작업] + [model 작업] + [ csrf 패키지 추가] ====================
 
 8. signup의 post로, 데이터베이스에 값을 집어넣게하기
 
@@ -110,9 +110,39 @@
 
 9. signup의 validation ( confirm 값이 다르다던가, 아이디가 이미 있다던가... 등등) 추가
 
+10. model에 insertOne 추가
+
+
+-------------------------------------------요부터 다시시작
+
+11. csrf 패키지 추가
+
+12. signup에 session 추가
+
 
 [여기까지 놓친부분1]
     : <app.js> 의 connectToDatabase의 catch.error
     : views 폴더의 세분화
     : 세분화된 views 폴더에, controller에서 render할때의 주소
     : ejs템플릿에서, heade include할때, 값 넘겨서 title 값 바꾸기
+
+    : model에서, 객체 안에 값을 담을때, 객체안의 객체를 사용 
+        {address = { street : street, 
+                    postal : postal ...}}
+
+    : csurf의 사용
+
+================================[다시 VIEW 작업 이번엔 LOGIN]================================
+
+13. login views 작업
+
+================================[ 다시 controllers 작업 ]================================
+
+14. login contollers 작업, + session 
+    : 데이터이스에 있는 값과 비교하여, 로그인하게 만들기
+    : validation 작업
+    : install express-session,  connect-mongodb-session
+
+15. 로그인 성공시 [미들웨어 사용하여 AUTH 부여하기], 부여하면 [미들웨어 사용하여 AUTH 검증하기]
+
+16. login 의 model  작업 [findOne]
