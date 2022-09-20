@@ -7,24 +7,25 @@
     <%- include("../../includes/header")%>
     <form id="signupForm"  action="/signup" method="post">
         <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
+
         <h1 id="mainH1"> Input your information</h1>
         <label for="email"> email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" value="<%= userInfo.email%>" required>
         <label for="emailC"> email Confirm</label>
-        <input type="email" id="emailC" name="emailC" required>
+        <input type="email" id="emailC" name="emailC" value="<%= userInfo.emailC%>" required>
         <label for="password"> password</label>
-        <input type="password" id="password" name="password"  min="6" max="15" required>
+        <input type="password" id="password" name="password"  value="<%= userInfo.password%>" min="6" max="15" required>
         <label for="passwordC"> password Confirm</label>
-        <input type="password" id="passwordC" name="passwordC"  min="6" max="15" required>
+        <input type="password" id="passwordC" name="passwordC" value="<%= userInfo.passwordC%>"  min="6" max="15" required>
         <hr>
         <label for="name"> name</label>
-        <input type="text" id="username" name="username"  required>
+        <input type="text" id="username" name="username" value="<%= userInfo.username %>" required>
         <label for="street"> street</label>
-        <input type="text" id="street" name="street"  required>
+        <input type="text" id="street" name="street" value="<%= userInfo.street%>" required>
         <label for="postal"> postal code</label>
-        <input type="text" id="postal" name="postal"  min="5" max="5" required>
+        <input type="text" id="postal" name="postal" value="<%= userInfo.postal%>" min="5" max="5" required>
         <label for="country"> country</label>
-        <input type="text" id="country" name="country" required>
+        <input type="text" id="country" name="country" value="<%= userInfo.country%>" required>
         <button class="btn"> confirm </button>
         <p id="switch-login"> <a href="/login"> Login account </a></p>
     </form>

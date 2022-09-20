@@ -64,11 +64,17 @@ body{
     background-color: var(--base-background-color)
 }
 
+#header li{
+    display: grid;
+    align-items:  center;
+}
 #header a{
     text-decoration: none;
     color: var(--base-font-color);
     font-weight: 900;
     font-size:var(--font-size-4);
+    display: flex;
+    justify-content: center;
 }
 
 .btn{
@@ -88,6 +94,9 @@ body{
 
 }
 
+#header .btn{
+    font-weight: var(--font-weight-3);
+}
 
 /* 나누는 줄 꾸미기 */
 hr{

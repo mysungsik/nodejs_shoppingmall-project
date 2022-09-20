@@ -10,4 +10,29 @@ function signupValidation(email,emailC,password,passwordC,name,street,postal,cou
     password.trim() < 6
 }
 
-module.exports = {signupValidation:signupValidation}
+function userWrongData(req){
+
+    let userWrongData = req.session.userInfoSession
+    
+    if(!userWrongData){
+        userWrongData ={
+            email : "",
+            emailC: "",
+            password: "",
+            passwordC: "",
+            username: "",
+            street:"",
+            postal: "",
+            country: ""
+        }
+    }
+    req.session.userInfoSession = null
+
+    return userWrongData
+
+}
+
+
+module.exports = {
+    signupValidation:signupValidation,
+    userWrongData:userWrongData}

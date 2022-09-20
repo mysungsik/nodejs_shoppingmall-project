@@ -112,12 +112,19 @@
 
 10. model에 insertOne 추가
 
+11. 세션추가 + csrf 패키지 추가 + middleware 폴더 안으로 리팩토링
+    npm install csurf
+    <app.js> const csrf = require("csruf") , use(csrf())
+    <middleware> function... res.locals.csrfToken = req.csrfToken() , export
+    <app.js> require, use() [csrf토큰과 라우트 사이에 코딩]
+    <view> <input type="hidden" value = "<%= locals.csrfToken %" name = "_csrf">
 
--------------------------------------------요부터 다시시작
+-  csrf 토큰에는 session 이 필요해!!!!
 
-11. csrf 패키지 추가
+12. signup에 session 추가 + util 폴더로 리팩토링
+    : 로그인 양식 잘못썻을때, 새로고침되지않게
 
-12. signup에 session 추가
+13. login 에 auth session 추가
 
 
 [여기까지 놓친부분1]
@@ -130,19 +137,38 @@
         {address = { street : street, 
                     postal : postal ...}}
 
-    : csurf의 사용
+    : csurf의 사용중 [세션이 반드시 필요하다는!]
+
+    : 전체 에러 핸들링 middleware
+        function(error,req,res,next){ ... }
 
 ================================[다시 VIEW 작업 이번엔 LOGIN]================================
 
 13. login views 작업
 
-================================[ 다시 controllers 작업 ]================================
+================================[ 다시 controllers 작업 LOGIN ]================================
 
 14. login contollers 작업, + session 
     : 데이터이스에 있는 값과 비교하여, 로그인하게 만들기
     : validation 작업
     : install express-session,  connect-mongodb-session
 
-15. 로그인 성공시 [미들웨어 사용하여 AUTH 부여하기], 부여하면 [미들웨어 사용하여 AUTH 검증하기]
+15. 로그인 성공시 [미들웨어 사용하여 AUTH 부여하기], 
+
+16. 부여하면 [미들웨어 사용하여 AUTH 검증하기]
+-   할려고 했는데! 하려면, home 이후의 라우터들이 필요해서
+        (라우터 안의 미들웨어에 넣을거니까) 보류!
 
 16. login 의 model  작업 [findOne]
+
+[여기까지 놓친부분2]
+    : login의 model파트, 자동으로 반환되는 프로미스
+    : 세션을 만들기만하고, save한 후!!! 렌더되게 혹은  redirect 되게 만들어야하는데
+        그냥 만들고 바로  redirect 해버림
+        ==>> 너무 빠르게 지나가서 세션이 미처 저장되지 않았는데 페이지가 넘어갈 가능성 충분
+    
+    : auth하기 위해 저장하는 user session에, 더이상 이메일, name 등을 넣지말고
+        아이디가 저장되어 있는  데이터베이스의 _id 값으로 저장할 것.
+        , [찾을때는  ObjectId() 를 사용하고(특수한 형태의 값이므로)]
+        , [빼올때는 _id.toString()으로 값을 저장하는 습관이 좋다]
+            ==>> toString 이유 궁금!

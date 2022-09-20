@@ -11,5 +11,7 @@ route.get("/signup",authController.getSignup)
 
 route.post("/signup",authController.signup)
 
+route.get("/logout", authController.logout)
+
 
 module.exports = route

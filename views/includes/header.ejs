@@ -3,5 +3,8 @@
     <li> <a href="/signup"> signup </a></li>
     <li> <a href="/login"> login </a></li>
     <li> <a href="/product"> product </a></li>
-    <li> <a href="/logout"> logout </a></li>
+    <form action ="/logout" method="get"> 
+        <input type="hidden" value="<%= locals.csrfToken%>" name="_csrf">
+        <button class="btn"> logout</button>
+    </form>
 </ul>
