@@ -12,6 +12,13 @@ class User {
             country : country
         } 
     }
+    async userWrongData(req,message) {
+        req.session.userInfoSession = {
+            email : this.email,
+            password : this.password,
+            message: message
+        }
+    }
 
     async insertUserInfo(){
 

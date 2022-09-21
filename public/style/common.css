@@ -81,6 +81,7 @@ body{
     padding: var(--space-2);
     font-size: var(--font-size-4);
     font-weight: var(--font-weight-4);
+    font-family: inherit;
     color: var(--base-font-color);
     background-color: var(--base-background-color);
     border-radius: var(--border-radius-2);
@@ -131,4 +132,22 @@ input{
 
 input:hover, input:active{
     background-color: rgb(255, 232, 217)
+}
+
+.alert{
+    width: 70%;
+    padding: var(--space-1);
+    text-align: center;
+    background-color: var(--erorr-100-color);
+    margin-bottom: var(--space-1);
+    border-radius: var(--border-radius-2);
+}
+
+.alert p{
+    margin: 0;
+    
+    color: wheat;
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-3);
+    
 }

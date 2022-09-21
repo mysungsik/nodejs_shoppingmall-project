@@ -1,11 +1,13 @@
 function userAuth(req,res,next){
+    const uid = req.session.authUserId
     const isAuth = req.session.isAuthenticated;
 
-    if(!isAuth){
+    if(!isAuth || !uid){
         return next()
     }
 
-    res.locals.isAuth = isAuth;
+    res.locals.uid = uid;
+    res.locals.isAuth = isAuth
 
     next()
 }

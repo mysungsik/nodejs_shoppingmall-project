@@ -3,13 +3,14 @@
 3. NODE작업
 4. ejs 설치, view engine set
 
-- [ VIEW의 BASE 작업]
-
 5. 인증영역 [대충] <views>, <routes> 대충 작업 [controller에 넣어가면서 작업]
 6. 제대로된 views 만들기 : signup 부터
 
+0. 새로운 형태의 코딩
+    1. this의 활용
+    2. req.body.[dash-dash]
 
-
+================================================================================================================================================================
 1. 키페이지 모델링
     <VIEW>
         [관리자] 
@@ -113,33 +114,30 @@
 10. model에 insertOne 추가
 
 11. 세션추가 + csrf 패키지 추가 + middleware 폴더 안으로 리팩토링
+    npm install express-session,  connect-mongodb-session
     npm install csurf
-    <app.js> const csrf = require("csruf") , use(csrf())
-    <middleware> function... res.locals.csrfToken = req.csrfToken() , export
-    <app.js> require, use() [csrf토큰과 라우트 사이에 코딩]
-    <view> <input type="hidden" value = "<%= locals.csrfToken %" name = "_csrf">
 
 -  csrf 토큰에는 session 이 필요해!!!!
 
-12. signup에 session 추가 + util 폴더로 리팩토링
+12. signup에 session 추가 + 플래싱 +  util 폴더로 리팩토링
     : 로그인 양식 잘못썻을때, 새로고침되지않게
 
 13. login 에 auth session 추가
 
 
 [여기까지 놓친부분1]
-    : <app.js> 의 connectToDatabase의 catch.error
-    : views 폴더의 세분화
-    : 세분화된 views 폴더에, controller에서 render할때의 주소
-    : ejs템플릿에서, heade include할때, 값 넘겨서 title 값 바꾸기
+1) <app.js> 의 connectToDatabase의 catch.error
+2) views 폴더의 세분화
+3) 세분화된 views 폴더에, controller에서 render할때의 주소
+4) ejs템플릿에서, heade include할때, 값 넘겨서 title 값 바꾸기
 
-    : model에서, 객체 안에 값을 담을때, 객체안의 객체를 사용 
+5) model에서, 객체 안에 값을 담을때, 객체안의 객체를 사용 
         {address = { street : street, 
                     postal : postal ...}}
 
-    : csurf의 사용중 [세션이 반드시 필요하다는!]
+6) csurf의 사용중 [세션이 반드시 필요하다는!]
 
-    : 전체 에러 핸들링 middleware
+7) 전체 에러 핸들링 middleware
         function(error,req,res,next){ ... }
 
 ================================[다시 VIEW 작업 이번엔 LOGIN]================================
@@ -149,26 +147,74 @@
 ================================[ 다시 controllers 작업 LOGIN ]================================
 
 14. login contollers 작업, + session 
-    : 데이터이스에 있는 값과 비교하여, 로그인하게 만들기
-    : validation 작업
-    : install express-session,  connect-mongodb-session
+    :
 
-15. 로그인 성공시 [미들웨어 사용하여 AUTH 부여하기], 
+15. login 의 model  작업 [findOne]
 
-16. 부여하면 [미들웨어 사용하여 AUTH 검증하기]
--   할려고 했는데! 하려면, home 이후의 라우터들이 필요해서
-        (라우터 안의 미들웨어에 넣을거니까) 보류!
+16. 로그인 성공시 [ AUTH 부여하기 (ID로)], 
+    id db에서 빼와서 저장할때, toString() 써서 저장
+        * db로 보내서 찾을때는 ObjectId 썻던거 기억해
 
-16. login 의 model  작업 [findOne]
+17. [부여한 AUTH를, 미들웨어 사용하여 템플릿에 보내서 동적헤더만들기]
 
 [여기까지 놓친부분2]
-    : login의 model파트, 자동으로 반환되는 프로미스
-    : 세션을 만들기만하고, save한 후!!! 렌더되게 혹은  redirect 되게 만들어야하는데
+
+1)login의 model파트, 자동으로 반환되는 프로미스
+2)세션을 만들기만하고, save한 후!!! 렌더되게 혹은  redirect 되게 만들어야하는데
         그냥 만들고 바로  redirect 해버림
         ==>> 너무 빠르게 지나가서 세션이 미처 저장되지 않았는데 페이지가 넘어갈 가능성 충분
     
-    : auth하기 위해 저장하는 user session에, 더이상 이메일, name 등을 넣지말고
+3)auth하기 위해 저장하는 user session에, 더이상 이메일, name 등을 넣지말고
         아이디가 저장되어 있는  데이터베이스의 _id 값으로 저장할 것.
         , [찾을때는  ObjectId() 를 사용하고(특수한 형태의 값이므로)]
         , [빼올때는 _id.toString()으로 값을 저장하는 습관이 좋다]
             ==>> toString 이유 궁금!
+
+18. 로그아웃 구현하기
+
+19. 비동기 작업의 오류처리 [ TRY{}, CATCH(ERROR){}]
+    비동기작업이 실패할 경우 [자동적으로 되는 오류처리 render500 이 안먹힌다.]
+
+-   try, catch 를 통해 오류처리한다.
+        * 오류처리시 try의 스코프 안으로, 변수가 들어가서 밖으로 못나오는 경우가 있다.
+            그럴때는, 변수를 바깥으로 빼서 정의해주고, 스코프 안에서는 변경만 하도록 한다.
+
+        ex) let test
+            try{
+                test = ...
+            }
+            catch(error){
+                next(error)
+                return
+            }
+-   기준 : 데이터베이스에서 불러오고, 집어넣는 행위를 하는 비동기작업은 필수!
+
+20. 로그인, 회원가입 마무리
+    : 잡다코드 정리, 리팩토링, validation, userinputsession, 다듬기 등 ....
+
+21. [관리자 권한 부여하여, 관리자 페이지 만들기] - 일단은 데이터베이스에서 수동으로 admin : ture 추가
+
+================================================================================================================================================================
+
+0. 새로운 형태의 코딩
+    1. this의 활용
+
+        [생성자 함수 내의 함수에서] [this를 사용하면, 생성자함수 내의 함수를, 받아쓸 수 있다.]
+        class Fun {
+            constructor{
+                ...
+            }
+
+            fun1(){
+                ...
+            }
+            fun2(){
+                const thisTest = this.fun1()        ==>>  fun1의 결과값을, 받아 쓸 수 있다.
+            }
+        }
+
+    2. req.body.[dash-dash]
+        
+        : HTML의 name 안에 '-' 가 들어간다면, req.body[dash-dash]
+            "대괄호를 사용하자"
+

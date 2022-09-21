@@ -8,9 +8,10 @@ const MongoDbStrore = require("connect-mongodb-session")(session)
 const sessionConfig = require("./middleware/connectSession")
 const addCsrfToken = require("./middleware/csrfToken")
 const errorHandler = require("./middleware/errorHandler")
+const userAuth = require("./middleware/userAuth")
 
 const authRoute = require("./routes/auth-route")
-const clientRoute = require("./routes/s")
+const productRoute = require("./routes/product-route")
 
 const db = require("./database/database")
 
@@ -26,11 +27,12 @@ app.use(express.urlencoded({extended:false}))
 app.use(session(sessionConfig.sessionBuild(Sessionstore)))
 
 app.use(csruf())
-
 app.use(addCsrfToken)
 
+app.use(userAuth)
+
 app.use(authRoute)
-app.use(clientRoute)
+app.use(productRoute)
 
 app.use(errorHandler)
 

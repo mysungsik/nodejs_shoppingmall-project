@@ -9,14 +9,20 @@
         <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
 
         <h1 id="mainH1"> Input your information</h1>
+        <% if(userInfo.message){%>
+            <section class="alert">
+                <p> <%= userInfo.message %></p>
+            </section>
+        <%} %>
+        
         <label for="email"> email</label>
-        <input type="email" id="email" name="email" value="<%= userInfo.email%>" required>
+        <input type="email" id="email" name="email" value="<%= userInfo.email%>"required>
         <label for="emailC"> email Confirm</label>
         <input type="email" id="emailC" name="emailC" value="<%= userInfo.emailC%>" required>
         <label for="password"> password</label>
-        <input type="password" id="password" name="password"  value="<%= userInfo.password%>" min="6" max="15" required>
+        <input type="password" id="password" name="password"  value="<%= userInfo.password%>" min="6" maxlength="15" required>
         <label for="passwordC"> password Confirm</label>
-        <input type="password" id="passwordC" name="passwordC" value="<%= userInfo.passwordC%>"  min="6" max="15" required>
+        <input type="password" id="passwordC" name="passwordC" value="<%= userInfo.passwordC%>"  min="6" maxlength="15" required>
         <hr>
         <label for="name"> name</label>
         <input type="text" id="username" name="username" value="<%= userInfo.username %>" required>

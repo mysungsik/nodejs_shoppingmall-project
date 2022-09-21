@@ -5,15 +5,25 @@
 
 <body>
     <%- include("../../includes/header")%>
+
+
+
     <form id="loginForm"  action="/login" method="post">
+
         <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
         <h1 id="mainH1"> Input your information</h1>
+        
+        <% if(userInfo.message){%>
+            <section class="alert">
+                <p> <%= userInfo.message %></p>
+            </section>
+        <%} %>
 
         <label for="email"> email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" value="<%= userInfo.email %>" required>
 
         <label for="password"> password</label>
-        <input type="password" id="password" name="password"  min="6" max="15" required>
+        <input type="password" id="password" name="password" value="<%= userInfo.password %>"  min="6" max="15" required>
 
         <button class="btn"> confirm </button>
 

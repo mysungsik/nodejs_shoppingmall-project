@@ -1,5 +1,5 @@
 function getHome(req,res){
-    res.render("customer/auth/home")
+    res.render("product/home")
 }
 
 module.exports = {

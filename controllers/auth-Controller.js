@@ -1,44 +1,56 @@
-const db =require("../database/database")
-const bcrypt = require("bcrypt")
 const userModel = require("../models/user-model")
 const util = require("../util/auth-controller-validation")
+const utilSession = require("../util/auth-contorller-createAuthSession")
 
 function getSignup(req,res){
 
-    const userWrongData = util.userWrongData(req)
+    const userWrongData = util.userWrongDataFlashing(req)
 
     res.render("customer/auth/signup" ,{userInfo:userWrongData})
 }
 
 async function signup(req,res){
 
-    if(util.signupValidation(req.body.email,req.body.emailC,req.body.password,req.body.passwordC,
-        req.body.username,req.body.street,req.body.postal,req.body.country)){
-
-        req.session.userInfoSession = {
-            email: req.body.email,
-            emailC : req.body.emailC,
-            password: req.body.password,
-            passwordC: req.body.passwordC,
-            username: req.body.username,
-            street: req.body.street,
-            postal : req.body.postal,
-            country : req.body.country
-        }
-        return res.redirect("/signup")
+    if(util.signupValidation
+        (req.body.email,req.body.emailC,req.body.password,req.body.passwordC,
+        req.body.username,req.body.street,req.body.postal,req.body.country))
+        {
+        req.session.userInfoSession = util.userWrongDataReturn(req,"please, Check your info")
+        req.session.save(function(){
+            res.redirect("/signup")        
+        })
+        return
     }
-
+    
     const userInfo = new userModel(
         req.body.email,req.body.password,req.body.username,
         req.body.street,req.body.postal,req.body.country)
 
-    await userInfo.insertUserInfo()
+    const sameEmailCheck = await userInfo.getUserWithSameEmail()
+
+    if(sameEmailCheck){
+        req.session.userInfoSession = util.userWrongDataReturn(req, "already exist same id")
+        req.session.save(function(){
+            res.redirect("/signup") 
+        })
+        return
+    }
+
+    try{
+        await userInfo.insertUserInfo()
+    }catch(error){
+        next(error)
+        return
+    }
 
     res.redirect("/login")
 }
 
 function getLogin(req,res){
-    res.render("customer/auth/login")
+    
+    let userInfo = util.loginWrongDataFlashing(req)
+
+    res.render("customer/auth/login" ,{userInfo:userInfo})
 }
 
 
@@ -48,26 +60,27 @@ async function login(req,res){
     const existUser = await userInfo.getUserWithSameEmail();
 
     if(!existUser){
-        return res.redirect("/login")
+        userInfo.userWrongData(req,"check your info")
+        res.redirect("/login")
+        return
     }
 
     const checkPassword = await userInfo.hashedPassword(existUser.password)
 
     if(!checkPassword){
-        return res.redirect("/login")
+        userInfo.userWrongData(req,"check your info")
+        res.redirect("/login")
+        return 
     }
 
-    req.session.user = {
-        email : existUser.email,
-        username : existUser.name
-    }
-    req.session.isAuthenticated = true;
-
-    res.redirect("/home")
+    utilSession.createSession(req,existUser,function(){
+        res.redirect("/home")
+    })
+    
 }
 
 async function logout(req,res){
-    req.session.user = null
+    req.session.authUserId = null
     req.session.isAuthenticated = false
 
     res.redirect("/login")
