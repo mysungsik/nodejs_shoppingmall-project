@@ -82,6 +82,7 @@ async function login(req,res){
 async function logout(req,res){
     req.session.authUserId = null
     req.session.isAuthenticated = false
+    req.session.admin = false
 
     res.redirect("/login")
 }
