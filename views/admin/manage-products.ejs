@@ -1,19 +1,18 @@
 <%- include("../includes/head", {pageTitle : "mange products"})%>
+<link rel="stylesheet" href="/style/header-web.css">
 <link rel="stylesheet" href="/style/product-manage.css">
 
 <script src="/scripts/manage-product-script.js" defer></script>
 </head>
 
 <body>
-
     <%- include("../includes/header")%>
     <section id="overall">
 
         <section id="adding-part">
+            <!-- 파일업로드를 포함하는 FORM에서, CSRF 토큰을 제출하는 방법 [쿼리 매개변수를 이용 ]-->
+            <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data" >
 
-            <form action="/admin/products" method="post">
-
-                <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
                 <div id="addimg-image-part">
                     <div id="image">
                         <label for="product-image"> Product Image</label>
@@ -21,51 +20,37 @@
                     </div>
                     <div>
                         <label for="product-add-image"> adding Image</label>
-                        <input type="file"id="product-add-image" name="productAddImage">
+                        <input type="file"id="product-add-image" name="productAddImage" accept="image/*">
                     </div>
                 </div>
     
-                <div class="sub">       
+                <div class="sub" id="product-ess">       
                     <label for="product-name">Product Name</label>
-                    <input type="text" id="product-name" name="productName">
+                    <input type="text" id="product-name" name="productName" required>
+
                     <label for="product-price">Product Price</label>
-                    <input type="text" id="product-price" name="productPrice">
+                    <input type="text" id="product-price" name="productPrice"  min="1", step="0.1" required>
                 </div>
     
-                <div class="sub">
+                <div class="sub" id="product-sub">
+
+                    <label for="product-summary"> Product summary</label>
+                    <input type="text" id="product-summary" name="productSummary">
+                    
                     <label for="product-detail">Product Detail</label>
                     <textarea id="product-detail" name="productDetail" ></textarea>
+
                     <label for="product-warning">Product Warning</label>
                     <textarea id="product-warining" name="productWarning" ></textarea>
-                    <label for="product-registration-date">Product Registration Date</label>
-                    <input type="text" id="product-registration-date" name="productRegistrationDate">
+
                 </div>
-                <button > add</button>
+                <div> 
+                    <button class="btn" type="reset"> RESET</button>
+                    <button class="btn"> ADD </button>
+                </div>
+                
             </form>
         </section>
-
-        <section id="summary-part">
-            <ol>
-                <% for(const products of allProduct){ %>
-                    <li>
-                        <div>
-                            <img src="/productImage/main.jpg">
-                        </div>
-                        <div>
-                            <p> <%= products.name %></p>
-                            <p> <%= products.price %></p>
-                            <form>
-                                <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
-                                <button> update </button>
-                            </form>
-                        </div>               
-                    </li>
-                <%}%>
-
-            </ol>
-
-        </section>
-    </section>
 
     <%- include("../includes/footer")%>
 </body>

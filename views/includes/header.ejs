@@ -1,34 +1,16 @@
-<header> 
-    <div id="logo"> logo </div>
+<header > 
+    <div id="logo"> <a href="/home"> logo</a> </div>
 
-    <ul id="header">
-        <li> <a href="/"> home </a> </li>
-        
-        <% if( !locals.isAuth ){ %>
-            <li> <a href="/signup"> signup </a></li>
-            <li> <a href="/login"> login </a></li>
-        <% }%>
-        <li> <a href="/cart">  cart </a></li>
-        <li> <a href="/order">  order </a></li>
-        <% if( locals.admin){ %>
-            <li> <a href="/admin/products"> manage product </a></li>
-            <li> <a href="/admin/order"> manage order </a></li>
-        <% } %>
-        <% if( locals.isAuth ){ %>
-            <form action ="/logout" method="get"> 
-                <input type="hidden" value="<%= locals.csrfToken%>" name="_csrf">
-                <button class="btn"> logout</button>
-            </form>
-        <% }%>
-        <% if(locals.admin){ %>
-            <section id="admin-section">
-                <p> admin </p>
-            </section>
-        <% } %>
-    </ul>   
+    <nav id="web-view">
+        <%-include("header-web")%>
+    </nav>
+
     <div id="mobile-menu-btn">
         <span></span>
         <span></span>
         <span></span>
     </div>
 </header>
+<aisde id="mobile-view">
+    <%-include("header-web")%>
+</aisde>

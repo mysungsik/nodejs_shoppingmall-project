@@ -1,6 +1,5 @@
-// const updateBtn = document.getElementById("updateBtn")
-// const msmsms = document.getElementById("msms")
 
+// const updateBtn = document.getElementById("updateBtn")
 // const productName = document.getElementById("product-name")
 // const productPrice = document.getElementById("product-price")
 // const productDetail = document.getElementById("product-detail")

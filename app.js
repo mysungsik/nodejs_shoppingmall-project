@@ -24,16 +24,20 @@ app.set("views", path.join(__dirname,"views"))
 
 app.use(express.static("public"))
 app.use(express.static("src"))
-app.use(express.urlencoded({extended:false}))
+
+
 app.use(session(sessionConfig.sessionBuild(Sessionstore)))
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
 
 app.use(csruf())
 app.use(addCsrfToken)
 
 app.use(userAuth)
 
-app.use(authRoute)
 app.use(productRoute)
+app.use(authRoute)
+
 
 app.use(errorHandler)
 

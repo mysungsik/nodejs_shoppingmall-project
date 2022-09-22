@@ -6,7 +6,9 @@
 5. 인증영역 [대충] <views>, <routes> 대충 작업 [controller에 넣어가면서 작업]
 6. 제대로된 views 만들기 : signup 부터
 
-0. 새로운 형태의 코딩
+
+
+[새로운 형태의 코딩]
     1. this의 활용
     2. req.body.[dash-dash]
 
@@ -199,6 +201,8 @@
     : 일단, 페이지에 admin 이 아니면, 못들어가게
     : 물건 추가, 물건 상세 페이지 업데이트, 등
 
+-   : step, 등의 view 논리
+
 23. manage product [route, controllers 작업]
     : 물건 정보 db에 넣어서 list 로 뽑기,
     
@@ -207,30 +211,136 @@
 
 24. 다시돌아가 헤더 [모바일 버젼 만들기]
 
+    : 웹버젼을 복사해서, 하나 더 만들어서 , include해서, <aside> 에 모바일쪽에 붙여서, 모바일은 따로 스타일링
+    < 사용 >  미디어쿼리, 쿼리선택자( ?=...) , 자바스크립트리스너, !important
+    
+    < 오류 >
+    - includes 폴더 안에 들어있는 두개의 파일을 include 할때,  [ include(includes/파일명) ]이 아니라, 이미 같은 폴더에 있으니 [incldue(파일명)] 이 맞다.
+    - 왜 미디어쿼리를 하면, 내 햄버거 버튼의 flex가 무너지지? (max-width로 함)
+        ==>> 왜그러진 모르겠지만, [햄버거버튼은] min-width를 사용하여, [원래는 있었다가, min-width 보다 커지는 순간, 나타나게 ]
+            [min-width 모바일 우선]  [max-width 데스크탑우선] ==>> [모바일 우선 승!]
+
+25. manage product 수정
+    < 수정>
+    1. 모바일 형태일 경우, manage product의 수정이 너무나 어려워진다. 젠장 다시 바꾸자, 다른페이지로 가게
+
+26. manage product 보충 [  file 탐색기!! , ajax 요청으로 섬네일추가하기]
+    :  npm install --save multer, uuid
+
+-   다시해보는 파일탐색기 기능!! 중요중요!
+
+-   뻐킹... [파일 업로드만 하려고 하면, csrf 토큰이 안먹던 이유!!]
+    => form 에,  enctype 이 들어가서, hidden value가 안먹으니까!!!
+    ==>> csurf의 csrf 토큰 확인하기 플랜 B [?_csrf = <%= locals.csrfToken %>]
+        : form action ="...?_csrf=<%= locals.csrfToken %>"
+
+-   파일을 서버에서 받을때는  req.files! 에스가 붙어있다!
 
 
+    1.  <view>  form => enctype="multipart/form-data"
+                input type = "file" , accept = "image/* "
+
+    2. <middleware> multer 패키지 설치
+
+                    cosnt upload = multer({storage})
+
+                    const storage = multer.diskStorage({
+                        ...
+                    })
+
+-                   ==>> fileupload middleware 에 잘 정리해두었음. 필독
+
+    
+    3. <node>   파일데이터 받아서 데이터베이스에 저장
+                    
+                model 에 constructor 에는 나중에 사용할 [req.body들의 것들 뿐 아니라]
+                                                       [ this.image = ]
+                    저장할때, req.body들 뿐 아니라
+                * 파일 이미지는 [이미지에 따로 하는것이지 req.body 들이랑 같이 묶이는것 아님]
+
+
+    ==> 미들웨어로 가는 이유
+        : 파일업로드라는 행위를 할때, 미들웨어를 거쳐( upload.single("HTML의 name") ) 파일을 저장하기 때문에
+
+27. [MODEL 작업 시작] : 파일 업로드와 더불어 받은, req.body 들 까지 전부 데이터베이스에 넣을 
+
+
+-    쓸데없이 보낸 나의 시간에 대하여....
+        model에 있는 사용자함수 Product에 = req.body.name , req.body....으로 넣으려고 
+            일부로 파라미터에 productData 라 쓰고 .HTML의name 을 적었는데
+            그걸 잘못적어서 undefine 이 나오는걸 개짓했네...
+
+    
+-   근데 왜  사용자함수에 image에 값이 안들어갈까..?
 
 ================================================================================================================================================================
 
-0. 새로운 형태의 코딩
-    1. this의 활용
+[새로운 형태의 코딩 - 새로 안 것]
 
-        [생성자 함수 내의 함수에서] [this를 사용하면, 생성자함수 내의 함수를, 받아쓸 수 있다.]
-        class Fun {
-            constructor{
-                ...
-            }
+1. this의 활용
 
-            fun1(){
+    [생성자 함수 내의 함수에서] [this를 사용하면, 생성자함수 내의 함수를, 받아쓸 수 있다.]
+    class Fun {
+        constructor{
                 ...
-            }
-            fun2(){
-                const thisTest = this.fun1()        ==>>  fun1의 결과값을, 받아 쓸 수 있다.
-            }
         }
 
-    2. req.body.[dash-dash]
-        
-        : HTML의 name 안에 '-' 가 들어간다면, req.body[dash-dash]
-            "대괄호를 사용하자"
+        fun1(){
+                ...
+        }
+        fun2(){
+            const thisTest = this.fun1()        ==>>  fun1의 결과값을, 받아 쓸 수 있다.
+        }
+    }
 
+2. req.body.[dash-dash]
+        
+    : HTML의 name 안에 '-' 가 들어간다면, req.body[dash-dash]
+        "대괄호를 사용하자"
+
+3. CSS [ classList , togle()]
+
+    :  classList 는, 클래스를 관리하는 코드, .add(),  .remove(),  ... togle() 이 있다.
+
+-   : toggle()
+        ==>> [classList에 있다면, 제거하고, 없다면 생성하는] [토클의 기능]
+        ==>> [새 페이지가 렌더되면, 당연하게도 사라지니까, 편함] [HTML 자체가 변경되는 것이 아니니까]
+
+4. CSS [ calc(100vh - 5rem); ]
+
+    : clac [ 계산해서 작동한다.]
+-   : 100vh [ 100%의 최대높이를 말한다.]
+
+5. csrf 토큰과 파일업로드를 같이 사용할때는 쿼리로 csrfToken을 제시해야한다.
+
+    <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data" >                                  "
+
+6. 사용자 함수 사용시, 파라미터에, req.body를 대신할 것을 넣어두고, 사용할때 ...req.body를 사용할 수 있다.
+
+    <model>
+        class Product {
+            constructor(productData){
+                this.name = productData.productName;
+                this.price = productData.productPrice;
+                ...
+
+    <node>
+        const data = new Product({
+            ...req.body,
+        })
+
+7. 파일선택기는 req.file로 접근할 수 있고,  req.file을  console.log 해서 나온 값들또한 req.file.값 으로 접근할 수 있다.
+
+    console.log(req.file)
+
+    xx = req.file.filename
+    yy = req.file.path
+    ...
+
+8. 파일 업로드를 위해, multer 를 사용할때, 원리를 잘 기억하자
+    
+    미들웨어 처리할것은 upload
+    upload 안에 들어갈 것은 multer({storage})
+    storage 안에 들어갈 것은 multer.diskStorage{destination, filename} 이다.
+
+9. 항상, 오류처리를 염두해두자.

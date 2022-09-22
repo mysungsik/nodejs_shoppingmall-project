@@ -48,42 +48,8 @@ html{
 }
 
 body{
-    margin: 0;
+    margin: 8rem 0 0 0;
     background-color: var(--base-body-background-color);
-}
-
-header{
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--base-background-color)
-}
-
-#header{
-    width: 100%;
-    margin: 0;
-    padding: var(--space-3);
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    gap : var(--sapce-5);
-    
-}
-
-#logo{
-    margin-left: 1rem;
-}
-
-#header li{
-    display: grid;
-    align-items:  center;
-}
-#header a{
-    text-decoration: none;
-    color: var(--base-font-color);
-    font-weight: 900;
-    font-size:var(--font-size-4);
-    display: flex;
-    justify-content: center;
 }
 
 .btn{
@@ -104,9 +70,6 @@ header{
 
 }
 
-#header .btn{
-    font-weight: var(--font-weight-3);
-}
 
 /* 나누는 줄 꾸미기 */
 hr{
@@ -176,22 +139,4 @@ input:hover, input:active{
     font-size: var(--font-size-3);
     font-weight: var(--font-weight-3);
 
-}
-
-#mobile-menu-btn{
-    width: 4rem;
-    display: flex;
-    flex-direction: column;
-    background-color: brown; 
-    margin-right: 1rem;
-    justify-content: center;
-    gap: 0.4rem;  
-    align-items: center;
-}
-
-#mobile-menu-btn span{
-    height: 0.5rem;
-    width: 80%;
-    background-color: antiquewhite;
-    
 }

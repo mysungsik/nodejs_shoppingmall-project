@@ -13,7 +13,7 @@ function sessionBuild(store){
         saveUninitialized:false,
         store:store,
         cookie:{
-            maxAge : 1000* 60* 60
+            maxAge : 1000* 60* 60*60
         }
     }
 }

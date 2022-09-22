@@ -3,8 +3,14 @@
     height: 100%;
     min-height: 45rem;
     max-height: 60rem;
-    grid-template-columns: 2fr 1fr;
-    
+    max-width: 60rem;
+    margin: 0 auto;
+    background-color: rgba(236, 169, 74, 0.377);
+    padding: 2rem;
+    border-radius: var(--border-radius-3);
+    font-size : 1rem;
+    font-weight: 800;
+    color: wheat;
 }
 
 textarea, input{
@@ -12,11 +18,13 @@ textarea, input{
 }
 textarea{
     height: 4rem;
+    margin-bottom: 1rem;
 }
 #adding-part{
     display: grid;
     text-align: center;
     align-items: center;
+    
 }
 
 .sub{
@@ -34,13 +42,29 @@ textarea{
 }
 
 #addimg-image-part{
-    margin: 0 auto;
+    margin: 0 auto !important; 
+    padding: 1rem 0;
     width: 70%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     margin-bottom: var(--space-3);
+    background-color: var(--base-background-color);
+    border-radius: var(--border-radius-2);
+}
 
+#product-ess{
+    width: 70%;
+    margin: 0 auto;
+    background-color: rgba(236, 169, 74, 0.377);
+    padding: 1.5rem 0;
+    color: var(--base-background-color);;
+}
+#product-sub{
+    width: 70%;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    background-color: var(--base-background-color);
 }
 
 #addimg-image-part #image{
@@ -67,4 +91,7 @@ textarea{
     width: 12rem;
     height: 10rem;
     box-shadow: var(--shadow-base);
+}
+.btn{
+    margin: 1rem;
 }
