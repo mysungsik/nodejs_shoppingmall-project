@@ -23,8 +23,7 @@ app.set("view engine","ejs")
 app.set("views", path.join(__dirname,"views"))
 
 app.use(express.static("public"))
-app.use(express.static("src"))
-
+app.use("/products/assets",express.static("src"))
 
 app.use(session(sessionConfig.sessionBuild(Sessionstore)))
 app.use(express.urlencoded({extended:false}))

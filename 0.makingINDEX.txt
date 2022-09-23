@@ -264,6 +264,19 @@
 
 27. [MODEL 작업 시작] : 파일 업로드와 더불어 받은, req.body 들 까지 전부 데이터베이스에 넣을 
 
+    ** 특히, req.file에 들어갈, image, imagepath, imageURL 을 [더 해서] 저장해주는 것이 중요!!
+
+    ** 추가적으로, [사용자함수 constructor]에 [db에 저장하기 위한 productId의 값으로 req.body._id 를 추가하는 것을 잊지말것!]
+
+    ==>> 그러니까, model의 product의 constructor의 파라미터로는 [name ... warning, filename, filepath, flleURL, id] 까지!
+    ==>> 그리고 [  db에서 가져온 id 저장 ]    할때    [.toString() ] 쓰는것 절대절대 잊지말것
+=   추가적으로!!! id 저장에 쓸 .toString() 은, id값을 저장하지 않을때에는, 매서드 오류가 나기 때문에 if값을 넣어서 constructor 에서 작업해야한다!!!
+        if(id){
+            this.id = id.toString()
+        }
+
+        -    근데 fileURL은 어따쓰냐 대체
+
 
 -    쓸데없이 보낸 나의 시간에 대하여....
         model에 있는 사용자함수 Product에 = req.body.name , req.body....으로 넣으려고 
@@ -272,7 +285,38 @@
 
     
 -   근데 왜  사용자함수에 image에 값이 안들어갈까..?
-        결국 따로 빼서 넣었음
+        결국 req.body로 안받고, 파라미터를 전부 각각 쓴 뒤에, 값을 따로 받음
+
+28. 섬네일 작업 완료
+
+29. 값을 받아, all product 꾸미기
+
+-   *** image 불러오는데 [미리저장한 "imageURL"을 사용해서, 불러온다.] 
+        ...src="<%= product.imageURL %>  "
+
+-   imagepath를 사용하면 되는데, 대체 왜???!?!?!?
+    ==>> 사용자들의 폴더접근을 막기위한 비밀번호같은 역할로, 실제 폴더가 어딨는지 모르게 하기위한 용도
+
+    "imageURL"을 /products/assets/uploadedImage/filename 이라고 저장했다면,
+
+    <app.js>  에서 미들웨어를 사용해 static 으로 제공할때, 
+
+        app.use("/products/assets", express.static("src")) 이런식으로 제공한다면, 
+            
+            , [미들웨어에서 접근할때] [필터를 거쳐, /products/assets 안에 있는것만 찾기때문에, ]
+
+    <view> 에서 사용할때,
+        src="<%= product.imageURL %>" 이라고 적어도,   => "/products/assets/uploadedImage/filename" 
+                ==>>  "/products/assets/" 을 제끼고, 알아서 "uploadedImage/filename" 을 찾아서 간다.
+
+    ==>> 다시말하지만, 사용하는 이유는 [사용자로부터 정확한 폴더명을 숨기기 위해서다!]
+
+    [결론] static을 할때, app.use("검색조건", express.static("src") 를 하면
+            "검색조건" 이 달려있는, "파일의 주소만",  "src 폴더에 접근해서, 파일이 있으면 공개되는 것"
+
+
+
+
 
 ================================================================================================================================================================
 
@@ -348,3 +392,29 @@
     storage 안에 들어갈 것은 multer.diskStorage{destination, filename} 이다.
 
 9. 항상, 오류처리를 염두해두자.
+
+
+10. Array.map() 에 관하여! [배열의 재정립] ==> 하여튼 그러니까, 사용자함수객체에는 넘길 데이터를 다 쓰더라도(객체에는 필요한 거 다 적으란 말), DB에서는 숨겨야 할 것은 숨기고, 그럼에도 VIEW로 넘길 것은 넘길 수 있는 방법
+
+    Array.map( function( element ){
+    return  element ...
+    })
+
+-   product-model 안에 들어있는, Array.map()
+-   [DB 안에 직접적인 PATH의 저장을 피해, 사고를 미연에 방지하면서도, 재정립하여 VIEW로 값을 보내는 안전한 방법]
+
+11. CSRF TOKEN의 제출 원리에 관하여 + 파일 탐색기를 이용하거나, value가 따로 있을경우, csrfToken을 제출하는 방법
+
+    csrfToken 의 제출로 
+    <form> 안에 hidden value = <%= locals.csrfToken%> name="_csrf"  코드를 사용한다.
+
+-   이 말 뜻은, FORM 안의 name과 value에 의해서 URL이 변경되어
+        domain?_csrf= <%= locals.csrfToken%> 가 됌을 의미한다.
+    
+=   즉, 원론적으로
+        form의 action 을, 
+        <form action = "/...?_csrf = <%= locals.csrfToken %>">               "
+-       이라고 적는다면, FORM 안의 값이 어찌됬든, 신경쓰지 않고 Form 자체의 action 으로 CSRF 토큰을 제출할 수 있게 된다.
+
+    이것이, 파일탐색기를 쓸 때, 혹은, Form 안에 어떤 값에 의해 쿼리 매개변수로 csrf토큰을 제출하지 못하면,
+    쓸 수 있는 아주 좋은 csrf토큰 제출 방법이다.

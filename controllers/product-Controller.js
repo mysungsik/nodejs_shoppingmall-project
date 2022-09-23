@@ -1,8 +1,18 @@
 const db = require("../database/database")
 const Product = require("../models/product-model")
 
-function getHome(req,res){
-    res.render("product/home")
+async function getHome(req,res,next){
+
+    try{
+        const allProducts = await Product.AllProducts()
+
+        res.render("product/home",{allProducts:allProducts})
+
+    }catch(error){
+        console.log(error)
+        next(error)
+        return
+    }
 }
 
 async function getManageProducts(req,res){
@@ -27,7 +37,7 @@ async function manageProducts(req,res){
         req.body.productWarning,
         req.file.filename)
 
-    console.log(req.file)
+    console.log()
     try{
         await data.save();
     }
@@ -35,7 +45,6 @@ async function manageProducts(req,res){
         next(error)
         return;
     }
-
     res.redirect("/admin/products")
 }
 

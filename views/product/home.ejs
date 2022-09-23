@@ -1,12 +1,26 @@
-<%- include("../includes/head", {pageTitle : "login"})%>
+<%- include("../includes/head", {pageTitle : "home"})%>
 <link rel="stylesheet" href="/style/header-web.css">
+<link rel="stylesheet" href="/style/home.css">
 
 </head>
 
 
 <body>
-
     <%- include("../includes/header")%>
+    
+    <ul>
+        <% for( const products of allProducts){%>
+            <li>
+                <p> <%= products.name %></p>
+                <p> <%= products.id%></p>
+                <img src="<%= products.imageUrl%>" class="img">       
+            </li>
+        <% }%>
+    </ul>
+    <form>
+        <input type="hidden" value="src" name="name">
+        <button></button>
+    </form>
     
 
     <%- include("../includes/footer")%>
