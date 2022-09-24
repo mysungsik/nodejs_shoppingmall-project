@@ -1,0 +1,20 @@
+.img{
+    width: 10rem;
+    height: 10rem;
+}
+
+#header-parts{
+    margin: 2rem;
+}
+
+#header-parts a{
+    text-decoration: none;
+    font-family: inherit;
+    padding: 0.25rem;
+    font-size: 1rem;
+    margin-left: 2rem;
+}
+
+#main-parts{
+    margin: 2rem;
+}

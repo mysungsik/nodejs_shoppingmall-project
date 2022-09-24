@@ -1,12 +1,15 @@
-const db = require("../database/database")
 const Product = require("../models/product-model")
+const mongoDb = require("mongodb")
+const ObjectId = mongoDb.ObjectId
+const db = require("../database/database")
 
-async function getHome(req,res,next){
+
+async function getAllProducts(req,res,next){
 
     try{
         const allProducts = await Product.AllProducts()
 
-        res.render("product/home",{allProducts:allProducts})
+        res.render("admin/allProducts",{allProducts:allProducts})
 
     }catch(error){
         console.log(error)
@@ -37,7 +40,6 @@ async function manageProducts(req,res){
         req.body.productWarning,
         req.file.filename)
 
-    console.log()
     try{
         await data.save();
     }
@@ -48,8 +50,52 @@ async function manageProducts(req,res){
     res.redirect("/admin/products")
 }
 
+async function deleteProduct(req,res){
+    const productId = req.params.id
+
+    const deleteId = new Product(null,null,null,null,null,null,productId)
+
+    await deleteId.deleteProducts()
+
+    res.redirect("/admin/allproducts")
+}
+
+async function getupdateProducts(req,res){
+    const productId = req.params.id
+
+    const data = new Product(null,null,null,null,null,null,productId)
+
+    const productData = await data.findProduct()
+
+    res.render("admin/update-products",{productData:productData})
+}
+
+async function updateProducts(req,res){
+    const pageId = req.params.id;
+    
+    const data = req.body;
+    const input = [
+        data.productName,
+        data.productPrice,
+        data.productSummary,
+        data.productDetail,
+        data.productWarning,
+        req.file.filename
+    ]
+    
+    const datas = new Product(...input,pageId)
+
+    await datas.save()
+
+    res.redirect(`/admin/allproducts`)
+ 
+}
+
 module.exports = {
-    getHome:getHome,
+    getAllProducts:getAllProducts,
     getManageProducts:getManageProducts,
-    manageProducts:manageProducts
+    manageProducts:manageProducts,
+    deleteProduct:deleteProduct,
+    getupdateProducts:getupdateProducts,
+    updateProducts:updateProducts
 }

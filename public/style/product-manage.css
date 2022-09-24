@@ -2,8 +2,7 @@
     display: grid;
     height: 100%;
     min-height: 45rem;
-    max-height: 60rem;
-    max-width: 60rem;
+    max-width: 55rem;
     margin: 0 auto;
     background-color: rgba(236, 169, 74, 0.377);
     padding: 2rem;
@@ -14,12 +13,14 @@
 }
 
 textarea, input{
-    width: 70%;
+    width: 60%;
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 textarea{
-    height: 4rem;
-    margin-bottom: 1rem;
+    height: 3rem;
 }
+
 #adding-part{
     display: grid;
     text-align: center;
@@ -36,8 +37,8 @@ textarea{
 }
 
 #product-image{
-    width: 12rem;
-    height: 10rem;
+    width: 9rem;
+    height: 7rem;
     box-shadow: var(--shadow-base);
 }
 
@@ -50,7 +51,7 @@ textarea{
     align-items: center;
     margin-bottom: var(--space-3);
     background-color: var(--base-background-color);
-    border-radius: var(--border-radius-2);
+    border-radius: var(--border-radius-2)
 }
 
 #product-ess{
@@ -63,7 +64,7 @@ textarea{
 #product-sub{
     width: 70%;
     margin: 0 auto;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     background-color: var(--base-background-color);
 }
 
@@ -71,27 +72,7 @@ textarea{
     display: grid;
     justify-content: center;
 }
-#summary-part{
-    align-items: center;
-    text-align: center;
-    box-shadow: var(--shadow-base);
-    overflow-y : scroll;
-}
-#summary-part ol{
-    padding: 0;
-    list-style: none;
-}
-#summary-part li{
-    border: 1px solid;
-}
-#summary-part p{
-    margin: 0;
-}
-#summary-part img{ 
-    width: 12rem;
-    height: 10rem;
-    box-shadow: var(--shadow-base);
-}
+
 .btn{
     margin: 1rem;
 }

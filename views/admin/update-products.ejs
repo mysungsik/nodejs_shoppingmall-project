@@ -10,40 +10,39 @@
     <section id="overall">
 
         <section id="adding-part">
-            <!-- 파일업로드를 포함하는 FORM에서, CSRF 토큰을 제출하는 방법 [쿼리 매개변수를 이용 ]-->
-            <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data" >
+            <form action="/admin/products/Update/<%=productData.id%>?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data" >
 
                 <div id="addimg-image-part">
                     <div id="image">
                         <label for="product-image"> Product Image</label>
-                        <img class="product-image" id="product-image" name="productImage" src="/products/assets/productImage/main.jpg">
+                        <img class="product-image" id="product-image" name="productImage" src="<%= productData.imageUrl%>">
                     </div>
                     <div>
                         <label for="product-add-image"> adding Image</label>
 
                         <br>
-                        <input type="file"id="product-add-image" name="productAddImage" accept="image/*" required>
+                        <input type="file" id="product-add-image" name="productAddImage" accept="image/*" required>
                     </div>
                 </div>
-    
+                
                 <div class="sub" id="product-ess">       
                     <label for="product-name">Product Name</label>
-                    <input type="text" id="product-name" name="productName" required>
+                    <input type="text" id="product-name" name="productName"  value="<%=productData.name%>" required>
 
                     <label for="product-price">Product Price</label>
-                    <input type="number" id="product-price" name="productPrice"  min="1", step="0.1" required>
+                    <input type="number" id="product-price" name="productPrice"  min="1", step="0.1"  value="<%=productData.price%>" required>
                 </div>
     
                 <div class="sub" id="product-sub">
 
                     <label for="product-summary"> Product summary</label>
-                    <input type="text" id="product-summary" name="productSummary" required>
+                    <input type="text" id="product-summary" name="productSummary"  value="<%=productData.summary%>" required>
                     
                     <label for="product-detail">Product Detail</label>
-                    <textarea id="product-detail" name="productDetail" required></textarea>
+                    <textarea id="product-detail" name="productDetail" required> <%=productData.detail%></textarea>
 
                     <label for="product-warning">Product Warning</label>
-                    <textarea id="product-warining" name="productWarning" required></textarea>
+                    <textarea id="product-warining" name="productWarning" required> <%=productData.warning%></textarea>
 
                 </div>
                 <div> 

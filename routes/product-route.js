@@ -9,11 +9,18 @@ route.get("/",function(req,res){
     res.redirect("/home")
 })
 
-route.get("/home",productController.getHome)
+route.get("/admin/allproducts",productController.getAllProducts)
 
 route.get("/admin/products", productController.getManageProducts)
 
 route.post("/admin/products",multerMiddleware,productController.manageProducts)
+
+route.get("/admin/products/delete/:id", productController.deleteProduct)
+
+route.get("/admin/products/Upadte/:id", productController.getupdateProducts)
+
+route.post("/admin/products/Update/:id",multerMiddleware, productController.updateProducts)
+
 
 
 

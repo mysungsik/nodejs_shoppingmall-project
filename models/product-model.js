@@ -1,5 +1,8 @@
 const db = require("../database/database")
 
+const mongoDb = require("mongodb")
+const ObjectId = mongoDb.ObjectId
+
 // 하나하나, constructor에 저장하지 말고, FORM 전체에서 오는 값을 넣기 위해, 파라미터를 넣어본다.
 // 또한, 이미지의 이름, 경로, [URL? 이건왜하지] 추가한다.
 
@@ -30,12 +33,26 @@ class Product {
             warning : this.warning,
             image : this.image
         }
+
+        if(!this.id){
+            await db.getDb().collection("productInfo").insertOne(data)
+        }
+
+        else {
+            await db.getDb().collection("productInfo").updateOne({_id: ObjectId(this.id)},{$set:{  
+                name :this.name,
+                price : +this.price,
+                summary : this.summary,
+                detail : this.detail,
+                warning :  this.warning,
+                image : this.image
+            }})
+        }
+
         
-        await db.getDb().collection("productInfo").insertOne(data)
     }
 
     static async AllProducts() {                                 // 객체의 파라미터 Product(여기!) 를 쓸 이유가 없으므로 static 해서 직접보관
-    
         const data = await db.getDb().collection("productInfo").find().toArray();
 
         return data.map(function(data){
@@ -47,6 +64,28 @@ class Product {
                 data.image,
                 data._id)
         })
+    }
+
+    async deleteProducts(){
+        await db.getDb().collection("productInfo").deleteOne({_id:ObjectId(this.id)})
+        
+    }
+
+
+    async findProduct(){
+
+        const data = await db.getDb().collection("productInfo").findOne({ _id:ObjectId(this.id)})
+
+        const productData = new Product(
+            data.name,
+            data.price,
+            data.summary,
+            data.detail,
+            data.warning,
+            data.image,
+            this.id)
+
+        return productData
     }
 }
 
