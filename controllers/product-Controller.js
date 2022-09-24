@@ -1,7 +1,5 @@
 const Product = require("../models/product-model")
-const mongoDb = require("mongodb")
-const ObjectId = mongoDb.ObjectId
-const db = require("../database/database")
+const fs = require("fs/promises")
 
 
 async function getAllProducts(req,res,next){

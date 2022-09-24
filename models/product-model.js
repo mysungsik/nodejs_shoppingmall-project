@@ -1,4 +1,5 @@
 const db = require("../database/database")
+const fs = require("fs/promises")
 
 const mongoDb = require("mongodb")
 const ObjectId = mongoDb.ObjectId
@@ -39,6 +40,23 @@ class Product {
         }
 
         else {
+            // 업데이트하기전, productid로, db에서 값을 찾아, 다시 constructor에 넣어, imagePath를 뽑아, 기존에 존재하던 파일을 삭제한다.
+            const data = await db.getDb().collection("productInfo").findOne({_id:ObjectId(this.id)})
+
+            const newData=  new Product(
+                data.name,
+                data.price,
+                data.summary,
+                data.detail,
+                data.warning,
+                data.image,
+                data._id
+            )
+    
+            await fs.unlink(newData.imagePath)
+
+            // 파일 없애고, db 업데이트하고
+
             await db.getDb().collection("productInfo").updateOne({_id: ObjectId(this.id)},{$set:{  
                 name :this.name,
                 price : +this.price,
@@ -47,9 +65,7 @@ class Product {
                 warning :  this.warning,
                 image : this.image
             }})
-        }
-
-        
+        }      
     }
 
     static async AllProducts() {                                 // 객체의 파라미터 Product(여기!) 를 쓸 이유가 없으므로 static 해서 직접보관
@@ -67,6 +83,24 @@ class Product {
     }
 
     async deleteProducts(){
+        // 삭제하기전, productid로, db에서 값을 찾아, 다시 constructor에 넣어, imagePath를 뽑아, 기존에 존재하던 파일을 삭제한다.
+
+        const data = await db.getDb().collection("productInfo").findOne({_id:ObjectId(this.id)})
+
+        const newData=  new Product(
+            data.name,
+            data.price,
+            data.summary,
+            data.detail,
+            data.warning,
+            data.image,
+            data._id
+        )
+
+        await fs.unlink(newData.imagePath)
+
+        // 파일 없애고, db없애고
+
         await db.getDb().collection("productInfo").deleteOne({_id:ObjectId(this.id)})
         
     }

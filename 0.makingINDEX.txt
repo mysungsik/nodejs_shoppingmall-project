@@ -331,6 +331,8 @@
 
 30. update product, delete product 만들기
 
+31. 추가, update product 일때 [fs] 사용하여, 파일 삭제하기
+
 
 
 
