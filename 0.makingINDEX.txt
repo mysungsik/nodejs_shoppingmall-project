@@ -330,6 +330,7 @@
             "검색조건" 이 달려있는, "파일의 주소만",  "src 폴더에 접근해서, 파일이 있으면 공개되는 것"
 
 30. update product, delete product 만들기
+    : 파일 삭제(fs) + DB 변경 OR 삭제
 
 31. 추가, update product 일때 [fs] 사용하여, 파일 삭제하기
 
@@ -436,6 +437,18 @@
 
     이것이, 파일탐색기를 쓸 때, 혹은, Form 안에 어떤 값에 의해 쿼리 매개변수로 csrf토큰을 제출하지 못하면,
     쓸 수 있는 아주 좋은 csrf토큰 제출 방법이다.
+
+
+12. ERROR 를 보내는 두가지 방법
+    1. const error = new Error("...")
+        error.code = xxx
+        throw error
+
+    2. try{ ... }
+        catch(error){
+            error.code = xxx
+            throw error
+        }
 
 
 

@@ -12,7 +12,7 @@
         <section id="adding-part">
             <!-- 파일업로드를 포함하는 FORM에서, CSRF 토큰을 제출하는 방법 [쿼리 매개변수를 이용 ]-->
             <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data" >
-
+                <h1> MANAGE PRODUCTS</h1>
                 <div id="addimg-image-part">
                     <div id="image">
                         <label for="product-image"> Product Image</label>

@@ -74,7 +74,7 @@ async function login(req,res){
     }
 
     utilSession.createSession(req,existUser,function(){
-        res.redirect("/home")
+        res.redirect("/login")
     })
     
 }

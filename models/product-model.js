@@ -14,9 +14,9 @@ class Product {
         this.summary = summary;
         this.detail = detail;
         this.warning = warning;
-        this.image = image;                                    // 이건 단지 저장될 이미지의 이름일 뿐
-        this.imagePath = `src/uploadedImage/${image}`         // 이미지가 저장된 파일의 경로를 저장
-        this.imageUrl = `/products/assets/uploadedImage/${image}`    // 이건 왜인지 꼭 알아내야함
+        this.image = image;                                             // 이건 단지 저장될 이미지의 이름일 뿐
+        this.imagePath = `src/uploadedImage/${image}`                   // 이미지가 저장된 파일의 경로를 저장
+        this.imageUrl = `/products/assets/uploadedImage/${image}`       // 파일의 경로를 숨기며, 이미지에 src에 추가하기위한, URL 추가
 
         if(id){
             this.id = id.toString()                         // toString() 매서드를 사용했으므로, 없으면 오류남. ==>> 없을경우 if체크로 날려버림
@@ -36,12 +36,24 @@ class Product {
         }
 
         if(!this.id){
-            await db.getDb().collection("productInfo").insertOne(data)
+            try{
+                await db.getDb().collection("productInfo").insertOne(data)
+            }
+            catch(error){
+                error.code = 404;
+                throw error
+            }
+            
         }
-
         else {
             // 업데이트하기전, productid로, db에서 값을 찾아, 다시 constructor에 넣어, imagePath를 뽑아, 기존에 존재하던 파일을 삭제한다.
             const data = await db.getDb().collection("productInfo").findOne({_id:ObjectId(this.id)})
+
+            if(!data){
+                const error = new Error("Could not find product with this Id")
+                error.code = 404;
+                throw error
+            }
 
             const newData=  new Product(
                 data.name,
@@ -52,11 +64,9 @@ class Product {
                 data.image,
                 data._id
             )
-    
-            await fs.unlink(newData.imagePath)
+
 
             // 파일 없애고, db 업데이트하고
-
             await db.getDb().collection("productInfo").updateOne({_id: ObjectId(this.id)},{$set:{  
                 name :this.name,
                 price : +this.price,
@@ -65,6 +75,14 @@ class Product {
                 warning :  this.warning,
                 image : this.image
             }})
+
+            try{
+                await fs.unlink(newData.imagePath)
+            } catch(error){
+                error.code = 404;
+                throw error
+            }
+            
         }      
     }
 

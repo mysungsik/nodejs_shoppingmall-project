@@ -1,4 +1,4 @@
-<%- include("../includes/head", {pageTitle : "home"})%>
+<%- include("../includes/head", {pageTitle : "All Products"})%>
 <link rel="stylesheet" href="/style/header-web.css">
 <link rel="stylesheet" href="/style/Allproducts.css">
 
@@ -10,16 +10,21 @@
     <%- include("../includes/header")%>
     <section id="header-parts">
         <h1> ALL PRODUCTS</h1>
-        <a href="/admin/products" class="btn"> add a new product</a> 
+        <a href="/admin/products" class="btn" id="addBtn"> add a new product</a> 
         <section id="main-parts">
+
             <ul id="product-section">
                 <% for( const products of allProducts){%>
                     <li>
-                        <p> <%= products.name %></p>
-                        <img src="<%= products.imageUrl%>" class="img">       
+                        <div class="imageANDname">
+                            <img src="<%= products.imageUrl%>" class="img">  
+                            <p> <%= products.name %></p>     
+                        </div>
+                        <div class="Button ">
+                            <a class = "btn" href="/admin/products/delete/<%= products.id%>"> Delete</a>
+                            <a class = "btn" href="/admin/products/Upadte/<%= products.id%>"> Upadte</a>
+                        </div>
                     </li>
-                        <a href="/admin/products/delete/<%= products.id%>"> Delete</a>
-                        <a href="/admin/products/Upadte/<%= products.id%>"> Upadte</a>
                 <% }%>
             </ul>
         </section>

@@ -11,6 +11,9 @@
     font-weight: 800;
     color: wheat;
 }
+h1{
+    margin: 0.5rem 0;
+}
 
 textarea, input{
     width: 60%;

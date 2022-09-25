@@ -6,7 +6,7 @@ const productController = require("../controllers/product-Controller")
 const multerMiddleware = require("../middleware/fileUpload")
 
 route.get("/",function(req,res){
-    res.redirect("/home")
+    res.redirect("/admin/allproducts")
 })
 
 route.get("/admin/allproducts",productController.getAllProducts)

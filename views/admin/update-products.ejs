@@ -11,7 +11,7 @@
 
         <section id="adding-part">
             <form action="/admin/products/Update/<%=productData.id%>?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data" >
-
+                <h1> UPDATE PRODUCTS</h1>
                 <div id="addimg-image-part">
                     <div id="image">
                         <label for="product-image"> Product Image</label>
@@ -47,7 +47,7 @@
                 </div>
                 <div> 
                     <button class="btn" type="reset"> RESET</button>
-                    <button class="btn"> ADD </button>
+                    <button class="btn"> UPDATE </button>
                 </div>
                 
             </form>

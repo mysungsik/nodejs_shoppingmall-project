@@ -7,14 +7,59 @@
     margin: 2rem;
 }
 
-#header-parts a{
+h1{
+    font-weight: 900;
+}
+#addBtn{
     text-decoration: none;
     font-family: inherit;
     padding: 0.25rem;
-    font-size: 1rem;
+    font-size: 1.75rem;
     margin-left: 2rem;
 }
 
 #main-parts{
     margin: 2rem;
+    margin-top: 5rem;
+}
+
+#product-section{
+    width: 70%;
+    margin: 0 auto;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 5rem;
+    
+}
+
+#product-section li{
+    width: 12rem;
+    height: 20rem;
+}
+
+.imageANDname{
+    text-align: center;
+
+}
+.imageANDname p{
+    margin: 0.5rem;
+    text-align: center;
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-4);
+    color: var(--base-background-color);
+    border: 2px rgb(165, 118, 52) solid;
+    border-radius: var(--border-radius-2);
+}
+.Button{
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.Button a{
+    margin: 0;
+    text-decoration: none;
+    font-size: 1rem;
 }
