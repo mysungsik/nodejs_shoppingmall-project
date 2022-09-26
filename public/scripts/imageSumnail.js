@@ -1,4 +1,5 @@
 const fileUpload = document.getElementById("product-add-image")
+const prductImage = document.getElementById("product-image")
 const productImageDiv = document.getElementById("image")
 
 
@@ -22,7 +23,16 @@ function changeImage(event){
     
 }
 
-fileUpload.addEventListener("change",changeImage)
+function thumnailImage(){
+
+    const files = fileUpload.files
+
+    const pickedFile = files[0]
+    prductImage.src = URL.createObjectURL(pickedFile)
+
+}
+
+fileUpload.addEventListener("change",thumnailImage)
 
 
 /*

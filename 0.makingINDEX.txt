@@ -334,10 +334,19 @@
 
 31. 추가, update product 일때 [fs] 사용하여, 파일 삭제하기
 
+32. 추가, URL 자바스크립트 내장 클래스로, 간단하게 썸네일 만들기!
 
+32. 추가! [삭제]를 get도아니고 post도 아니고 [delete 요청을 통해!] AJAX 요청과 같은 자바스크립트기반 요청을 사용해서, 새로고침 없이 삭제하기!
+   ==> [무한히 증가하는 버튼에 대하여] [어떻게 쿼리선택자로 특정 버튼을 타겟할것인가! !]
 
+-   기본적으론 [추가연습 1번] 무한히 증식하는 버튼에 어떻게, AJAX 요청으로 특정 버튼을 타겟할것인가. 를 따르고,
+-   기술적으로는,버튼의 부모요소,부모요소...부모요소, 를 타고 올라가 .remove() 하는 방법을 사용하며,
 
-================================================================================================================================================================
+    당연하게도, 라우터에 버튼과 같은 동적주소를 입력하고, 컨트롤러에서 기능을 적어, 라우트 function에 넣는다 
+
+    1. VIEW 버튼에 data-id = "..." 해서 동적으로 넣기 
+
+   
 
 [새로운 형태의 코딩 - 새로 안 것]
 
@@ -459,3 +468,88 @@
         [등록 버튼]은 하나이기 때문에 여기서는 [form으로 btn에 data, 달아서, dataset으로 가져오면 된다.]
         [ 새 댓글창을 만드는 것은 li에 ajax 요청으로 가져온 데이터를 담고,]
 -       [ 새 댓글창(무한증식하는)의 [등록버튼] 의 id를 [동적으로 받는것]이 중요한데...] 이걸 어떻게 한담...
+
+    ==>> 결론.
+    -   [무한히 증식하는 버튼을 만들때, 각 버튼의 data-id] 안에, " DB에서 받아온, 각각의 댓글 id를 넣으면 된다"
+        어떻게? 예를들어,
+
+        어떤 사람이 댓글을 적어서, 그 댓글이 DB안에 들어갔다고 하자.
+          DB에 들어간 댓글을 뽑아, li로 만들것이고, 그 댓글 자체의 id가 존재할것이다.
+-       li안에 존재하는 버튼에, [댓글 자체의 id]를 [data-id] 안에 담아, 버튼을 만든다.
+
+            <button  data-productId= '<%= product.id %>'   class=...   > </button>
+
+        [그럼 그 버튼을 어떻게 타겟할 것인가?]
+
+-       querySelectorAll 로, 전부 잡아서, for( cont x of Array) 로 전부 잡아 리스너를 달고
+-       [function 에, event 파라미터로 [dataset을 가져와] [서버로 그 dataset을 보낸다] , dataset에는 data- 안에 담긴 DB의 productid가 존재하기 때문에,
+-       타겟하여 서버로부터 요청을 주고받을 수 있다.
+-       물론 [요청 하는 주소도 동적으로 보낼 수 있다.]
+
+            const buttons = document.querySelectorAll(".상위클래스 button")
+
+            async function function(event){
+                const postId = event.target.dataset.postid      //만약, data-postid = "..." 
+
+                await fetch(`/admin/products/` + postid, {
+                    method="..."                                //get요청일경우, URL만으로 끝
+                })
+            }
+
+            for( const button of buttons){
+                button.addEventListenal("click", function)
+            }
+
+
+        [어떤 요청을 할것인가?]
+-       fetch에는 모든 요청이 전부 가능하다 [get, post, delete, 등...] 선택해서 한다.
+
+            <get (기본)>
+                const response = fetch("URL")
+                const responsData = response.json()
+
+            <post>
+                data = {...}
+
+                fetch("URL", {
+                    method = "post"
+                    body = JSON.stringify(data)
+                    header : {
+                        "Content-Type" : "application/json"
+                    }
+                })
+
+            <delete>
+                fetch("URL",{
+                    method = "delete"
+                })
+
+            ...
+
+-       추가적으로 요청인 만큼 CSRF토큰을 제시해야한다!
+            그러므로, 보낼때 [data-보낼데이터 = "..."] 뿐 아니라,
+                            [data-csrf = "<%= locals.csrfToken%>"] 도 같이 보내서,
+        
+            async function function(event){
+                const postId = event.target.dataset.postid      //만약, data-postid = "..."  , data-csrf = "<%= locals.csrfToken%>" 
+                const csrf = event.target.dataset.csrf
+
+                const response = await fetch(`/admin/products/` + postid + `?_csrf` + csrf , {
+                    method="..."                               
+                })
+            }
+
+        처럼 csrfToken 도 제시해야, 값을 받고 보낼수 있다.
+
+-       response가 ok가 아닐경우, error를 제시하는 것도 잊지 말아야한다.
+
+            async function function(event){
+                const postId = event.target.dataset.postid      //만약, data-postid = "..." 
+
+                const reponse = await fetch("URL")
+
+-              if(!response.ok){
+                    alert("...")
+                    return
+                }
+            }

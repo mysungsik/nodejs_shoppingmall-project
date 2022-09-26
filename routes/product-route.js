@@ -15,11 +15,12 @@ route.get("/admin/products", productController.getManageProducts)
 
 route.post("/admin/products",multerMiddleware,productController.manageProducts)
 
-route.get("/admin/products/delete/:id", productController.deleteProduct)
-
 route.get("/admin/products/Upadte/:id", productController.getupdateProducts)
 
 route.post("/admin/products/Update/:id",multerMiddleware, productController.updateProducts)
+
+route.get("/admin/products/delete/:id", productController.deleteProduct)
+
 
 
 
