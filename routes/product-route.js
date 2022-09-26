@@ -19,7 +19,7 @@ route.get("/admin/products/Upadte/:id", productController.getupdateProducts)
 
 route.post("/admin/products/Update/:id",multerMiddleware, productController.updateProducts)
 
-route.get("/admin/products/delete/:id", productController.deleteProduct)
+route.delete("/admin/products/Update/:id", productController.deleteProduct)
 
 
 

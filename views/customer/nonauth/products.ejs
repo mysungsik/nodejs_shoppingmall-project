@@ -1,14 +1,11 @@
-<%- include("../includes/head", {pageTitle : "All Products"})%>
+<%- include("../../includes/head", {pageTitle : "All Products"})%>
 <link rel="stylesheet" href="/style/header-web.css">
 <link rel="stylesheet" href="/style/Allproducts.css">
-<script src="/scripts/delete-product.js" defer></script>
-
 </head>
-
 
 <body>
 
-    <%- include("../includes/header")%>
+    <%- include("../../includes/header")%>
     <section id="header-parts">
         <h1> ALL PRODUCTS</h1>
         <a href="/admin/products" class="btn" id="addBtn"> add a new product</a> 
@@ -22,14 +19,13 @@
                             <p> <%= products.name %></p>     
                         </div>
                         <div class="Button ">
-                            <a class = "btn delete" data-productid="<%= products.id%>" data-csrf="<%= locals.csrfToken%>"> Delete</a>
-                            <a class = "btn" href="/admin/products/Upadte/<%= products.id%>"> Upadte</a>
+                            <a class = "btn" href="/products/Detail/<%= products.id%>"> Detail</a>
                         </div>
                     </li>
                 <% }%>
             </ul>
         </section>
     </section>
-    <%- include("../includes/footer")%>
+    <%- include("../../includes/footer")%>
 </body>
 </html>

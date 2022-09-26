@@ -9,8 +9,10 @@ const sessionConfig = require("./middleware/connectSession")
 const addCsrfToken = require("./middleware/csrfToken")
 const errorHandler = require("./middleware/errorHandler")
 const userAuth = require("./middleware/userAuth")
+const authCheck = require("./middleware/userAuthCheck")
 
 const authRoute = require("./routes/auth-route")
+const clientProductRoute = require("./routes/client-products-route")
 const productRoute = require("./routes/product-route")
 
 const db = require("./database/database")
@@ -34,8 +36,12 @@ app.use(addCsrfToken)
 
 app.use(userAuth)
 
-app.use(productRoute)
+
+app.use(clientProductRoute)
 app.use(authRoute)
+app.use(authCheck)
+app.use(productRoute)   // 앞에 [/admin] 필터를 붙여준다면, routes 폴더에서는 /admin/... 가 아니라 바로 /... 이 나올 수 있게 되겠지
+
 
 
 app.use(errorHandler)

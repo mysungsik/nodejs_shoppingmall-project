@@ -3,14 +3,6 @@ const Product = require("../models/product-model")
 
 async function getAllProducts(req,res,next){
     
-    // 체크
-    const checkAdmin = req.session.admin;
-
-    if(!checkAdmin){
-        res.redirect("/")
-        return
-    }
-
     try{
         const allProducts = await Product.AllProducts()
 
@@ -25,14 +17,6 @@ async function getAllProducts(req,res,next){
 
 async function getManageProducts(req,res){
     
-    //체크
-    const checkAdmin = req.session.admin;
-
-    if(!checkAdmin){
-        res.redirect("/")
-        return
-    }
-
     res.render("admin/manage-products")
 }
 
@@ -58,14 +42,6 @@ async function manageProducts(req,res){
 
 async function deleteProduct(req,res){
 
-    // admin 체크
-    const checkAdmin = req.session.admin;
-
-    if(!checkAdmin){
-        res.redirect("/")
-        return
-    }
-
     // 찾아서 삭제
     const productId = req.params.id
 
@@ -73,18 +49,10 @@ async function deleteProduct(req,res){
 
     await deleteId.deleteProducts()
 
-    res.redirect("/admin/allproducts")
+    res.json({message: "delete complete"})
 }
 
 async function getupdateProducts(req,res){
-
-    // 체크
-    const checkAdmin = req.session.admin;
-
-    if(!checkAdmin){
-        res.redirect("/")
-        return
-    }
 
     const productId = req.params.id
 
