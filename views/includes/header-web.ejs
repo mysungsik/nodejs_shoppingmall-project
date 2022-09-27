@@ -7,13 +7,20 @@
     <% }%>
 
     <% if(!locals.admin){ %>
-        <li> <a href="/cart">  cart </a></li>
+        <% if(!locals.uid){%>
+            <li> <a href="/cart">  cart </a></li>
+        <% } %>
+
+        <% if(locals.uid){%>
+            <li> <a href="/cart/<%= locals.uid %>">  cart </a></li>
+        <% } %>
         <li> <a href="/order">  order </a></li>
     <% } %>   
     <% if( locals.admin){ %>
         <li> <a href="/admin/allproducts"> manage product </a></li>
         <li> <a href="/admin/order"> manage order </a></li>
     <% } %>
+
     <% if( locals.isAuth ){ %>
         <form action ="/logout" method="get"> 
             <input type="hidden" value="<%= locals.csrfToken%>" name="_csrf">

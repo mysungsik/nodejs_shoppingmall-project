@@ -42,8 +42,7 @@ class Product {
             catch(error){
                 error.code = 404;
                 throw error
-            }
-            
+            }    
         }
         else {
             // 업데이트하기전, productid로, db에서 값을 찾아, 다시 constructor에 넣어, imagePath를 뽑아, 기존에 존재하던 파일을 삭제한다.
@@ -54,7 +53,6 @@ class Product {
                 error.code = 404;
                 throw error
             }
-
             const newData=  new Product(
                 data.name,
                 data.price,
@@ -64,8 +62,6 @@ class Product {
                 data.image,
                 data._id
             )
-
-
             // 파일 없애고, db 업데이트하고
             await db.getDb().collection("productInfo").updateOne({_id: ObjectId(this.id)},{$set:{  
                 name :this.name,
@@ -75,14 +71,12 @@ class Product {
                 warning :  this.warning,
                 image : this.image
             }})
-
             try{
                 await fs.unlink(newData.imagePath)
             } catch(error){
                 error.code = 404;
                 throw error
             }
-            
         }      
     }
 
@@ -140,6 +134,8 @@ class Product {
         return productData
     }
 }
+
+
 
 module.exports = Product;
 

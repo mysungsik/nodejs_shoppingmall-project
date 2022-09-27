@@ -1,0 +1,18 @@
+<%- include("../../includes/head", {pageTitle : "Product Detail"})%>
+<link rel="stylesheet" href="/style/client-cart.css">
+</head>
+
+<body>
+
+    <%- include("../../includes/header")%>
+    <h1> CART </h1>
+    <section id="header-parts">
+        <% for(const product of allProductsInCart){%>
+
+            <a href="<%= product.productUrl%>"> <%= product.productName %></a>
+
+        <% } %>
+    </section>
+    <%- include("../../includes/footer")%>
+</body>
+</html>

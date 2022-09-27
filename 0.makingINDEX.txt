@@ -385,8 +385,18 @@
      나는 그냥, 새 페이지 만듬
 
 36. 디테일 페이지 만들기
+    : 유저한테 보여야하니, media query 필수, transform:rotateZ(-10deg) 써보기
 
 37. 카트에 담게하기
+    : 로그인시, [ res.locals.uid = req.session.authUserId ]로, 사용자 인증 아이디(DB에서 뽑아온 _id)를 저장하는 이유가 있었따! 
+    : AJAX 요청으로, 페이지 이동없이
+
+    product-detail ajax (post) => 주문자 id와 함께, [cart db에 save] 시킴
+                                주문 한다면 cart db에서 삭제하고 order db로 넘기면되고
+
+    cart post - 주문자 id와 동일한 db들을 전부뽑아 li로 만들어서 넘김
+
+-   
 
 38. 주문하게하기
 
@@ -560,9 +570,9 @@
                 data = {...}
 
                 fetch("URL", {
-                    method = "post"
-                    body = JSON.stringify(data)
-                    header : {
+                    method : "post",
+                    body : JSON.stringify(data),
+                    headers : {
                         "Content-Type" : "application/json"
                     }
                 })

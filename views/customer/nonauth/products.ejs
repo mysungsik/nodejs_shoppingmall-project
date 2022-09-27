@@ -1,6 +1,5 @@
 <%- include("../../includes/head", {pageTitle : "All Products"})%>
-<link rel="stylesheet" href="/style/header-web.css">
-<link rel="stylesheet" href="/style/Allproducts.css">
+<link rel="stylesheet" href="/style/admin-Allproducts.css">
 </head>
 
 <body>
@@ -19,7 +18,7 @@
                             <p> <%= products.name %></p>     
                         </div>
                         <div class="Button ">
-                            <a class = "btn" href="/products/Detail/<%= products.id%>"> Detail</a>
+                            <a class = "btn" href="/product/detail/<%= products.id%>"> Detail</a>
                         </div>
                     </li>
                 <% }%>

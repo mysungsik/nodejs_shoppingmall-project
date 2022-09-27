@@ -37,8 +37,8 @@ app.use(addCsrfToken)
 app.use(userAuth)
 
 
-app.use(clientProductRoute)
 app.use(authRoute)
+app.use(clientProductRoute)
 app.use(authCheck)
 app.use(productRoute)   // 앞에 [/admin] 필터를 붙여준다면, routes 폴더에서는 /admin/... 가 아니라 바로 /... 이 나올 수 있게 되겠지
 

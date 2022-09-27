@@ -1,0 +1,43 @@
+<%- include("../../includes/head", {pageTitle : "Product Detail"})%>
+<link rel="stylesheet" href="/style/client-product-detail.css">
+<script src="/scripts/add-to-cart.js" defer></script>
+</head>
+
+<body>
+
+    <%- include("../../includes/header")%>
+    <h1> PRODUCT DETAIL</h1>
+    <section id="header-parts">
+            <div class="part" id="product-ess">
+                <div>
+                    <img id="product-image" src="<%= productDetail.imageUrl %>">
+                </div>
+                <hr id="divide-mobile">
+    
+                <div id="name-and-price">
+                    <p class="label">Product Name</p>
+                    <p class="info" id="product-name" name="productName"> <%= productDetail.name %></p>
+        
+                    <p class="label" >Product Price</p>
+                    <p class="info"  id="product-price" name="productPrice"> <%= productDetail.price %></p>
+                </div>
+            </div>
+            <hr id="divide-window">
+            <div class="part" id="description">
+                <div>
+                    <p class="label" >Product Detail</p>
+                    <p class="info info-description"  id="product-detail" name="productDetail" > <%= productDetail.detail %></p>
+        
+                    <p class="label" >Product Warning</p>
+                    <p class="info info-description"  id="product-warining" name="productWarning" > <%= productDetail.warning %></p>
+                </div>
+    
+                <div id="btn-part">
+                    <button class="btn" id="add-btn" data-userid="<%= locals.uid %>" data-productid="<%= productDetail.id %>" data-csrf="<%=locals.csrfToken%>"> ADD to CART </button>
+                </div>
+            </div>
+        </section>
+    </section>
+    <%- include("../../includes/footer")%>
+</body>
+</html>
