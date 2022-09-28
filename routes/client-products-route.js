@@ -11,13 +11,19 @@ route.get("/", clientProductsController.getAllProducts )
 
 route.get("/product/detail/:id", clientProductsController.getProductDetail)
 
+
+route.post("/product/detail/:userid", clientProductsController.saveToCart)
+
 route.get("/cart", function(req,res){
     res.render("error/have-to-login")
 })
 
 route.get("/cart/:id", clientProductsController.getCart)
 
-route.post("/product/detail/:userid", clientProductsController.saveToCart)
+route.post("/cart/:userid", clientProductsController.postOrder )
+
+route.get("/order/:userid" , clientProductsController.getOrder)
+
 
 
 module.exports = route

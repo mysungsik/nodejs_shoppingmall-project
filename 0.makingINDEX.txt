@@ -518,6 +518,17 @@
 
 15. CSS @media (min-width: xx )를 활용해서, 센터였다가,  큰화면에서는 [text-align을 left로 두어서 편하게 볼 수 있게 만들 수 잇음]
 
+16. 옆으로 grid
+    #main-grid li{
+        display: grid;
+        grid-auto-flow: column;
+    }
+
+17. 자바스크립트 string에서 숫자 추출하기
+    let ms = "asdasda34534sd345345"
+    ms = ms.replace(/\D/g,"")
+    console.log(ms)
+
 
 [추가연습]
 1. 연습 ,댓글창의 댓글창 만들기

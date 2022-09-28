@@ -1,0 +1,21 @@
+
+h1{
+    margin-left: 3rem;
+}
+#header-parts{
+    margin-left: 5rem;
+
+}
+#main-grid li{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 15rem 15rem 8rem 20rem;
+    align-items: center;
+    border: 1px solid;
+    padding: 1rem;
+    width: 60rem;
+}
+
+input{
+    margin: 0;
+}

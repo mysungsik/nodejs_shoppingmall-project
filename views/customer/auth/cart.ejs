@@ -1,5 +1,6 @@
 <%- include("../../includes/head", {pageTitle : "Product Detail"})%>
 <link rel="stylesheet" href="/style/client-cart.css">
+<script src="/scripts/cart.js" defer></script>
 </head>
 
 <body>
@@ -7,11 +8,26 @@
     <%- include("../../includes/header")%>
     <h1> CART </h1>
     <section id="header-parts">
-        <% for(const product of allProductsInCart){%>
-
-            <a href="<%= product.productUrl%>"> <%= product.productName %></a>
-
-        <% } %>
+        <ul id="main-grid">
+            <li>
+                <p>name</p>
+                <p>price</p>
+                <p>quantity</p>
+                <p>totalPirce</p>
+            </li>
+            <% for(const product of allProductsInCart){%>
+                <li>
+                    <a class="name" href="<%= product.productUrl%>"> <%= product.productName %> </a>
+                    <p class="price"> <%= product.productPrice%></p>
+                    <input type="number" min="1" max="1000" class="quantity" value="1">
+                    <p class="totalPrice"></p>
+                </li>
+            <% } %>
+            <p>all total price</p>
+            <p id="TotalPrices"></p>
+            <h2 id="sumTotalPrice"></h2>
+        </ul>
+        <a id="submit" href="/order/<%= locals.uid%>" class="btn" data-userid="<%=locals.uid%>" data-csrf="<%=locals.csrfToken%>"> submit </a>
     </section>
     <%- include("../../includes/footer")%>
 </body>
