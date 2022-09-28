@@ -1,21 +1,59 @@
 
+body{
+    width: fit-content;
+    min-width: 70rem;
+}
 h1{
     margin-left: 3rem;
+}
+img{
+    width: 8rem;
+    height: 8rem;
+    margin-right: 1rem;
+}
+
+.name{
+    width: 10rem;
+}
+#img-and-name{
+    display: flex;
+    align-items: center;
 }
 #header-parts{
     margin-left: 5rem;
 
 }
 #main-grid li{
+    
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 15rem 15rem 8rem 20rem;
+    grid-template-columns: 18rem 10rem 8rem 15rem 10rem;
     align-items: center;
     border: 1px solid;
     padding: 1rem;
-    width: 60rem;
+    width: 100%;
+    text-align: center;
 }
 
+#total-price-section{
+    text-align: center;
+}
+.calPrice{
+    display: inline-block;
+    font-size: var(--font-size-4);
+    margin-top: 0;
+}
+#sumTotalPrice{
+    font-size: var(--font-size-5);
+}
 input{
-    margin: 0;
+    margin: 0 auto;
+}
+
+#btn-control{
+    display: flex;
+    justify-content: end;
+}
+.totalPrice{
+    width: 100%;
 }

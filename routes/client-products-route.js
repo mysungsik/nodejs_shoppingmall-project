@@ -20,7 +20,11 @@ route.get("/cart", function(req,res){
 
 route.get("/cart/:id", clientProductsController.getCart)
 
-route.post("/cart/:userid", clientProductsController.postOrder )
+route.post("/cart/:userid", clientProductsController.cartToOrderToSave )
+
+route.get("/cart/:productname/productDelete", clientProductsController.deleteProductOne )
+
+route.delete("/cart/:userid",clientProductsController.deleteCartlistToOrder)
 
 route.get("/order/:userid" , clientProductsController.getOrder)
 

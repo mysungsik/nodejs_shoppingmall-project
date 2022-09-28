@@ -114,9 +114,7 @@ class Product {
         // 파일 없애고, db없애고
 
         await db.getDb().collection("productInfo").deleteOne({_id:ObjectId(this.id)})
-        
     }
-
 
     async findProduct(){
 

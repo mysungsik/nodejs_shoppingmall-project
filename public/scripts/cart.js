@@ -19,13 +19,13 @@ console.log(allQuantity[0].value* allPrice[0].textContent)
 // 초기값
 
 
-for(i=0;i<3;i++){
+for(i=0;i<allName.length;i++){
     allTotalPrice[i].textContent =  allQuantity[i].value * allPrice[i].textContent;
-    TotalPrices.textContent =  allTotalPrice[i].textContent + "원" +TotalPrices.textContent;
+    TotalPrices.textContent =  allTotalPrice[i].textContent + "원 + " +TotalPrices.textContent;
     sumTotalPrice.textContent = +allTotalPrice[i].textContent +  +sumTotalPrice.textContent;
 }
 TotalPrices.textContent = TotalPrices.textContent  + "="
-sumTotalPrice.textContent  = sumTotalPrice.textContent  + "원"
+sumTotalPrice.textContent  = sumTotalPrice.textContent  + "원 "
 
 
 
@@ -35,14 +35,14 @@ function add(allTotalPrice){
     let pricetext ="";
     
     for(const pricestext of allTotalPrice){
-        pricetext = pricestext.textContent +  "원" +pricetext
+        pricetext = pricestext.textContent +  "원 + " +pricetext
     }
 
     for(const prices of allTotalPrice){
        price = +prices.textContent + +price
     }
     TotalPrices.textContent = pricetext + "="
-    sumTotalPrice.textContent = price + "원"
+    sumTotalPrice.textContent = price + "원 "
 }
 
 // 각각 총값 function
@@ -59,8 +59,6 @@ for(const quantity of allQuantity){
     quantity.addEventListener("change",change)
 }
 
-
-// ajax로 넘기기 하고싶다. , 물론 넘기면, 다른거 render 하던가하자
 async function submitItem(){
     let quantityData = []
     let priceData =[]
@@ -71,8 +69,7 @@ async function submitItem(){
     const userId = submit.dataset.userid;
     const csrf= submit.dataset.csrf;
 
-    // String 에서 char 제거하여 number만 남기고 저장하기
-    for(i=0; i<allQuantity.length;i++){
+    for(i=0; i<allQuantity.length;i++){                     // String 에서 char 제거하여 number만 남기고 저장하기
         quantityData.push(allQuantity[i].value)
         quantityData[i].replace(/\D/g,"")
         priceData.push(allPrice[i].textContent)
@@ -80,16 +77,14 @@ async function submitItem(){
         nameData.push(allName[i].textContent)
     }
 
-    // 넘길데이터 선정
-    let data = {
+    let data = {                                            // 넘길데이터 선정
         productNames : nameData,
         productPrices : priceData,
         productQuantities : quantityData,
         productTotalPrice : totalPrice
     }
     
-    // 값 넘기기
-    const response = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
+    const response = await fetch(`/cart/${userId}?_csrf=${csrf}`,{  // 값 넘기기
         method:"post",
         body : JSON.stringify(data),
         headers: {
@@ -97,8 +92,15 @@ async function submitItem(){
         }
     })
 
+    const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
+        method:"delete"
+    })
+
     if(!response.ok){
         alert("xxxx")
+    }
+    if(!responseDelete.ok){
+        alert("order is not succeeded")
     }
 
 }   

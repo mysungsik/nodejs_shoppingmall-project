@@ -396,9 +396,15 @@
 
     cart post - 주문자 id와 동일한 db들을 전부뽑아 li로 만들어서 넘김
 
--   
+= <현재 미구축사항>
+    [order 넣는 순간, CART에 담겨진 DB 및, LI 삭제하기 => ORDER로 넘어갈거니까]     /작업완료
+    [카트 안에서, 물건 제거하기]
+    [카트 컨트롤러 안에 db접근애들 MODEL로 옮기기( + ORDER model 따로 만들어야함)]
+
 
 38. 주문하게하기
+    사용자 주소 받아와서, 싹 들어가게 해놓고 바뀌게도 가능하게하기
+
 
 
 [새로운 형태의 코딩 - 새로 안 것]
@@ -524,10 +530,16 @@
         grid-auto-flow: column;
     }
 
-17. 자바스크립트 string에서 숫자 추출하기
+17. 자바스크립트 string에서 숫자 추출하기( char 제거) , char 추출하기(숫자제거) 
     let ms = "asdasda34534sd345345"
-    ms = ms.replace(/\D/g,"")
+-   ms = ms.replace(/\D/g,"")               [ / : 조건시작 ], [\D : 숫자가 아닌것들(not Digital)], [g : 매치되는것들 전부(global))] , 들을 " " empty로
     console.log(ms)
+    
+
+
+    let js = "asdasda34534sd345345"
+-   js = js.replace(/[^0-9]/g, "''");       [ / : 조건시작 ], [[^0-9] : 모든 숫자들], [g : 매치되는것들 전부(global))] , 들을 " " empty로
+    console.log(js)
 
 
 [추가연습]

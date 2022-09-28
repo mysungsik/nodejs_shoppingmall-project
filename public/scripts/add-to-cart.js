@@ -1,8 +1,10 @@
 const addToCartBtn = document.getElementById("add-btn");
 const productName = document.getElementById("product-name");
 const productPrice = document.getElementById("product-price");
+const productImg = document.getElementById("product-image")
 const prodcutId = addToCartBtn.dataset.productid;
 const productURL = `/product/detail/${prodcutId}`
+
 
 async function addToCart(){
     const userIdData = addToCartBtn.dataset.userid
@@ -12,10 +14,10 @@ async function addToCart(){
         productId :prodcutId,
         productName:productName.textContent,
         productPrice:productPrice.textContent,
+        productImg:productImg.src,
         productURL: productURL
     }
-    console.log(data)
-    console.log(userIdData)
+
 
     const response = await fetch(`/product/detail/${userIdData}?_csrf=${csrf}`,{
         method: "post",
@@ -29,6 +31,7 @@ async function addToCart(){
         alert("you have to login First!")
         return
     }
+    alert("Add to Cart Success!")
 }
 
 addToCartBtn.addEventListener("click",addToCart)
