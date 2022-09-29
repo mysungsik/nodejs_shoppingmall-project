@@ -4,6 +4,9 @@ const productPrice = document.getElementById("product-price");
 const productImg = document.getElementById("product-image")
 const prodcutId = addToCartBtn.dataset.productid;
 const productURL = `/product/detail/${prodcutId}`
+const headerCartQuantity = document.getElementById("cart-quantity");
+
+
 
 
 async function addToCart(){
@@ -32,6 +35,12 @@ async function addToCart(){
         return
     }
     alert("Add to Cart Success!")
+
+    const responseQunatity = await fetch("/productQuantity")
+    const cartQunatity = await responseQunatity.json()
+
+    headerCartQuantity.textContent = cartQunatity
+
 }
 
 addToCartBtn.addEventListener("click",addToCart)

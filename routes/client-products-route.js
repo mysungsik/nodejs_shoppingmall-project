@@ -11,8 +11,9 @@ route.get("/", clientProductsController.getAllProducts )
 
 route.get("/product/detail/:id", clientProductsController.getProductDetail)
 
-
 route.post("/product/detail/:userid", clientProductsController.saveToCart)
+
+route.get("/productQuantity", clientProductsController.productQuantity)
 
 route.get("/cart", function(req,res){
     res.render("error/have-to-login")

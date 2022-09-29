@@ -10,6 +10,7 @@ const addCsrfToken = require("./middleware/csrfToken")
 const errorHandler = require("./middleware/errorHandler")
 const userAuth = require("./middleware/userAuth")
 const authCheck = require("./middleware/userAuthCheck")
+const totalQuantity = require("./middleware/totalQuantity")
 
 const authRoute = require("./routes/auth-route")
 const clientProductRoute = require("./routes/client-products-route")
@@ -29,12 +30,15 @@ app.use("/products/assets",express.static("src"))
 
 app.use(session(sessionConfig.sessionBuild(Sessionstore)))
 app.use(express.urlencoded({extended:false}))
-app.use(express.json())
+app.use(express.json())     // ajax에서 보내는 json를 서버에서 받기 위한! 미들웨어! 
+
+
 
 app.use(csruf())
 app.use(addCsrfToken)
 
 app.use(userAuth)
+app.use(totalQuantity)
 
 
 app.use(authRoute)

@@ -14,10 +14,7 @@ let price = 0;
 let pricetext ="";
 
 
-console.log(allQuantity[0].value* allPrice[0].textContent)
-
 // 초기값
-
 
 for(i=0;i<allName.length;i++){
     allTotalPrice[i].textContent =  allQuantity[i].value * allPrice[i].textContent;
@@ -50,7 +47,7 @@ function change(){
     for(i=0; i<allTotalPrice.length; i++){
         data[i] = allPrice[i].textContent*allQuantity[i].value;
         allTotalPrice[i].textContent = data[i]
-    }
+}
     add(allTotalPrice)
 }
 

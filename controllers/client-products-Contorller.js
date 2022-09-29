@@ -87,6 +87,11 @@ async function deleteCartlistToOrder(req,res){
     res.json({message:"order complete, delete your cart"})
 }
 
+async function productQuantity(req,res){
+    const quantity = res.locals.totalQuantity
+
+    res.json(quantity)
+}
 
 function getOrder(req,res){
     res.render("customer/auth/order")
@@ -101,4 +106,5 @@ module.exports = {
     getOrder:getOrder,
     deleteProductOne:deleteProductOne,
     cartToOrderToSave:cartToOrderToSave,
-    deleteCartlistToOrder:deleteCartlistToOrder}
+    deleteCartlistToOrder:deleteCartlistToOrder,
+    productQuantity:productQuantity}
