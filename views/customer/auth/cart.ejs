@@ -9,28 +9,35 @@
     <h1> CART </h1>
     <section id="header-parts">
         <ul id="main-grid">
-            <li>
+            <li id="grid-header">
                 <p>name</p>
                 <p>price(&#8361;)</p>
                 <p>quantity</p>
                 <p>totalPirce(&#8361;)</p>
                 <p>edit</p>
             </li>
-            <% for(const product of allProductsInCart){%>
-                <form action="/cart/<%=product.prodcutId%>/productDelete" method="get">
-                    <li>
-                        <div id="img-and-name">
-                            <img src="<%= product.productImg%>">
-                            <a class="name" href="<%= product.productUrl%>"> <%= product.productName %> </a>
-                            <span class="product-id" hidden> <%= product.prodcutId%> </span>
-                        </div>
-                        <p class="price"> <%= product.productPrice%></p>
-                        <input type="number" min="1" max="1000" class="quantity" value="1">
-                        <p class="totalPrice"></p>
-                        <button class="btn delete-btn"> DELETE</button>
-                    </li>
-                </form>
-            <% } %>
+            <%if(!allProductsInCart ||allProductsInCart.length==0){%>
+                <h1> you have no items in cart.</h1>
+                <p> please, take some items to buying </p>
+
+                <%} else{%>
+
+                    <% for(const product of allProductsInCart){%>
+                        <form action="/cart/<%=product.prodcutId%>/productDelete" method="get">
+                            <li>
+                                <div id="img-and-name">
+                                    <img class="img" src="<%= product.productImg%>">
+                                    <a class="name" href="<%= product.productUrl%>"> <%= product.productName %> </a>
+                                    <span class="product-id" hidden> <%= product.prodcutId%> </span>
+                                </div>
+                                <p class="price"> <%= product.productPrice%></p>
+                                <input type="number" min="1" max="1000" class="quantity" value="1">
+                                <p class="totalPrice"></p>
+                                <button class="btn delete-btn"> DELETE</button>
+                            </li>
+                        </form>
+                    <% } %>
+                <%}%>
             <div id="total-price-section">
                 <h3>all total price</h3>
                 <p class="calPrice" id="TotalPrices"></p>

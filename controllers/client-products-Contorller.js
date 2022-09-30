@@ -1,8 +1,5 @@
 const Product = require("../models/product-model")
 const Cart = require("../models/cart-model")
-const db = require("../database/database")
-const mongodb = require("mongodb")
-const ObjectId = mongodb.ObjectId
 
 // refacoring 하는것이 더 복잡해서 일단 두었음. (코드 줄이 짧아서)
 
@@ -47,6 +44,7 @@ async function saveToCart(req,res,next){
         return
     }
     const userid = req.params.userid;
+
     const cart = new Cart(userid,
         req.body.productId,
         req.body.productName,
@@ -87,17 +85,17 @@ async function cartToOrderToSave(req,res){
     let bd = req.body;
 
     await new Cart(pageid, 
-        bd.productNames,
         bd.productIds,
-        bd.productPrices, null,null,
+        bd.productNames,
+        bd.productPrices,
+        bd.productUrl,
+        bd.productImgUrl,
         bd.productQuantities,
         bd.productTotalPrice
     ).fromCartToOrder()
 
     res.redirect(`/order/${pageid}`)
 }
-
-
 
 
 module.exports = {

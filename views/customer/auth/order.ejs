@@ -1,63 +1,65 @@
 <%- include("../../includes/head", {pageTitle : "Product Detail"})%>
 <link rel="stylesheet" href="/style/client-cart.css">
 <link rel="stylesheet" href="/style/client-order.css">
+<script src="/scripts/pay-to-order.js" defer> </script>
 </head>
 
 <body>
 
     <%- include("../../includes/header")%>
     <h1> PAY TO ORDER </h1>
-    <section id="header-parts">
-        <ul id="main-grid">
-            <li>
-                <p>name</p>
-                <p>price(&#8361;)</p>
-                <p>quantity</p>
-                <p>totalPirce(&#8361;)</p>
-                <p>edit</p>
-            </li>
-            <!-- for(const product of allProductsInCart){%> -->
+    <form action="/order/<%=locals.uid%>" method="post">
+        <input type="hidden" name="_csrf" value="<%= locals.csrfToken%>">
+        <section id="header-parts">
+            <ul id="main-grid">
                 <li>
-                    <div id="img-and-name">
-                        <img src=" ... 프로덕트이미지의 URL주소 ">
-                        <a class="name" href=" ... 프로덕트의 URL주소 "> 상품이름, URL은 앵커태그(productinfo collection에서  빼오면됌) </a>
-                    </div>
-                    <p class="price"> 각각가격</p>
-                    <p class="quantity"> 각각개수</p>
-                    <p class="totalPrice">최종가격</p>
-                    <button class="btn delete-btn"> DELETE</button>
+                    <p>name</p>
+                    <p>price(&#8361;)</p>
+                    <p>quantity</p>
+                    <p>totalPirce(&#8361;)</p>
+                    <p> ETC </p>
                 </li>
-            <!--  } %> -->
-            <div id="total-price-section">
-                <h3>all total price</h3>
-                <p class="calPrice" id="TotalPrices"></p>
-                <h2 class="calPrice" id="sumTotalPrice"></h2>
+                    <%for(i=0; i<orderData.orderedProduct.productsId.length; i++ ){%>
+                        <li>
+                            <div id="img-and-name">
+                                <img src=" <%=orderData.orderedProduct.productImgUrl[i] %> ">
+                                <a class="name" href="<%=orderData.orderedProduct.productUrl[i] %> "> <%=orderData.orderedProduct.productsName[i] %> </a>
+                            </div>
+                            <p class="price"> <%=orderData.orderedProduct.productsPrice[i] %></p>
+                            <p class="quantity"> <%=orderData.orderedProduct.productsQuantity[i] %></p>
+                            <p class="totalPrice"><%= orderData.orderedProduct.orderTotalPrice %> </p>
+                            <p> 기타사항 </p>
+                        </li>
+                    <% } %>
+                <div id="total-price-section">
+                    <h3>최종 가격</h3>
+                    <h2 class="calPrice" id="sumTotalPrice"></h2><span id="won">원</span>
+                </div>
+            </ul>
+        </section>
+        <section id="user-info-section">
+            <h2> 주문자 정보 </h2>
+            <label for="email"> email</label>
+            <input type="email" id="email" name="email" value="<%= orderData.userData.email %>" required>
+            <label for="name"> name</label>
+            <input type="text" id="username" name="username" value=" <%= orderData.userData.name %>" required>
+            <label for="street"> street</label>
+            <input type="text" id="street" name="street" value="<%= orderData.userData.address.street %>" required>
+            <label for="postal"> postal code</label>
+            <input type="text" id="postal" name="postal" value="<%= orderData.userData.address.postal %>" min="5" max="5" required>
+            <label for="country"> country</label>
+            <input type="text" id="country" name="country" value="<%= orderData.userData.address.country %>" required>
+        </section>
+        <section id="OK-section">
+            <div id="checkbox-div">
+                <label class="checkbox" id="terms"> 결제에 동의합니다. </label>
+                <input class="checkbox" type="checkbox" id="terms" value="true" required>
             </div>
-        </ul>
-    </section>
-    <section id="user-info-section">
-        <label for="email"> email</label>
-        <input type="email" id="email" name="email" value="유저인포 이메일"required>
-        <label for="name"> name</label>
-        <input type="text" id="username" name="username" value=" 유저인포 네임" required>
-        <label for="street"> street</label>
-        <input type="text" id="street" name="street" value="유저인포 거리" required>
-        <label for="postal"> postal code</label>
-        <input type="text" id="postal" name="postal" value="유저인포 우편번호" min="5" max="5" required>
-        <label for="country"> country</label>
-        <input type="text" id="country" name="country" value=" 유저인포 나라" required>
-    </section>
-    <section id="OK-section">
-        <div id="checkbox-div">
-            <label class="checkbox" id="terms"> 결제에 동의합니다. </label>
-            <input class="checkbox" type="checkbox" id="terms" value="true">
-         
-        </div>
-        
-        <div id="btn-control">
-            <button class="btn"> PAY AND ORDER </button>
-        </div>
-    </section>
+            <div id="btn-control">
+                <button class="btn payBtn"> PAY </button>
+            </div>
+        </section>
+    </form>
     
     <%- include("../../includes/footer")%>
 </body>

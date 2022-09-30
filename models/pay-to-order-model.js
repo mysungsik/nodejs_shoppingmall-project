@@ -1,45 +1,51 @@
+const mongoDb = require("mongodb")
+
+const db = require("../database/database")
+
+const UserModel = require("../models/user-model")
+const CartModel = require("../models/cart-model")
+
+const ObjectId = mongoDb.ObjectId
+
+
 class PayOrder{
 
     // status : panding(대기중) , payment completed(결제완료), send(발송), arrival(도착) 
 
-    constructor(orderedProduct, userData, status = "pending"){        
-        this.orderedProduct = orderedProduct;   // 객체 + 배열의 느낌
-        this.userData = userData;               // 객체 + 배열의 느낌
-        this.status =status;
-        if(this.orderedProduct){
-            this.date = new Date.now().toLocaleDateString("ko-kr")  // 이러면 자동생성이 되려나?
-        }
+    constructor(orderedProduct, userData, status = "pending", date){        
+        this.orderedProduct = orderedProduct;
+        this.userData = userData;
+        this.status = status;
+        this.date = new Date(date).toLocaleDateString("ko-kr") 
+        
     }
 
+    static async getOrder(userid){
+        
+        // userid는 ObjectId가 아니라 string 형태일것
+        const userData = await UserModel.getUserInfoWithoutPassword(userid)
+        const orderData = await CartModel.orderData(userid)
+
+        const payData = new PayOrder(orderData,userData)
+        return payData
+    }
+
+    async saveInAdminOrder(){
+
+        // getOrder에서 썻던거 xx 
+        // 왜냐면, 주문자 주소, 이름이 변경 될 수 있기 때문에
+        // ==> product 정보는 카트(지만 order collection)에서 받아오돼, 
+        //      userdata 는 주문자 정보기 때문에 req.body 로 받아와야하고,
+        //      status 정보는 기본으로 pending이고,
+        //      admin order 페이지 가서 바꿀수 있도록 하자 (DB UPDATE)
+        await 
+
+        db.getDb().collection("adminOrder").insertOne({
+            
+
+        })
+    }
     
 }
 
-/* 
-필요한것
-
- 결제에 필요한 모든것
-
-    orderedProduct  => 카트에서 받아온정보들
-                        주문번호 : "..."
-                        물품 id들 : "..."
-                        물품 이름들 productsName : [... , ... , ...]
-                        물품 가격들 productsPrice : [... , ... , ...]
-                        물품 갯수들 productsQuantity : [... , ... , ...]
-                        물품 총 가격 orderTotalPrice : [... , ... , ...]
-
-                            [컨트롤러에서 역시나 가져오면되겠지  ]
-
-    userData        => 주문자정보들 
-                        _id: ObjectId("632a7a5d9c9451cf50d347ac"),
-                        email: 'test1@test.com',
-                        password: '$2b$12$LhIKgybdYusBoAhEzeK5nuSMSwUjJWq8vcZeOmBTH9lW6.SsfRO1K',
-                        name: 'CMS',
-                        address: { street: 'pangyo', postal: '12345', country: '123123' }
-
-                            [   컨트롤러에서  findOne({id:...} {password : 0})   ] 하면 password만 제외한 체로
-
-                        
-    status          => 상태코드
-    date            => 자동?
-*/ 
-
+module.exports = PayOrder

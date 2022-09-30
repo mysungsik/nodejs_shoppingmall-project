@@ -49,10 +49,15 @@ class Cart {
             productsId : this.productId,
             productsName : this.productName,
             productsPrice : this.productPrice,
+            productUrl: this.productUrl,
+            productImgUrl:this.productImg,
             productsQuantity :  this.productsQuantity,
             orderTotalPrice : this.orderTotalPrice
         })
-
+    }
+    static async orderData(userid){
+        const orderData = await db.getDb().collection("order").findOne({userId:userid})
+        return orderData
     }
 }
 

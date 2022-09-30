@@ -1,5 +1,6 @@
 const db= require("../database/database")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { ObjectId } = require("mongodb");
 
 class User {
     constructor(email,password,name,street,postal,country){
@@ -39,6 +40,10 @@ class User {
     async hashedPassword(existUserPassword){
         return bcrypt.compare(this.password,existUserPassword)
        
+    }
+    static async getUserInfoWithoutPassword(userid){
+        const userInfo = db.getDb().collection("userInfo").findOne({_id: ObjectId(userid)},{ projection:{password:0} })
+        return userInfo
     }
 }
 

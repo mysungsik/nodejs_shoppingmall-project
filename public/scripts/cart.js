@@ -1,9 +1,13 @@
+const gridHeader = document.getElementById("grid-header")
+
 const allPrice = document.querySelectorAll(".price")
 const allQuantity = document.querySelectorAll(".quantity")
 const allTotalPrice = document.querySelectorAll(".totalPrice")
 const allName = document.querySelectorAll(".name")
 const allProductId = document.querySelectorAll(".product-id")
+const allProductImg = document.querySelectorAll(".img")
 
+const totalPriceSection = document.getElementById("total-price-section")
 const TotalPrices = document.getElementById("TotalPrices")
 let sumTotalPrice = document.getElementById("sumTotalPrice")
 
@@ -17,13 +21,27 @@ let pricetext ="";
 // [수량 및 가격 값을 바꾸기 위한 FUNCTION] =============================================================================================================
 
 // 초기값
-for(i=0;i<allName.length;i++){
-    allTotalPrice[i].textContent =  allQuantity[i].value * allPrice[i].textContent;
-    TotalPrices.textContent =  allTotalPrice[i].textContent + "원 + " +TotalPrices.textContent;
-    sumTotalPrice.textContent = +allTotalPrice[i].textContent +  +sumTotalPrice.textContent;
+if(allName.length==1){
+    allTotalPrice[0].textContent =  allQuantity[0].value * allPrice[0].textContent;
+    sumTotalPrice.textContent = allTotalPrice[0].textContent + "원"
+}else{
+    for(i=0;i<allName.length;i++){
+        allTotalPrice[i].textContent =  allQuantity[i].value * allPrice[i].textContent;
+        TotalPrices.textContent =  allTotalPrice[i].textContent + "원 + " +TotalPrices.textContent;
+        sumTotalPrice.textContent = +allTotalPrice[i].textContent +  +sumTotalPrice.textContent;
+    }
+    sumTotalPrice.textContent = "="+ sumTotalPrice.textContent
 }
-TotalPrices.textContent = TotalPrices.textContent  + "="
-sumTotalPrice.textContent  = sumTotalPrice.textContent  + "원 "
+
+if(!allName[0]){
+    totalPriceSection.classList.add("disappear")
+    submit.classList.add("disappear")
+    gridHeader.classList.add("disappear")
+}else{
+    totalPriceSection.classList.remove("disappear")
+    submit.classList.remove("disappear")
+    gridHeader.classList.remove("disappear")
+}
 
 // 총총값 function
 function add(allTotalPrice){
@@ -64,6 +82,8 @@ async function submitItem(){
     let priceData =[]
     let productIdData = []
     let nameData = []
+    let productUrlData = [];
+    let productImgUrlData = []
     let totalPrice = sumTotalPrice.textContent
     totalPrice = totalPrice.replace(/\D/g,"")
     
@@ -78,8 +98,9 @@ async function submitItem(){
         priceData[i].replace(/\D/g,"")
 
         nameData.push(allName[i].textContent)
-
         productIdData.push(allProductId[i].textContent)
+        productUrlData.push(allName[i].href)
+        productImgUrlData.push(allProductImg[i].src)
         
     }
 
@@ -88,7 +109,9 @@ async function submitItem(){
         productIds : productIdData,
         productPrices : priceData,
         productQuantities : quantityData,
-        productTotalPrice : totalPrice
+        productTotalPrice : totalPrice,
+        productUrl: productUrlData,
+        productImgUrl : productImgUrlData
     }
     
     const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
@@ -114,7 +137,6 @@ async function submitItem(){
     if(!response.ok){
         alert("xxxx")
     }
-
 
 }   
 
