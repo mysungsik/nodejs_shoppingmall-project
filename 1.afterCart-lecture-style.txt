@@ -30,9 +30,10 @@
                 const item = this.items[i]  
                 //중복항목에대하여                           
                 if(item.product.id === product.id){                      ==>> 이미저장된 아이디[item.product.id]와, 파라미터에 의해 새로입력된 아이디[product.id] 같다면
-                    cartItem.quantity = cartItem.quantity + 1;                                 ==>> 카트아이템의 quantity가 +1 된다.
-                    cartItem.totalPrice = cartItem.totalPrice + product.price;
+                    cartItem.quantity = item.quantity + 1;                                 ==>> 카트아이템의 quantity가 +1 된다.
+                    cartItem.totalPrice = item.totalPrice + product.price;
                     this.items[i] = cartItem;                               ==>> 중복된 항목을 재정리해서 업데이트하는느낌
+                    
                     this.totalQuantity++
                     this.totalPrice += product.price;
                     return                                                  ==>> 추가된거면, 이미 있던걸 또 추가하면 안되니까, return 해서 다음걸 막음

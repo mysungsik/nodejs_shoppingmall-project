@@ -1,7 +1,10 @@
 const Product = require("../models/product-model")
 const Cart = require("../models/cart-model")
 const db = require("../database/database")
+const mongodb = require("mongodb")
+const ObjectId = mongodb.ObjectId
 
+// refacoring 하는것이 더 복잡해서 일단 두었음. (코드 줄이 짧아서)
 
 async function getAllProducts(req,res,next){
     try{
@@ -57,32 +60,18 @@ async function saveToCart(req,res,next){
 }
 
 
-async function cartToOrderToSave(req,res){
-    const pageid = req.params.userid
-
-    await db.getDb().collection("order").insertOne({
-        userId : pageid,
-        productsName :req.body.productNames,
-        productsPrice :req.body.productPrices,
-        productsQuantity : req.body.productQuantities,
-        orderTotalPrice : req.body.productTotalPrice
-    })
-
-    res.json({message:"l-ol"})
-}
 
 async function deleteProductOne(req,res){
-    const productname = req.params.productname
+    const productid = req.params.productid
 
-    await db.getDb().collection("cart").deleteOne({productName:productname, userId:res.locals.uid})
-
+    await new Cart(res.locals.uid,productid).deleteProductOne()
+    
     res.redirect(`/cart/${res.locals.uid}`)
 }
 
 async function deleteCartlistToOrder(req,res){
-    const userid = req.params.userid
 
-    await db.getDb().collection("cart").deleteMany({userId:userid})
+    await new Cart(res.locals.uid).makeEmptyCart()
 
     res.json({message:"order complete, delete your cart"})
 }
@@ -93,9 +82,22 @@ async function productQuantity(req,res){
     res.json(quantity)
 }
 
-function getOrder(req,res){
-    res.render("customer/auth/order")
+async function cartToOrderToSave(req,res){
+    const pageid = req.params.userid
+    let bd = req.body;
+
+    await new Cart(pageid, 
+        bd.productNames,
+        bd.productIds,
+        bd.productPrices, null,null,
+        bd.productQuantities,
+        bd.productTotalPrice
+    ).fromCartToOrder()
+
+    res.redirect(`/order/${pageid}`)
 }
+
+
 
 
 module.exports = {
@@ -103,7 +105,6 @@ module.exports = {
     ,getProductDetail:getProductDetail,
     getCart:getCart,
     saveToCart:saveToCart,
-    getOrder:getOrder,
     deleteProductOne:deleteProductOne,
     cartToOrderToSave:cartToOrderToSave,
     deleteCartlistToOrder:deleteCartlistToOrder,

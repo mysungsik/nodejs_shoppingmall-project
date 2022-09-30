@@ -2,6 +2,7 @@ const allPrice = document.querySelectorAll(".price")
 const allQuantity = document.querySelectorAll(".quantity")
 const allTotalPrice = document.querySelectorAll(".totalPrice")
 const allName = document.querySelectorAll(".name")
+const allProductId = document.querySelectorAll(".product-id")
 
 const TotalPrices = document.getElementById("TotalPrices")
 let sumTotalPrice = document.getElementById("sumTotalPrice")
@@ -13,9 +14,9 @@ const data =[]
 let price = 0;
 let pricetext ="";
 
+// [수량 및 가격 값을 바꾸기 위한 FUNCTION] =============================================================================================================
 
 // 초기값
-
 for(i=0;i<allName.length;i++){
     allTotalPrice[i].textContent =  allQuantity[i].value * allPrice[i].textContent;
     TotalPrices.textContent =  allTotalPrice[i].textContent + "원 + " +TotalPrices.textContent;
@@ -23,8 +24,6 @@ for(i=0;i<allName.length;i++){
 }
 TotalPrices.textContent = TotalPrices.textContent  + "="
 sumTotalPrice.textContent  = sumTotalPrice.textContent  + "원 "
-
-
 
 // 총총값 function
 function add(allTotalPrice){
@@ -56,9 +55,14 @@ for(const quantity of allQuantity){
     quantity.addEventListener("change",change)
 }
 
+
+
+// [제출하기 위한 FUNCTION] =============================================================================================================
+
 async function submitItem(){
     let quantityData = []
     let priceData =[]
+    let productIdData = []
     let nameData = []
     let totalPrice = sumTotalPrice.textContent
     totalPrice = totalPrice.replace(/\D/g,"")
@@ -69,18 +73,32 @@ async function submitItem(){
     for(i=0; i<allQuantity.length;i++){                     // String 에서 char 제거하여 number만 남기고 저장하기
         quantityData.push(allQuantity[i].value)
         quantityData[i].replace(/\D/g,"")
+
         priceData.push(allPrice[i].textContent)
         priceData[i].replace(/\D/g,"")
+
         nameData.push(allName[i].textContent)
+
+        productIdData.push(allProductId[i].textContent)
+        
     }
 
     let data = {                                            // 넘길데이터 선정
         productNames : nameData,
+        productIds : productIdData,
         productPrices : priceData,
         productQuantities : quantityData,
         productTotalPrice : totalPrice
     }
     
+    const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
+        method:"delete",
+    })
+
+    if(!responseDelete.ok){
+        alert("order is not succeeded")
+    }
+
     const response = await fetch(`/cart/${userId}?_csrf=${csrf}`,{  // 값 넘기기
         method:"post",
         body : JSON.stringify(data),
@@ -89,16 +107,14 @@ async function submitItem(){
         }
     })
 
-    const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
-        method:"delete"
-    })
+    if(response.redirected) {
+        window.location.href = `/order/${userId}`
+    }
 
     if(!response.ok){
         alert("xxxx")
     }
-    if(!responseDelete.ok){
-        alert("order is not succeeded")
-    }
+
 
 }   
 

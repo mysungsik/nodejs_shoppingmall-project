@@ -17,11 +17,12 @@
                 <p>edit</p>
             </li>
             <% for(const product of allProductsInCart){%>
-                <form action="/cart/<%=product.productName%>/productDelete" method="get">
-                <li>
+                <form action="/cart/<%=product.prodcutId%>/productDelete" method="get">
+                    <li>
                         <div id="img-and-name">
                             <img src="<%= product.productImg%>">
                             <a class="name" href="<%= product.productUrl%>"> <%= product.productName %> </a>
+                            <span class="product-id" hidden> <%= product.prodcutId%> </span>
                         </div>
                         <p class="price"> <%= product.productPrice%></p>
                         <input type="number" min="1" max="1000" class="quantity" value="1">
@@ -37,7 +38,7 @@
             </div>
         </ul>
         <div id="btn-control">
-            <a id="submit" href="/order/<%= locals.uid%>" class="btn" data-userid="<%=locals.uid%>" data-csrf="<%=locals.csrfToken%>"> ORDER </a>
+            <button id="submit" class="btn" data-userid="<%=locals.uid%>" data-csrf="<%=locals.csrfToken%>"> ORDER </button>
         </div>
     </section>
     <%- include("../../includes/footer")%>

@@ -5,13 +5,15 @@ const mongoDb = require("mongodb")
 const ObjectId = mongoDb.ObjectId
 
 class Cart {
-    constructor(userId,productId,productName,productPrice,productUrl,productImg){
-        this.userId = userId,
-        this.productId = productId,
-        this.productName = productName,
-        this.productPrice = productPrice,
+    constructor(userId,productId,productName,productPrice,productUrl,productImg,productsQuantity,orderTotalPrice){
+        this.userId = userId
+        this.productId = productId
+        this.productName = productName
+        this.productPrice = productPrice
         this.productUrl = productUrl
         this.productImg = productImg
+        this.productsQuantity = productsQuantity
+        this.orderTotalPrice = orderTotalPrice
     }
 
     async save(){
@@ -32,6 +34,25 @@ class Cart {
 
     async findOneProduct(){
         await db.getDb().collection("cart").findOne({})
+    }
+    
+    async deleteProductOne(){
+        await db.getDb().collection("cart").deleteOne({userId:this.userId, prodcutId:this.productId })
+    }
+
+    async makeEmptyCart(){
+        await db.getDb().collection("cart").deleteMany({userId:this.userId})
+    }
+    async fromCartToOrder(){
+        await db.getDb().collection("order").insertOne({
+            userId : this.userId,
+            productsId : this.productId,
+            productsName : this.productName,
+            productsPrice : this.productPrice,
+            productsQuantity :  this.productsQuantity,
+            orderTotalPrice : this.orderTotalPrice
+        })
+
     }
 }
 

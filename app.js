@@ -15,6 +15,7 @@ const totalQuantity = require("./middleware/totalQuantity")
 const authRoute = require("./routes/auth-route")
 const clientProductRoute = require("./routes/client-products-route")
 const productRoute = require("./routes/product-route")
+const payToOrderRoute = require("./routes/pay-to-order-route")
 
 const db = require("./database/database")
 
@@ -45,6 +46,7 @@ app.use(authRoute)
 app.use(clientProductRoute)
 app.use(authCheck)
 app.use(productRoute)   // 앞에 [/admin] 필터를 붙여준다면, routes 폴더에서는 /admin/... 가 아니라 바로 /... 이 나올 수 있게 되겠지
+app.use(payToOrderRoute)
 
 
 

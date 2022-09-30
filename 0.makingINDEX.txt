@@ -422,7 +422,7 @@
 1. [비동기식 작업에 대하여!] DB에 넣고 빼는 작업을 할때, 실수할수도 있느느데, try,catch 사용했는가?
     + try, catch 로 할때, 혹시나 변수를 내부에서만 사용가능하게 두진 않았는가?
     = 외부 변수를 let 사용하여 빼야, try 안에서만 사용가능한 지역변수화 되는것을 막을 수 있다.
-    
+
 2. [동기식 작업에 대하여!] if() 로, 잘 되었는지 확인 한 후에, throw() 를 하였는가?
 
 
@@ -562,7 +562,81 @@
     console.log(js)
 
 
-[추가연습]
+18. 배열에 추가,삭제 를 담당하는 array.splice(x,y,z) 에 관하여
+    array.splice(x,y,z) 
+        x: 몇번째? num
+        y: 으로부터 몇개를 삭제(num)
+        z: 하고 무엇을 추가?(value)
+
+    ms = [1,2,3,4,5]
+
+    ms.splice(1,0,4)    => 1번째로부터 아무것도 삭제하지 않고, 5를 추가
+    ms.splice(3,2)      => 3번째로부터 2개를 삭제하고
+    ms.splice(2,1,5)    => 2번째로부터 1개를 삭제하고, 5를 추가
+
+
+19. [아무것도 없는 무한증식 Form (no action,no method)]에 addEventListener를 달아, ajax 요청을 하는 것에 관하여!
+    => 브라우저의 FORM 에서는 GET, POST만 가능하니, JAVASCRIPT 로 넘겨야, PUT, PATCH 등이 가능
+
+
+-   KEYPOINT : 무한증식 [FORM 태그 자체]에 addEventLinstener 를 다는것
+-              [FORM 태그 자체]에  data-xxx="" 를 적어, script로 넘기는것
+-              [기본 FORM의 기능을] event.preventDefault() 로 막는것
+               event.target.querySelector("...") 의 사용!!!!
+
+                ==>> 무한히 증식하는 FORM 안의 각각에 대한 태그를 타겟할 수 있음
+                    FORM A의 P태그
+                    FORM B의 P태그
+                    ... 
+
+    <VIEW>
+        <form class= "..." data-xx="xxx"... >
+            <input ...>
+            <p class="pTag">  ... </p>
+            <button class="btn"> update </button>
+        </form>
+
+
+    <JS>
+        const forms = document.querySelectorAll("...")
+
+        async function function(event){
+-           event.preventDefault();
+            const xx = event.target.dataset.xx
+            const yy = event.target.firstElementChild.value
+
+            data = {
+                name:xx,
+                age:yy
+            }
+
+            cosnt response = await fetch("...",{
+                method: "PATCH",
+                body : JSON.stringify(data)
+                headers : {
+                    "Content-Type" : "appliaction/json"
+                }                     
+            })
+
+            const responseData = await response.json()
+
+-           const formElement = event.target.querySelector(".pTag")
+            formElement.textContent = "...."
+        }
+
+        for(const form of forms){
+-           form.addEventListener("submit", function)
+        }
+
+                         ==>>   try,catch 추가(let response 해서 밖으로 빼는것까지)  
+                                !response.ok 일경우 추가
+
+20. JAVASCRIPT , 소수점 고정시키는 toFixed(x)
+        toFixed(2) => 소수점 2째자리수 까지로 고정
+        
+* PATCH는 사실 POST와 똑같다.   
+
+[추가연습] =============================================================================================================
 
 1. 연습 ,댓글창의 댓글창 만들기
 
@@ -588,7 +662,7 @@
 -       타겟하여 서버로부터 요청을 주고받을 수 있다.
 -       물론 [요청 하는 주소도 동적으로 보낼 수 있다.]
 
-            const buttons = document.ySelectorAll(".상위클래스 button")
+            const buttons = document.querySelectorAll(".상위클래스 button")
 
             async function function(event){
                 const postId = event.target.dataset.postid      //만약, data-postid = "..." 
@@ -661,4 +735,9 @@
     필요 : (함수내에 저장되엇음을 어떻게 알것인가?)
         : 만약 저장되는 중이라면, 어떻게 기다릴것인가?
         : WAIT 같은게 있나? STOP? 뭘까
+
+
+3. 로그아웃 오른쪽에, user 아이디 넣고, 누르면 아래 팝업으로, [주문확인,개인정보] 나오게하기
+
+4. PAY-TO-ORDER 옆에 사이드로, 그 사용자가 했던 [주문확인] 나오게하기
         

@@ -1,8 +1,8 @@
 const express = require("express")
-
 const route = express.Router()
 
 const clientProductsController = require("../controllers/client-products-Contorller")
+
 
 route.get("/home", function(req,res){
     res.redirect("/")
@@ -21,13 +21,11 @@ route.get("/cart", function(req,res){
 
 route.get("/cart/:id", clientProductsController.getCart)
 
-route.post("/cart/:userid", clientProductsController.cartToOrderToSave )
-
-route.get("/cart/:productname/productDelete", clientProductsController.deleteProductOne )
+route.get("/cart/:productid/productDelete", clientProductsController.deleteProductOne )
 
 route.delete("/cart/:userid",clientProductsController.deleteCartlistToOrder)
 
-route.get("/order/:userid" , clientProductsController.getOrder)
+route.post("/cart/:userid", clientProductsController.cartToOrderToSave )
 
 
 
