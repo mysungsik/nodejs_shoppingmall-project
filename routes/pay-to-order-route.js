@@ -6,6 +6,6 @@ const orderController = require("../controllers/pay-to-order-Controller")
 
 route.get("/order/:userid" , orderController.getOrder)
 
-route.post("/order/:userid", )
+route.post("/order/:userid",orderController.saveInAdminOrder )
 
 module.exports = route

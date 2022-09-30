@@ -25,7 +25,7 @@
   : 기타 사항( model, 잡다 버그) 완성 //OK
 
 
-<미완성>
+<미완성 완성중>
 
 1. admin 주문 확인서 페이지 작성 [admin으로 넣어서 admin이 확인하게 하기]
   [product img, product name, price, quantity, totalprice]  + order Number! + date! + status 변경! => db로 연동하여 client 페이지에 보여주기
@@ -38,43 +38,28 @@
 
 4. order 아무것도 없으면, 아예 딴 화면처럼 표시하기 [현재 당신은 주문할것이 없습니다. or 주문내역확인시켜주기]
 
+  //OK?
+
+<해본거 추가?>
+
+1. 객체 안의 data를 삭제해보았다.
+  const data  = { id: xx, name: xx}
+  delete data.id
+
+2. form은 input 태그의 정보만 가져올 수 있다는걸 분명히 알았다.
+
+3. date를 if 조건을 사용하여 적어보았다.
+
+class PayOrder{
+  constructor(date){        
+      if(date =="now"){
+          this.date = new Date().toLocaleDateString("ko-kr") 
+      }
+  }
+  
+
+
+
 
 [작업순서]
 나는 veiw -controller -model 순이 좋다!
-
-
-PayOrder {
-    orderedProduct: {
-      _id: new ObjectId("633691065f05bb9e71289e22"),
-      userId: '632876efc145ed084ca67afc',
-      productsId: [
-        ' 632fed849ecdac2e013296d7 ',
-        ' 63310b9bd8e27b3cab12ea7b ',
-        ' 63310d87ee58a9ce3cba2cc4 '
-      ],
-      productsName: [ '  Ground ', '  sdf ', '  sky ' ],
-      productsPrice: [ '  545000', '  3443434', '  5470000' ],
-      productUrl: [
-        'http://localhost:3000/product/detail/632fed849ecdac2e013296d7',
-        'http://localhost:3000/product/detail/63310b9bd8e27b3cab12ea7b',
-        'http://localhost:3000/product/detail/63310d87ee58a9ce3cba2cc4'
-      ],
-      productImgUrl: [
-        'http://localhost:3000/products/assets/uploadedImage/bdaeb733-8005-48f4-a022-17bdfeeb3d32-IMG_5523.JPG',
-        'http://localhost:3000/products/assets/uploadedImage/cac70d95-2586-461c-8627-579b72851253-dd5cfbb6-15d5-4311-87d2-8fe6b4411b86-e5abd289-1eb3-41f7-ac5e-4704661a475e-IMG_5610.JPG',
-        'http://localhost:3000/products/assets/uploadedImage/75bda72d-c6af-4fd6-aacb-1305b0e71855-landscape_art_road_127350_1680x1050.jpg'
-      ],
-      productsQuantity: [ '1', '2', '2' ],
-      orderTotalPrice: '18371868'
-    },
-    userData: {
-      _id: new ObjectId("632876efc145ed084ca67afc"),
-      email: 'test1@test.com',
-      name: 'CMS',
-      address: { street: 'pangyo', postal: '12345', country: 'korea' }
-    },
-    status: 'pending',
-    date: 'Invalid Date'
-  }
-  
-  

@@ -1,3 +1,18 @@
+#header{
+    display: flex;
+    justify-content: space-between;
+}
+#header p{
+    display: flex;
+    align-items: flex-end;
+    margin: 0 1rem 0 0;
+    font-weight: 700;
+}
+#header span{
+    margin-left: 0.5rem;
+    font-weight: 400;
+}
+
 #user-info-section{
     text-align: center;
     margin-left: 5rem;

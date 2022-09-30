@@ -7,7 +7,6 @@ const CartModel = require("../models/cart-model")
 
 const ObjectId = mongoDb.ObjectId
 
-
 class PayOrder{
 
     // status : panding(대기중) , payment completed(결제완료), send(발송), arrival(도착) 
@@ -16,7 +15,11 @@ class PayOrder{
         this.orderedProduct = orderedProduct;
         this.userData = userData;
         this.status = status;
-        this.date = new Date(date).toLocaleDateString("ko-kr") 
+        if(date =="now"){
+            this.date = new Date().toLocaleDateString("ko-kr") 
+        }else{
+            this.date = new Date().toLocaleDateString("ko-kr") 
+        }
         
     }
 
@@ -31,21 +34,18 @@ class PayOrder{
     }
 
     async saveInAdminOrder(){
-
-        // getOrder에서 썻던거 xx 
-        // 왜냐면, 주문자 주소, 이름이 변경 될 수 있기 때문에
-        // ==> product 정보는 카트(지만 order collection)에서 받아오돼, 
-        //      userdata 는 주문자 정보기 때문에 req.body 로 받아와야하고,
-        //      status 정보는 기본으로 pending이고,
-        //      admin order 페이지 가서 바꿀수 있도록 하자 (DB UPDATE)
-        await 
-
-        db.getDb().collection("adminOrder").insertOne({
-            
-
+        
+        await db.getDb().collection("adminOrder").insertOne({
+            paidProductData : this.orderedProduct,
+            RecieverData : this.userData,
+            paidDate: this.date,
+            status:this.status
         })
     }
-    
+
+    static async makeEmptyOrder(userid){
+        await db.getDb().collection("order").deleteMany({userId:userid})
+    }
 }
 
 module.exports = PayOrder

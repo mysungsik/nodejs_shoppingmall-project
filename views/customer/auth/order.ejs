@@ -7,9 +7,12 @@
 <body>
 
     <%- include("../../includes/header")%>
-    <h1> PAY TO ORDER </h1>
-    <form action="/order/<%=locals.uid%>" method="post">
-        <input type="hidden" name="_csrf" value="<%= locals.csrfToken%>">
+    <div id="header">
+        <h1> PAY TO ORDER </h1>
+        <p> Order Number : <span><%= orderData.orderedProduct._id%></span></p>
+    </div>
+    <form action="/order/<%=locals.uid%>?_csrf=<%=locals.csrfToken %>" method="post">
+        <input type="hidden" name="orderId" value="<%= orderData.orderedProduct._id%>">
         <section id="header-parts">
             <ul id="main-grid">
                 <li>
@@ -25,7 +28,7 @@
                                 <img src=" <%=orderData.orderedProduct.productImgUrl[i] %> ">
                                 <a class="name" href="<%=orderData.orderedProduct.productUrl[i] %> "> <%=orderData.orderedProduct.productsName[i] %> </a>
                             </div>
-                            <p class="price"> <%=orderData.orderedProduct.productsPrice[i] %></p>
+                            <p class="price" name="price"> <%=orderData.orderedProduct.productsPrice[i] %></p>
                             <p class="quantity"> <%=orderData.orderedProduct.productsQuantity[i] %></p>
                             <p class="totalPrice"><%= orderData.orderedProduct.orderTotalPrice %> </p>
                             <p> 기타사항 </p>
@@ -38,7 +41,7 @@
             </ul>
         </section>
         <section id="user-info-section">
-            <h2> 주문자 정보 </h2>
+            <h2> 수취인 정보 </h2>
             <label for="email"> email</label>
             <input type="email" id="email" name="email" value="<%= orderData.userData.email %>" required>
             <label for="name"> name</label>
