@@ -8,6 +8,7 @@ async function getOrder(req,res){
     res.render("customer/auth/order" ,{orderData:orderData})
 }
 
+
 async function saveInAdminOrder(req,res){
     // orderData는 그대로니까, 주문번호만 추가해서 넘기고
     // userData는 주문자 데이터니까 바뀔수 있으니 req.body로
@@ -36,11 +37,37 @@ async function saveInAdminOrder(req,res){
     await pay.saveInAdminOrder()
 
     await PayOrder.makeEmptyOrder(res.locals.uid)
-
+    await CartModel.makeEmptyCart(res.locals.uid)
+    
     res.redirect(`/`)  
 }
 
+
+async function getAllOrderForClient(req,res){
+
+    const basicOrderData = await PayOrder.getListOfAllClientOrderForClient(res.locals.uid)
+    console.log(basicOrderData)
+
+    res.render("customer/auth/all-your-order" ,{basicOrderData:basicOrderData})
+}
+
+async function getOrderDetail(req,res){
+    const orderedId = req.params.orderid
+    console.log(orderedId)
+    const data = new PayOrder(orderedId)
+    console.log(data)
+
+    const detailProductData = await data.getOrderDetail()
+
+    console.log(detailProductData)
+    
+    res.render("customer/auth/order-detail",{detailProductData:detailProductData} )
+}
+
+
 module.exports ={
     getOrder:getOrder,
-    saveInAdminOrder:saveInAdminOrder
+    saveInAdminOrder:saveInAdminOrder,
+    getAllOrderForClient:getAllOrderForClient,
+    getOrderDetail:getOrderDetail
 }

@@ -1,0 +1,42 @@
+<%- include("../includes/head", {pageTitle : "Manage all orders"})%>
+<link rel="stylesheet" href="/style/admin-Allproducts.css">
+<script src="/scripts/manage-order.js" defer></script>
+</head>
+
+<body>
+
+    <%- include("../includes/header")%>
+    <section id="header-parts">
+        <h1> MANAGE ALL ORDER </h1>
+        <section id="main-parts">
+           
+            <ul id="all-order-list">
+                <% for(const orderdata of allOrderDatas){%>
+                    <li>
+                        <p> 주문자 id : <%= orderdata.paidProductData.userId%></p>
+                        <p> 수취인 이름 :  <%= orderdata.RecieverData.name%> </p>
+                        <p> 수취인 email : <%= orderdata.RecieverData.email%> <a href="mailto:<%=orderdata.RecieverData.email%>">메일보내기 </a>
+                        <p> 주문번호 : <%= orderdata.paidProductData.orderId%> </p>
+                        <p> 상품이름 : <%= orderdata.paidProductData.productsName%></p>
+                        <p> 결제 날짜 : <%= orderdata.paidDate %> </p>
+                        <p> 상태 : <%= orderdata.status %>  <button> 변경</button>변경가능하도록 [바로여기서]</p>
+                        <div class="change-status-div">
+                            <form action="/admin/order?_csrf=<%= locals.csrfToken%>" method="post">
+                                <input type="text" class="change-status-text" readonly>  <button class ="change-status-button" type="button" data-orderedid="<%=orderdata.paidProductData.orderId%>" data-csrf ="<%=locals.csrfToken%>"> OK </button>
+                                <div>
+                                    <button type="button" class="change-statusText-button"> pending </button>
+                                    <button type="button" class="change-statusText-button"> shipping </button>
+                                    <button type="button" class="change-statusText-button"> arrival </button>
+                                </div>
+                            </form>
+                        </div>
+                        <a> 주문상세 ==> 상세페이지가면 : 주문자id의 상세오더로 연결시키기</a>      
+                    </li>
+                <% } %>
+            </ul>
+
+        </section>
+    </section>
+    <%- include("../includes/footer")%>
+</body>
+</html>

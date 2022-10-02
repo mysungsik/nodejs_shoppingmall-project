@@ -23,7 +23,7 @@ route.get("/cart/:id", clientProductsController.getCart)
 
 route.get("/cart/:productid/productDelete", clientProductsController.deleteProductOne )
 
-route.delete("/cart/:userid",clientProductsController.deleteCartlistToOrder)
+// route.delete("/cart/:userid",clientProductsController.deleteCartlistToOrder)
 
 route.post("/cart/:userid", clientProductsController.cartToOrderToSave )
 

@@ -1,0 +1,28 @@
+<%- include("../../includes/head", {pageTitle : "All Products"})%>
+<link rel="stylesheet" href="/style/admin-Allproducts.css">
+</head>
+
+<body>
+
+    <%- include("../../includes/header")%>
+    <section id="header-parts">
+        <h1> YOUR ORDER </h1>
+        <section id="main-parts">
+
+            <ul id="all-order-list">
+                <% for(const data of basicOrderData){%>
+                    <li>
+                        <p> 주문번호 :  <%= data.paidProductData.orderId %></p>
+                        <p> 상품이름 :  <%= data.paidProductData.productsName%></p>
+                        <p> 결제 날짜 :  <%= data.paidDate%></p>
+                        <p> 상태 :  <%= data.status%></p>
+                        <a href="/order-detail/<%= data.paidProductData.orderId %>"> 주문상세 </a>
+                    </li>
+                <% }%>
+            </ul>
+
+        </section>
+    </section>
+    <%- include("../../includes/footer")%>
+</body>
+</html>

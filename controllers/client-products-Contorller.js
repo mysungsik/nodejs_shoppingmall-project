@@ -67,12 +67,12 @@ async function deleteProductOne(req,res){
     res.redirect(`/cart/${res.locals.uid}`)
 }
 
-async function deleteCartlistToOrder(req,res){
+// async function deleteCartlistToOrder(req,res){
 
-    await new Cart(res.locals.uid).makeEmptyCart()
+//     await new Cart(res.locals.uid).makeEmptyCart()
 
-    res.json({message:"order complete, delete your cart"})
-}
+//     res.json({message:"order complete, delete your cart"})
+// }
 
 async function productQuantity(req,res){
     const quantity = res.locals.totalQuantity
@@ -105,5 +105,4 @@ module.exports = {
     saveToCart:saveToCart,
     deleteProductOne:deleteProductOne,
     cartToOrderToSave:cartToOrderToSave,
-    deleteCartlistToOrder:deleteCartlistToOrder,
     productQuantity:productQuantity}

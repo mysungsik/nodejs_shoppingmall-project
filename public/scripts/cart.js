@@ -114,13 +114,13 @@ async function submitItem(){
         productImgUrl : productImgUrlData
     }
     
-    const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
-        method:"delete",
-    })
+    // const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
+    //     method:"delete",
+    // })
 
-    if(!responseDelete.ok){
-        alert("order is not succeeded")
-    }
+    // if(!responseDelete.ok){
+    //     alert("order is not succeeded")
+    // }
 
     const response = await fetch(`/cart/${userId}?_csrf=${csrf}`,{  // 값 넘기기
         method:"post",

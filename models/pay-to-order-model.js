@@ -46,6 +46,24 @@ class PayOrder{
     static async makeEmptyOrder(userid){
         await db.getDb().collection("order").deleteMany({userId:userid})
     }
+
+    static async getListOfAllClientOrderForClient(userid){
+        const data = await db.getDb().collection("adminOrder").find({"paidProductData.userId":userid} , 
+        {projection : {
+            "paidProductData.orderId":1,
+            "paidProductData.productsName":1,
+            "paidProductData.orderTotalPrice":1,
+            paidDate:1,
+            status:1
+        }}).toArray()
+
+        return data
+    }
+    
+    async getOrderDetail(){
+        const data = await db.getDb().collection("adminOrder").findOne({"paidProductData.orderId":this.orderedProduct})
+        return data
+    }
 }
 
 module.exports = PayOrder

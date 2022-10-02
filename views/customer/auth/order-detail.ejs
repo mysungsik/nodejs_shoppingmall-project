@@ -1,0 +1,56 @@
+<%- include("../../includes/head", {pageTitle : "Product Detail"})%>
+<link rel="stylesheet" href="/style/client-cart.css">
+<link rel="stylesheet" href="/style/client-order.css">
+</head>
+
+<body>
+    <%- include("../../includes/header")%>
+    <div id="header">
+        <h1> PAY TO ORDER </h1>
+        <p> Order Number : <span><%= detailProductData.paidProductData.orderId%></span></p>
+    </div>
+        <section id="header-parts">
+            <ul id="main-grid">
+                <li>
+                    <p>name</p>
+                    <p>price(&#8361;)</p>
+                    <p>quantity</p>
+                    <p>totalPirce(&#8361;)</p>
+                    <p> ETC </p>
+                </li>
+                    <%for(i=0; i<detailProductData.paidProductData.productsId.length; i++ ){%>
+                        <li>
+                            <div id="img-and-name">
+                                <img src=" <%=detailProductData.paidProductData.productImgUrl[i] %> ">
+                                <a class="name" href="<%=detailProductData.paidProductData.productUrl[i] %> "> <%=detailProductData.paidProductData.productsName[i] %> </a>
+                            </div>
+                            <p class="price" name="price"> <%=detailProductData.paidProductData.productsPrice[i] %></p>
+                            <p class="quantity"> <%=detailProductData.paidProductData.productsQuantity[i] %></p>
+                            <p class="totalPrice"><%= detailProductData.paidProductData.orderTotalPrice %> </p>
+                            <p> 기타사항 </p>
+                        </li>
+                    <% } %>
+                <div id="total-price-section">
+                    <h3>최종 가격</h3>
+                    <h2 class="calPrice" id="sumTotalPrice"> <%= detailProductData.paidProductData.orderTotalPrice %></h2><span id="won">원</span>
+                </div>
+            </ul>
+        </section>
+        <section id="user-info-section">
+            <h2> 수취인 정보 </h2>
+            <label for="email"> email</label>
+            <p id="email" name="email" > <%= detailProductData.RecieverData.email %></p> 
+            <label for="name"> name</label>
+            <p id="username" name="username"> <%= detailProductData.RecieverData.name %> %> </p>
+            <label for="street"> street</label>
+            <p id="street" name="street"> <%= detailProductData.RecieverData.address.street %> </p> 
+            <label for="postal"> postal code</label>
+            <p id="postal" name="postal"> <%= detailProductData.RecieverData.address.postal %> </p> 
+            <label for="country"> country</label>
+            <p id="country" name="country"> <%= detailProductData.RecieverData.address.country %> </p> 
+        </section>
+        
+    
+    <%- include("../../includes/footer")%>
+</body>
+</html>

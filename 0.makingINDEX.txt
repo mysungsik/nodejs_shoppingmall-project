@@ -636,6 +636,16 @@
         
 * PATCH는 사실 POST와 똑같다.   
 
+21. [사용자함수 안에서 db를 불러올때, 가져올 조건을 정하는 방법 ==>> { projection : {password:0, _id:0}} ]
+
+    static async getUserInfoWithoutPassword(userid){
+        const userInfo = db.getDb().collection("userInfo").findOne({_id: ObjectId(userid)},{ projection:{password:0} })
+        return userInfo
+
+   일반적으로는        findOne({_id: ObjectId(userid)},{password:0 , xx:0 ...})
+   사용자함수 안에서는 [ 반드시 projection 을 통해서, 타겟해주어야 한다. ]
+   
+
 [추가연습] =============================================================================================================
 
 1. 연습 ,댓글창의 댓글창 만들기
