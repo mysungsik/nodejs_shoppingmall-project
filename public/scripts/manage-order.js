@@ -1,4 +1,21 @@
 const statusTexts = document.querySelectorAll(".change-status-text")
+const openStatusButtons = document.querySelectorAll(".open-status-button")
+
+// 변경버튼 오픈
+function open(event){
+    const basic = event.target.parentElement.nextElementSibling.classList
+
+    if(basic.item(1) == "disappear"){
+        basic.remove("disappear")
+    }else if(basic.item(1) != "disappear"){
+        basic.add("disappear")
+    }
+}
+
+
+for(const openStatus of openStatusButtons){
+    openStatus.addEventListener("click",open)
+}
 
 // 변경
 function changePending(event){
@@ -27,15 +44,11 @@ async function updateDbData(event){
     const csrf = event.target.dataset.csrf
     const orderid = event.target.dataset.orderedid
     const updatingStatus = event.target.parentElement.children[0].value;
-    console.log(orderid)
-    console.log(updatingStatus)
-
 
     const updatingData={
         orderid:orderid,
         updatingStatus:updatingStatus
     }
-    console.log(updatingData)
 
     const response = await fetch(`/admin/order/${orderid}?_csrf=${csrf}`,{
         method:"post",
@@ -48,6 +61,15 @@ async function updateDbData(event){
     if(!response.ok){
         alert("xxxx")
     }
+
+    // 변경시키고 닫기
+    let inputText = event.target.previousElementSibling
+    let status = event.target.parentElement.parentElement.previousElementSibling.children[0]
+    status.textContent = inputText.value
+
+    let changStatusDiv = event.target.parentElement.parentElement
+    changStatusDiv.classList.add("disappear")
+
 }
 
 

@@ -19,11 +19,12 @@
                         <p> 주문번호 : <%= orderdata.paidProductData.orderId%> </p>
                         <p> 상품이름 : <%= orderdata.paidProductData.productsName%></p>
                         <p> 결제 날짜 : <%= orderdata.paidDate %> </p>
-                        <p> 상태 : <%= orderdata.status %>  <button> 변경</button>변경가능하도록 [바로여기서]</p>
-                        <div class="change-status-div">
+                        <p> 상태 : <span><%= orderdata.status %></span>  <button class="open-status-button"> 변경</button> </p>
+                        <div class="change-status-div disappear">
                             <form action="/admin/order?_csrf=<%=locals.csrfToken%>" method="post">
-                                <input type="text" class="change-status-text" readonly>  <button class ="change-status-button" type="button" 
-                                data-orderedid="<%=orderdata.paidProductData.orderId%>" data-csrf ="<%=locals.csrfToken%>"> OK </button>
+                                <input type="text" class="change-status-text" readonly>  
+                                <button class ="change-status-button" type="button" 
+                                    data-orderedid="<%=orderdata.paidProductData.orderId%>" data-csrf ="<%=locals.csrfToken%>"> OK </button>
                                 <div>
                                     <button type="button" class="change-statusText-button"> pending </button>
                                     <button type="button" class="change-statusText-button"> shipping </button>
@@ -31,7 +32,7 @@
                                 </div>
                             </form>
                         </div>
-                        <a> 주문상세 ==> 상세페이지가면 : 주문자id의 상세오더로 연결시키기</a>      
+                        <a href="/order-detail/<%=orderdata.paidProductData.orderId%>"> 주문상세</a>      
                     </li>
                 <% } %>
             </ul>

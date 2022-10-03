@@ -140,3 +140,7 @@ input:hover, input:active{
     font-weight: var(--font-weight-3);
 
 }
+
+.disappear{
+    display: none !important;
+}
