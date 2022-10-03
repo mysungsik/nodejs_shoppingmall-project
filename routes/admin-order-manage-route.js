@@ -5,7 +5,7 @@ const mangeOrder = require("../controllers/admin-order-controller")
 
 route.get("/admin/order", mangeOrder.getManageOrder)
 
-route.patch("/admin/order/:orderid", mangeOrder.updatingOrderStatus)
+route.post("/admin/order/:orderid", mangeOrder.updatingOrderStatus)
 
 
 module.exports = route

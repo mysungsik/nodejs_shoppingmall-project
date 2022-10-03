@@ -28,21 +28,22 @@ async function updateDbData(event){
     const orderid = event.target.dataset.orderedid
     const updatingStatus = event.target.parentElement.children[0].value;
     console.log(orderid)
+    console.log(updatingStatus)
+
 
     const updatingData={
         orderid:orderid,
         updatingStatus:updatingStatus
     }
+    console.log(updatingData)
 
     const response = await fetch(`/admin/order/${orderid}?_csrf=${csrf}`,{
-        method:"patch",
-        body : updatingData,
+        method:"post",
+        body : JSON.stringify(updatingData),
         headers :{
             "Content-Type" : "application/json"
         }
     })
-
-    //왜 배드 리쿠[스트야!!!!]
 
     if(!response.ok){
         alert("xxxx")

@@ -9,11 +9,11 @@ async function getManageOrder(req,res){
 async function updatingOrderStatus(req,res){
     const orderid = req.params.orderid
 
-    const updatingStatus =  req.body.updatingData.updatingStatus
-
-    const data = new adminOrderModel(null,orderid,updatingStatus)
+    const data = new adminOrderModel(null,orderid,req.body.updatingStatus)
 
     await data.updatingStatus()
+
+    res.json({message:"nice"})
  
 }
 

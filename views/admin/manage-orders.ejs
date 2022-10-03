@@ -21,8 +21,9 @@
                         <p> 결제 날짜 : <%= orderdata.paidDate %> </p>
                         <p> 상태 : <%= orderdata.status %>  <button> 변경</button>변경가능하도록 [바로여기서]</p>
                         <div class="change-status-div">
-                            <form action="/admin/order?_csrf=<%= locals.csrfToken%>" method="post">
-                                <input type="text" class="change-status-text" readonly>  <button class ="change-status-button" type="button" data-orderedid="<%=orderdata.paidProductData.orderId%>" data-csrf ="<%=locals.csrfToken%>"> OK </button>
+                            <form action="/admin/order?_csrf=<%=locals.csrfToken%>" method="post">
+                                <input type="text" class="change-status-text" readonly>  <button class ="change-status-button" type="button" 
+                                data-orderedid="<%=orderdata.paidProductData.orderId%>" data-csrf ="<%=locals.csrfToken%>"> OK </button>
                                 <div>
                                     <button type="button" class="change-statusText-button"> pending </button>
                                     <button type="button" class="change-statusText-button"> shipping </button>
