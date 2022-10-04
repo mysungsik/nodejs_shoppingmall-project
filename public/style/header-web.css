@@ -14,6 +14,7 @@ header{
 #header{
     width: 100%;
     margin: 0;
+    padding-left: 0;
     display: flex;
     justify-content: center;
     list-style: none;
@@ -61,6 +62,7 @@ header{
     justify-content: center;
     gap: 0.4rem;  
     align-items: center;
+    display: none;
 }
 
 #mobile-menu-btn span{
@@ -83,10 +85,11 @@ header{
 }
 
 #web-view{
-    display: grid;
+    display: flex !important;
     justify-content: space-between;
     align-items: center;
-    display: none;
+    display: block;
+    margin-right: 3rem;
 }
 #mobile-view{
     display: none;
@@ -106,17 +109,23 @@ header{
     border-radius: 100%;
 }
 
-@media (min-width : 50rem){
-
+@media (max-width : 50rem){
     #web-view{
-        display: block;
-        display: grid;
-        margin-right: 3rem;
+        display: none !important;
+    }
+    header{
+        width:100%;
     }
     #mobile-view{
         display: none;
     }
     #mobile-menu-btn{
-        display: none;
+        display: flex;
     }
+    #mobile-menu-btn span{
+        height: 0.5rem !important;
+        width: 80% !important;
+        background-color: antiquewhite;
+    }
+
 }

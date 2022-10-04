@@ -1,5 +1,6 @@
 <%- include("../../includes/head", {pageTitle : "All Products"})%>
 <link rel="stylesheet" href="/style/admin-Allproducts.css">
+<link rel="stylesheet" href="/style/client-all-order.css">
 </head>
 
 <body>
@@ -12,11 +13,15 @@
             <ul id="all-order-list">
                 <% for(const data of basicOrderData){%>
                     <li>
-                        <p> 주문번호 :  <%= data.paidProductData.orderId %></p>
-                        <p> 상품이름 :  <%= data.paidProductData.productsName%></p>
-                        <p> 결제 날짜 :  <%= data.paidDate%></p>
-                        <p> 상태 :  <%= data.status%></p>
-                        <a href="/order-detail/<%= data.paidProductData.orderId %>"> 주문상세 </a>
+                        <div>
+                            <p class="list"> 주문번호 </p>  <span><%= data.paidProductData.orderId %></span>
+                            <p class="list"> 상품이름 </p> <span><%= data.paidProductData.productsName%></span>
+                            <p class="list"> 결제 날짜 </p> <span><%= data.paidDate%></span>
+                            <p id="status"> <%= data.status%></p>
+                        </div>
+                        <div class="btn-div">
+                            <a class="btn" href="/order-detail/<%= data.paidProductData.orderId %>"> 주문상세 </a>
+                        </div>
                     </li>
                 <% }%>
             </ul>

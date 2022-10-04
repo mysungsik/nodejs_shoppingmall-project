@@ -7,7 +7,7 @@
 <body>
 
     <%- include("../../includes/header")%>
-    <div id="header">
+    <div id="head">
         <h1> PAY TO ORDER </h1>
         <p> Order Number : <span><%= orderData.orderedProduct._id%></span></p>
     </div>
@@ -15,7 +15,7 @@
         <input type="hidden" name="orderId" value="<%= orderData.orderedProduct._id%>">
         <section id="header-parts">
             <ul id="main-grid">
-                <li>
+                <li id="grid-header">
                     <p>name</p>
                     <p>price(&#8361;)</p>
                     <p>quantity</p>
@@ -28,9 +28,15 @@
                                 <img src=" <%=orderData.orderedProduct.productImgUrl[i] %> ">
                                 <a class="name" href="<%=orderData.orderedProduct.productUrl[i] %> "> <%=orderData.orderedProduct.productsName[i] %> </a>
                             </div>
-                            <p class="price" name="price"> <%=orderData.orderedProduct.productsPrice[i] %></p>
-                            <p class="quantity"> <%=orderData.orderedProduct.productsQuantity[i] %></p>
-                            <p class="totalPrice"><%= orderData.orderedProduct.orderTotalPrice %> </p>
+                            <div>
+                                <span class="mobile-price"> 가격 </span><p class="price" name="price"> <%=orderData.orderedProduct.productsPrice[i] %></p><span class="mobile-price"> 원 </span>
+                            </div>
+                            <div>
+                                <span class="mobile-price"> 주문 수량 </span><p class="quantity"> <%=orderData.orderedProduct.productsQuantity[i] %></p> <span class="mobile-price"> 개 </span>
+                            </div>
+                            <div>
+                                <span class="mobile-price"> 총 가격 </span><p class="totalPrice"><%= orderData.orderedProduct.orderTotalPrice %> </p><span class="mobile-price"> 원 </span>
+                            </div>
                             <p> 기타사항 </p>
                         </li>
                     <% } %>

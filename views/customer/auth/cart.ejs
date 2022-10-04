@@ -30,10 +30,18 @@
                                     <a class="name" href="<%= product.productUrl%>"> <%= product.productName %> </a>
                                     <span class="product-id" hidden> <%= product.prodcutId%> </span>
                                 </div>
-                                <p class="price"> <%= product.productPrice%></p>
-                                <input type="number" min="1" max="1000" class="quantity" value="1">
-                                <p class="totalPrice"></p>
-                                <button class="btn delete-btn"> DELETE</button>
+                                <div>
+                                    <span class="mobile-price"> 가격 </span> <p class="price"> <%= product.productPrice%></p> <span class="mobile-price">원</span>
+                                </div>
+                                <div>
+                                    <span class="mobile-price"> 수량 </span> <input type="number" min="1" max="1000" class="quantity" value="1">
+                                </div>
+                                <div>
+                                    <span class="mobile-price"> 총 가격</span> <p class="totalPrice"></p> <span class="mobile-price">원</span>
+                                </div>
+                                <div>
+                                    <button class="btn delete-btn"> DELETE</button>
+                                </div>
                             </li>
                         </form>
                     <% } %>

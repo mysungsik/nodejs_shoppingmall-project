@@ -1,17 +1,17 @@
-<%- include("../../includes/head", {pageTitle : "Product Detail"})%>
+<%- include("../../includes/head", {pageTitle : "order Detail"})%>
 <link rel="stylesheet" href="/style/client-cart.css">
 <link rel="stylesheet" href="/style/client-order.css">
 </head>
 
 <body>
     <%- include("../../includes/header")%>
-    <div id="header">
-        <h1> PAY TO ORDER </h1>
+    <div id="head">
+        <h1> ORDER Detail</h1>
         <p> Order Number : <span><%= detailProductData.paidProductData.orderId%></span></p>
     </div>
         <section id="header-parts">
             <ul id="main-grid">
-                <li>
+                <li id="grid-header">
                     <p>name</p>
                     <p>price(&#8361;)</p>
                     <p>quantity</p>
@@ -22,12 +22,22 @@
                         <li>
                             <div id="img-and-name">
                                 <img src=" <%=detailProductData.paidProductData.productImgUrl[i] %> ">
-                                <a class="name" href="<%=detailProductData.paidProductData.productUrl[i] %> "> <%=detailProductData.paidProductData.productsName[i] %> </a>
+                                <a class="name btn" href="<%=detailProductData.paidProductData.productUrl[i] %> "> <%=detailProductData.paidProductData.productsName[i] %> </a>
                             </div>
-                            <p class="price" name="price"> <%=detailProductData.paidProductData.productsPrice[i] %></p>
-                            <p class="quantity"> <%=detailProductData.paidProductData.productsQuantity[i] %></p>
-                            <p class="totalPrice"><%= detailProductData.paidProductData.orderTotalPrice %> </p>
-                            <p> 기타사항 </p>
+                            <div id="order-ess-info">
+                                <div>
+                                    <span class="mobile-price"> 가격 </span><p class="price" name="price"> <%=detailProductData.paidProductData.productsPrice[i] %></p><span class="mobile-price mobile-price-sub"> 원 </span>
+                                </div>
+                                <div>
+                                    <span class="mobile-price"> 수량 </span><p class="quantity"> <%=detailProductData.paidProductData.productsQuantity[i] %></p><span class="mobile-price mobile-price-sub"> 개 </span>
+                                </div>
+                                <div>
+                                    <span class="mobile-price"> 총 가격 </span><p class="totalPrice"><%= detailProductData.paidProductData.orderTotalPrice %> </p><span class="mobile-price mobile-price-sub"> 원 </span>
+                                </div>
+                                <div>
+                                    <p> 기타사항 </p>
+                                </div>
+                            </div>
                         </li>
                     <% } %>
                 <div id="total-price-section">

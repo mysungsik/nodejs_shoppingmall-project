@@ -1,14 +1,14 @@
-#header{
+#head{
     display: flex;
     justify-content: space-between;
 }
-#header p{
+#head p{
     display: flex;
     align-items: flex-end;
     margin: 0 1rem 0 0;
     font-weight: 700;
 }
-#header span{
+#head span{
     margin-left: 0.5rem;
     font-weight: 400;
 }
@@ -35,4 +35,55 @@ input{
 .checkbox{
     width: fit-content;
     margin-right:1rem;
+}
+
+#user-info-section{
+    text-align: start;
+    margin-left: 10rem;
+}
+#user-info-section h2{
+    background-color: var(--base-background-color);
+    width: 10rem;
+    border-radius: 4px;
+    color: wheat;
+    text-align: center;
+}
+#user-info-section label{
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+
+@media (max-width:50rem) {
+    #user-info-section{
+        margin-left: 0;
+
+    }
+    #user-info-section input{
+        width: 80%;
+    }
+    #head{
+        display: block;
+    }
+    #head p{
+        margin-left: 2rem;
+    }
+    #user-info-section{
+        text-align: start;
+        margin-left: 2rem;
+    }
+    #user-info-section h2{
+        background-color: var(--base-background-color);
+        width: 10rem;
+        border-radius: 4px;
+        color: wheat;
+        text-align: center;
+    }
+    #user-info-section label{
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+    
+
+
 }

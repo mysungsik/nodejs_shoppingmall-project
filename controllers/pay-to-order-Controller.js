@@ -46,21 +46,16 @@ async function saveInAdminOrder(req,res){
 async function getAllOrderForClient(req,res){
 
     const basicOrderData = await PayOrder.getListOfAllClientOrderForClient(res.locals.uid)
-    console.log(basicOrderData)
 
     res.render("customer/auth/all-your-order" ,{basicOrderData:basicOrderData})
 }
 
 async function getOrderDetail(req,res){
     const orderedId = req.params.orderid
-    console.log(orderedId)
     const data = new PayOrder(orderedId)
-    console.log(data)
 
     const detailProductData = await data.getOrderDetail()
 
-    console.log(detailProductData)
-    
     res.render("customer/auth/order-detail",{detailProductData:detailProductData} )
 }
 

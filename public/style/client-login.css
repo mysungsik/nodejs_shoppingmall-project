@@ -7,6 +7,10 @@
     gap: var(--space-1);
     justify-items: center;
     box-shadow: var(--shadow-base);
-    border-radius: var(--border-radius-3)
+    border-radius: var(--border-radius-3);
+    text-align: center;
+}
+input{
+    width: 80%;
 }
 

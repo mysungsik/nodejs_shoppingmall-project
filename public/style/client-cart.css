@@ -23,7 +23,6 @@ img{
     margin-left: 5rem;
 
 }
-
 #main-grid{
     padding: 1rem;
 }
@@ -37,6 +36,15 @@ img{
     padding: 1rem;
     width: 100%;
     text-align: center;
+}
+#order-ess-info{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns:10rem 8rem 15rem 10rem;
+}
+
+#grid-header{
+    display: grid !important;
 }
 
 #total-price-section{
@@ -60,5 +68,67 @@ input{
 }
 .totalPrice{
     width: 100%;
+}
+.mobile-price{
+    display: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.mobile-price-sub{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
+
+@media (max-width:50rem) {
+    body{
+        min-width: 0;
+        margin-top: 7rem;
+        width: 100%;
+    }
+    h1{
+        margin-left: 1rem;
+    }
+    #header-parts{
+        width: 100%;
+        margin: 0;
+    }
+    #main-grid li{
+        display: flex;
+        flex-direction: column;
+    }
+    #grid-header{
+        display: none !important;
+    }
+
+    #img-and-name{
+        display: flex;
+        justify-content: center;
+    }
+    #main-grid li div{
+        margin: 0.5rem;
+    }
+    #main-grid li p{
+        display: inline;
+    }
+    .mobile-price{
+        display: inline;
+    }
+    input{
+        width: 3rem;
+    }
+    #order-ess-info{
+        width: 80%;
+    }
+    #order-ess-info div{
+        margin: 0 auto !important;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        width: 80%;
+        justify-content: center;
+    }
+
 }
 
