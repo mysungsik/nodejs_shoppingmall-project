@@ -61,7 +61,9 @@ img{
 input{
     margin: 0 auto;
 }
-
+.quantity{
+    width: 5rem;
+}
 #btn-control{
     display: flex;
     justify-content: end;

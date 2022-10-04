@@ -71,3 +71,37 @@ class PayOrder{
 
 7. 관리자페이지에서 주문관리 작성
   : 상태 업데이트, 메일보내기버튼
+
+  ===========================================================================================================================
+  [22년 10월 4일] ========================================================================================================
+  ========================================================================================================
+
+1. quantity 넣을때, 이상한 수 방지 위한 validation 작성
+
+  // 정수는 1로 나누면 항상 나머지가 0인 것을 이용해, [0 이상의 자연수만 남기고] 이상한 수 방지
+
+  function isIntergar(number){
+      return (number%1==0)
+  }
+
+  for (let quantity of data.productQuantities ){
+      let check = isIntergar(quantity)
+      if(!check || quantity<0){
+          alert("check your quantity")
+          return
+      }
+  }
+
+
+2. javascript 코드 filter()와 indexOf() 를 사용하여, 배열 [삭제 추가 정리하기]
+
+- Array.filter(function( item ){
+    return item.indexOf( condition ) 
+  })
+
+
+3. 모바일메뉴 cart 안의 수 업데이트 안되던것 fix
+
+4. 기타 fix
+
+  

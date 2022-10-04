@@ -82,7 +82,7 @@ async function productQuantity(req,res){
 
 async function cartToOrderToSave(req,res){
     const pageid = req.params.userid
-    let bd = req.body;
+    let bd = req.body;    
 
     await new Cart(pageid, 
         bd.productIds,

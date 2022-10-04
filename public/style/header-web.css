@@ -99,7 +99,7 @@ header{
     display: block !important;
 }
 
-#cart-quantity{
+.cart-quantity{
     background-color: var(--base-font-color);
     color: var(--base-background-color);
     width: 2rem;

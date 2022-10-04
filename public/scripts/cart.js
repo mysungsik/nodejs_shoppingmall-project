@@ -113,7 +113,23 @@ async function submitItem(){
         productUrl: productUrlData,
         productImgUrl : productImgUrlData
     }
+
+    // 정수는 1로 나누면 항상 나머지가 0인 것을 이용해, [0 이상의 자연수만 남기고] 이상한 수 방지
+
+    function isIntergar(number){
+        return (number%1==0)
+    }
     
+    for (let quantity of data.productQuantities ){
+        let check = isIntergar(quantity)
+        if(!check || quantity<0){
+            alert("check your quantity")
+            return
+        }
+    }
+
+
+
     // const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
     //     method:"delete",
     // })

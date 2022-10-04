@@ -9,22 +9,27 @@
     <section id="header-parts">
         <h1> YOUR ORDER </h1>
         <section id="main-parts">
-
-            <ul id="all-order-list">
-                <% for(const data of basicOrderData){%>
-                    <li>
-                        <div>
-                            <p class="list"> 주문번호 </p>  <span><%= data.paidProductData.orderId %></span>
-                            <p class="list"> 상품이름 </p> <span><%= data.paidProductData.productsName%></span>
-                            <p class="list"> 결제 날짜 </p> <span><%= data.paidDate%></span>
-                            <p id="status"> <%= data.status%></p>
-                        </div>
-                        <div class="btn-div">
-                            <a class="btn" href="/order-detail/<%= data.paidProductData.orderId %>"> 주문상세 </a>
-                        </div>
-                    </li>
-                <% }%>
-            </ul>
+            <% if(!basicOrderData.paidProductData){%>
+                <p> you have no order! </p>
+                <p> you have no order! </p>
+                <p> you have no order! </p>
+            <%} else{%>
+                <ul id="all-order-list">
+                    <% for(const data of basicOrderData){%>
+                        <li>
+                            <div>
+                                <p class="list"> 주문번호 </p>  <span><%= data.paidProductData.orderId %></span>
+                                <p class="list"> 상품이름 </p> <span><%= data.paidProductData.productsName%></span>
+                                <p class="list"> 결제 날짜 </p> <span><%= data.paidDate%></span>
+                                <p id="status"> <%= data.status%></p>
+                            </div>
+                            <div class="btn-div">
+                                <a class="btn" href="/order-detail/<%= data.paidProductData.orderId %>"> 주문상세 </a>
+                            </div>
+                        </li>
+                    <% }%>
+                </ul>
+            <% }%>
 
         </section>
     </section>
