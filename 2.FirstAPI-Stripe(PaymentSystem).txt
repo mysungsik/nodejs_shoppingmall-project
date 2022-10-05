@@ -1,0 +1,213 @@
+[0. API와 SERVICE 를 적용하는 방법]
+: 패키지와, API, SERVICE 마다 전부 다르므로
+= 반드시 설명서를 참조하여 추가해야한다!
+
+[0. 용어]
+    1) API
+
+    2) API KEY : 제공하는 API( 현재, stripe API)로 "요청"을 보낼 수 있는 키 [ 마치 csrfToken 처럼 요청을 보낼때, 같이 보내서 신원을 확인함]
+
+
+* 들어가기에 앞서
+ : 어차피 테스트모드니까, 안심하고 막 등록하는 [결제 API이다!]
+
+[1.FirstAPI-Stripe(PaymentSystem)]
+    stripe 홈페이지 - [상단바] - Developers - Prebuilt Checkout - quick start
+    URL : https://stripe.com/docs/checkout/quickstart?lang=node
+
+[2. 설명서 참고하여 하나씩 해보자]
+ * 우선 계정만들고
+
+    1) 대쉬보드 상단 위, Developer
+
+    2) API KEY 확인
+        URL : https://dashboard.stripe.com/test/apikeys
+
+    3) Set up the server
+        : npm install --save stripe
+
+    4) 위치정하기
+        : "사용할 곳"은 "사용자가 결제해야할 곳"
+            ==> 나의 경우, [order 페이지] => [ pay-to-order 라우트] => [pay-to-order 컨트롤러] 에서 "작동하므로"
+
+        [위치] = [pay to order 컨트롤러!]
+
+    5) stipe 홈페이지의 코드를 하나씩 따온다.
+
+        [1. 불러오기]
+
+            const stripe = require('stripe')('sk_test_51LpNaFKewLSBpof5bSklhnQxWtZdAABciZHwH6JlPatHR7h4XNIj7Oi7g2Eldc2xX6Z9zLzCyK3P1BvzYEXVzTg600RRSGJq8M');
+
+                의 의미는
+            const stripe = require("stripe")
+            const stripeObj = stripe("sk_test_51LpNaFKewLSBpof5bSklhnQxWtZdAABciZHwH6JlPatHR7h4XNIj7Oi7g2Eldc2xX6Z9zLzCyK3P1BvzYEXVzTg600RRSGJq8M")
+                이것과 같다.
+            
+        * "sk_test_51..."은 나의 stipe 계정에 [시크릿 키이므로], 절대 [바깥에 알려져서는 안된다.] 지워버리자
+
+
+        [2. 기능]
+
+            const session = await stripe.checkout.sessions.create({
+            line_items: [
+              {
+                // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                price: '{{PRICE_ID}}',
+                quantity: 1,
+              },
+            ],
+            mode: 'payment',
+            success_url: `${YOUR_DOMAIN}/success.html`,
+            cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+          });
+        
+          res.redirect(303, session.url);
+    
+          ==>> order 버튼을 눌렀을때(pay 화면이 생성될곳), 나와야 하니 
+                내 경우에는 [Controller] 에 [saveInAdminOrder] 에 넣어준다.
+
+        [3.설명 - About Price]
+
+            line_items: [
+                {
+                // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                price: '{{PRICE_ID}}',
+                quantity: 1,
+                },
+            ]
+
+            에서의 price는 [stipe 에서 정의된 price_id 가 필요한 것이다.] => product 이름과 가격을 나타내는것
+            ==> 공식 문서에 따르면 "Define a product to sell"
+                    Define product information when you create the Checkout Session 
+                        using [predefined price IDs] or on the fly with [price_data.]
+            ==> 에서 [price_data.] 태그를 클릭하면
+            ==> 사용방법이 나온다.
+                ULR: https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-line_items-price_data
+
+
+-           [설명서에 따르면],  
+                참조 : [0.stripeAPI \ stripeAPI-price.JPG]
+
+            "price" or "pirce_data" 에는
+            .currency (필수) , 나머지는 (필요에 따라 필수) 항목들이 필요하며,
+
+                1. line_items.price_data.currency
+
+                2. line_items.price_data.product_data
+                    2-1 .line_items.price_data.product_data.name
+
+                3. line_items.price_data.unit_amount
+
+            를 필요로 하므로, (물론 더 필요할 수도)
+
+                price_data = {
+                    currency : usd,
+                    product_data : {
+                        name : "product name"
+                    },
+                    unit_amount : 30       
+                }
+                
+            정도의 코드로 적을 수 있겠다.
+
+            pirce에 관한것은 최종적으로 이렇게 정리되겠다.
+
+                line_items: [
+                    {
+                    price_data = {
+                        currency : usd,
+                        product_data : {
+                            name : "product name"
+                        },
+                        unit_amount : 30       
+                    },
+                    quantity: 1,
+                    },
+                ]
+
+        [3.설명 - response]
+
+        success_url: `${YOUR_DOMAIN}/success.html`,
+        cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+
+        ==> stripe 는 결제할 때, [stripe 사이트로 진입해 결제 후] [다시 사용자의 사이트로 redirect 하므로] 
+            성공과 실패 여부의 URL 을 만들어야 하고
+
+            success_url: `https://localhost:3000/success.html`,
+            cancel_url: `https://localhost:3000/cancel.html`, 
+
+            으로 나의 도메인을 적어주면된다.
+-           혹은,
+
+            success_url: `https://localhost:3000/success`, /or `https://localhost:3000/order/success`
+            cancel_url: `https://localhost:3000/cancel`,  /or `https://localhost:3000/order/cancel` 
+
+-           이렇게 만들어서 ejs파일로 만들면 더 좋겠다.
+
+-           절대로! [ https:// 를 빼먹어는 안된다.]
+              ==> stripe는 https:// 가 없다면 올바른 URL로 인식하지 않는다.
+
+        * views / customer / auth / stripe-cancel.ejs , stripe-success.ejs/ 로 만들었다.
+        * 라우트에 가서, 각 url 에 따른 처리를 추가하고 [ route.get("success" , ...) ]
+        * 컨트롤러에 가서 기능을 적어준다               [ res.render(...stripe-success) ]
+
+        [4. 최종기능]
+
+          1. API Direction(설명서)을 보고 
+          2. 적절한 위치( order 버튼과 연결된 Route의 Controller의 함수)에 넣었고
+          3. Direction을 보고, 아이템에 관하여 적었고,  이제 실행만 하면된다.
+
+-         4. [실행하기 전 ] Direction을 토대로 [나의 데이터를, 알맞게 stripe 가 제공한 폼에 맞추면! ] 실행하면 된다.
+
+            나의 경우, "PAY 직전"에 "Order collection"에 저장된 이후, 최종 결제를 진행한다.
+
+
+            <pay-to-order controller>
+
+                async function saveInAdminOrder(req,res){
+
+                    let bd = req.body;
+
+-                   const Data = await CartModel.orderData(res.locals.uid)
+                    delete Data._id;
+                    
+            
+-           즉, "order collection"에서 뽑아온 const "Data" 를 변형시켜, "Data"의 값을 stripe가 원하는 모양으로 바꿔주면 된다.
+
+                line_items: Data.map(function(item){
+                    return  {
+                        price_data = {
+                            currency : usd,
+                            product_data : {
+                                name : item.productsName
+                            },
+                            unit_amount : item.productsPrice      
+                        },
+                        quantity: item.productsQuantity
+                    }
+                })
+        
+-           로 변형시켜주면 이제 작동을 시작할 수 있다.
+
+        * unit_amount 설명
+
+            : A non-negative integer in cents representing how much to charge. One of unit_amount or unit_amount_decimal is required.
+            ==> cent 화 되어있다.
+            [내가 적은 값이 xxx cent 가 되는것이다] = [달러로 바꾸고 싶으면 unit_amount에 x 100 하면된다.]
+
+
+[3. 추가 API 를 필요에 따라 검색하고 다운받고, 설명서를 보고, 활용하자]
+
+    원하는 기능이 있을때, 
+
+    예를들면
+
+    mail send API
+    map API 
+    등으로 검색해서 사용 할 수 있다.
+
+    돈 들어가는거 많음.
+
+
+
+

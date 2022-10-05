@@ -102,6 +102,7 @@ console.log(js)
 
 
 // filter 연습4.  사전조건 [ 공통으로 갖는 '키' 를 가진 객체만 남기기 ]
+// : filter 는 "true" 인것만 뽑아내는 조건을 이용하여
 
         let data4 = [
             {name: "a"},
