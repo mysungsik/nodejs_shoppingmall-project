@@ -43,6 +43,9 @@ class Cart {
     static async makeEmptyCart(userid){
         await db.getDb().collection("cart").deleteMany({userId:userid})
     }
+    async initializeOrderDB(){
+        await db.getDb().collection("order").deleteMany({userId:this.userId})
+    }
 
     async fromCartToOrder(){
         await db.getDb().collection("order").insertOne({

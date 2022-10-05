@@ -8,6 +8,10 @@ route.get("/order/:userid" , orderController.getOrder)
 
 route.post("/order/:userid",orderController.saveInAdminOrder )
 
+route.get("/success", orderController.paySuccess )
+
+route.get("/cancel", orderController.payCancel)
+
 route.get("/all-order/:userid", orderController.getAllOrderForClient)
 
 route.get("/order-detail/:orderid", orderController.getOrderDetail )

@@ -82,7 +82,10 @@ async function productQuantity(req,res){
 
 async function cartToOrderToSave(req,res){
     const pageid = req.params.userid
-    let bd = req.body;    
+    let bd = req.body;
+    
+    const initialize = new Cart(pageid) // res.locals.uid 도 언제나환영
+    await initialize.initializeOrderDB()
 
     await new Cart(pageid, 
         bd.productIds,

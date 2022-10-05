@@ -152,7 +152,7 @@
         * 컨트롤러에 가서 기능을 적어준다               [ res.render(...stripe-success) ]
 
         [4. 최종기능]
-
+                                                                                
           1. API Direction(설명서)을 보고 
           2. 적절한 위치( order 버튼과 연결된 Route의 Controller의 함수)에 넣었고
           3. Direction을 보고, 아이템에 관하여 적었고,  이제 실행만 하면된다.
@@ -174,18 +174,19 @@
             
 -           즉, "order collection"에서 뽑아온 const "Data" 를 변형시켜, "Data"의 값을 stripe가 원하는 모양으로 바꿔주면 된다.
 
-                line_items: Data.map(function(item){
-                    return  {
-                        price_data = {
-                            currency : usd,
-                            product_data : {
-                                name : item.productsName
-                            },
-                            unit_amount : item.productsPrice      
-                        },
-                        quantity: item.productsQuantity
-                    }
-                })
+      
+
+        line_items: Data.map(function(item){
+            return   {
+                price_data:{
+                    currency : "usd",
+                    product : item.productsName,
+                    unit_amount : item.productsQuantity,
+                },
+                quantity: item.productsQuantity,
+        }
+
+
         
 -           로 변형시켜주면 이제 작동을 시작할 수 있다.
 

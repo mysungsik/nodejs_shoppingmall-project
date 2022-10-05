@@ -33,13 +33,13 @@ class PayOrder{
         return payData
     }
 
-    async saveInAdminOrder(){
+    static async saveInAdminOrder(item){
         
         await db.getDb().collection("adminOrder").insertOne({
-            paidProductData : this.orderedProduct,
-            RecieverData : this.userData,
-            paidDate: this.date,
-            status:this.status
+            paidProductData : item.orderedProduct,
+            RecieverData : item.userData,
+            paidDate: item.date,
+            status:item.status
         })
     }
 
@@ -63,6 +63,10 @@ class PayOrder{
     async getOrderDetail(){
         const data = await db.getDb().collection("adminOrder").findOne({"paidProductData.orderId":this.orderedProduct})
         return data
+    }
+    
+    static async initializeAdminOrder(userid,orderid){
+        await db.getDb().collection("adminOrder").deleteOne({userId:userid,orderId:orderid })
     }
 }
 
