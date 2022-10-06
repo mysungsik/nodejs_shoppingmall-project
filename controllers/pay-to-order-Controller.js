@@ -34,6 +34,18 @@ async function saveInAdminOrder(req,res){
         })
     }
 
+
+
+    const userData = {
+        email : bd.email,
+        name: bd.username,
+        address:{
+            street: bd.street,
+            postal: bd.postal,
+            country: bd.country
+        }
+    }
+
     // Stripe API를 사용한, 결제시스템 구축
 
     // 4242 4242 4242 4242 카드번호
@@ -47,19 +59,6 @@ async function saveInAdminOrder(req,res){
 
     //      ==> 그렇다면 값을 [order collection이 아니라 ] [ Cart collection 에서 각각 있는 값을 가져오면 되겠다]
     //          단, 내 Cart collection에는 "수량" 이 없으니까 추가하도록하자!
-
-    const userData = {
-        email : bd.email,
-        name: bd.username,
-        address:{
-            street: bd.street,
-            postal: bd.postal,
-            country: bd.country
-        }
-    }
-
-    // 결제될 정보를 넣고
-    // 결제완료 페이지(success) 에 들어가면 저장하도록 하기
 
     const pay = new PayOrder(productData,userData,"pending","now")
     req.session.ADMINORDER = pay

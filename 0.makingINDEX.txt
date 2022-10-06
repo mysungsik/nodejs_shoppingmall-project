@@ -401,7 +401,7 @@
 = <현재 미구축사항>
     [order 넣는 순간, CART에 담겨진 DB 및, LI 삭제하기 => ORDER로 넘어갈거니까]     /작업완료
     [카트 안에서, 물건 제거하기] /작업완료
-    [카트 컨트롤러 안에 db접근애들 MODEL로 옮기기( + ORDER model 따로 만들어야함)]
+    [카트 컨트롤러 안에 db접근애들 MODEL로 옮기기( + ORDER model 따로 만들어야함)] /작업완료
 
 
 37-1. header cart에 동적 갯수 추가 (카트안에 갯수)
@@ -654,6 +654,61 @@
 22. javascript 코드 filter()와 indexOf() 를 사용하여, 배열 [삭제 추가 정리하기]
 
 23. for문에서 continue 적극적으로 활용하기
+
+**24. DB에 저장할때에는 웬만하면, 배열 한칸에 한 아이템만
+        [{NAME : YES, AGE : 30}, {NAME: MS , AGE : 29}] ==> OO
+        [ {NAME : [YES, MS]} , {AGE : 30, 29} ]  ==> XX
+
+**25. MAP을 활용한 [양식에 맞게 제출하기!]
+
+    원하는 FORM : 
+     [모든 각각의 ITEM 에 관하여]
+        line_items: 
+                price_data : {
+                currency : 
+                product_data : {
+                    name : 
+                },
+                unit_amount :{
+
+                },
+                quantity:
+
+
+
+    [그렇다면 내 ARRAY에 MAP 을 활용하여, 각각 배열값마다, 각각의 양식을 MAP 으로 전개]
+        const session = await stripe.checkout.sessions.create({
+            line_items: newData.map(function(item){
+                return{
+                    price_data : {
+                    currency : "usd",
+                    product_data : {
+                        name : item.productName
+                    },
+                    unit_amount : +item.productPrice
+
+                    },
+                    quantity: +item.productQuantity,
+                }
+            }),
+        });
+
+26. 자연수만 남기게 validation
+
+    // 정수는 1로 나누면 항상 나머지가 0인 것을 이용해, [0 이상의 자연수만 남기고] 이상한 수 방지
+
+    function isIntergar(number){
+        return (number % 1 == 0)
+    }
+
+    for (let quantity of data.productQuantities ){
+        let check = isIntergar(quantity)
+        if(!check || quantity<0){
+            alert("check your quantity")
+            return
+        }
+}
+
 
 [추가연습] =============================================================================================================
 

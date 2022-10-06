@@ -1,0 +1,16 @@
+#all-order-list{
+    list-style: none;
+    width: 60rem;
+}
+
+#all-order-list li{
+    padding: 1rem;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid black;
+}
+
+#all-order-list li a{
+    width: fit-content;
+}
