@@ -4,10 +4,16 @@ const route = express.Router()
 const clientProductsController = require("../controllers/client-products-Contorller")
 
 
-route.get("/home", function(req,res){
-    res.redirect("/")
+route.get("/welcome", function(req,res){
+    res.render("customer/nonauth/welcome")
 })
-route.get("/", clientProductsController.getAllProducts )
+route.get("/", clientProductsController.getAllProducts)
+
+// 검색 라우트
+route.get("/search", clientProductsController.getsearchProducts)
+
+route.post("/search" , clientProductsController.searchProducts)
+
 
 route.get("/get-all-products",clientProductsController.getAllProductsForJs )
 

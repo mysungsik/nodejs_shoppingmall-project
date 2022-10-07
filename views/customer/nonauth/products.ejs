@@ -9,10 +9,14 @@
 
     <section id="header-parts">
         <h1> ALL PRODUCTS</h1>
+        <section id ="search-product-section">
+            <input type="text" id="search-products" name="searchProducts">
+            <button id="search-products-button" data-csrf=<%= locals.csrfToken%>> search</button>
+        </section>
         <section id="main-parts">
             <ul id="product-section">
                 <% for( const products of allProducts){%>
-                    <li>
+                    <li class="basic">
                         <div class="imageANDname">
                             <img src="<%= products.imageUrl%>" class="img">  
                             <p> <%= products.name %></p>     

@@ -2,40 +2,68 @@ const Product = require("../models/product-model")
 const Cart = require("../models/cart-model")
 
 async function getAllProducts(req,res,next){
+    req.session.searchData = null
+    
     const pageNumber = req.query.pagenumber
 
-    try{
-        const Datas = await Product.AllProducts()
-
-        const allProducts = []
-        const start= pageNumber*8 - 8
-        let last;
-        last = pageNumber*8
+    if(pageNumber){
+        try{
+            const Datas = await Product.AllProducts()
     
-        if(last>Datas.length){
-            last = pageNumber*8 - (8-Datas.length%8)
-        }
+            const allProducts = []
+            const start= pageNumber*8 - 8
+            let last;
+            last = pageNumber*8
         
-        for(i=start; i <last; i++){
-            const newData = Datas[i]
-            allProducts.push(newData)
+            if(last>Datas.length){
+                last = pageNumber*8 - (8-Datas.length%8)
+            }
+            
+            for(i=start; i <last; i++){
+                const newData = Datas[i]
+                allProducts.push(newData)
+            }
+            res.render("customer/nonauth/products" , {allProducts:allProducts})
+    
+        }catch(error){
+            next(error)
         }
-        res.render("customer/nonauth/products" , {allProducts:allProducts})
-
-    }catch(error){
-        next(error)
     }
 }
 
 async function getAllProductsForJs(req,res,next){
     try{
-        const allProducts = await Product.AllProducts()
+        let allProducts = await Product.AllProducts()
+        if(req.session.searchData){
+            allProducts = req.session.searchData
+        }
         res.json(allProducts)
 
     }catch(error){
         next(error)
     }
 }
+
+// 받아서, req.session 처리 // redirect [search/검색어] - 안먹혀서 자바스크립트에서 강제이동
+async function searchProducts(req,res){
+    const data = req.body.data
+    const searchKeyWord = req.body.searchKeyWord
+
+    req.session.searchData = data
+
+    res.redirect(`/search/?${searchKeyWord}`)
+}
+
+//  req.session 처리된 항목들을 렌더
+function getsearchProducts(req,res){
+
+    const allProducts =  req.session.searchData
+    console.log(allProducts)
+
+    res.render("customer/nonauth/products" , {allProducts:allProducts})
+
+}
+
 
 async function getProductDetail(req,res,next){
     const productId = req.params.id
@@ -91,13 +119,6 @@ async function deleteProductOne(req,res){
     res.redirect(`/cart/${res.locals.uid}`)
 }
 
-// async function deleteCartlistToOrder(req,res){
-
-//     await new Cart(res.locals.uid).makeEmptyCart()
-
-//     res.json({message:"order complete, delete your cart"})
-// }
-
 async function productQuantity(req,res){
     const quantity = res.locals.totalQuantity
 
@@ -129,6 +150,8 @@ module.exports = {
     getAllProducts : getAllProducts,
     getAllProductsForJs:getAllProductsForJs
     ,getProductDetail:getProductDetail,
+    searchProducts:searchProducts,
+    getsearchProducts:getsearchProducts,
     getCart:getCart,
     saveToCart:saveToCart,
     deleteProductOne:deleteProductOne,
