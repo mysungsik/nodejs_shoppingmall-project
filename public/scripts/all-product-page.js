@@ -71,7 +71,7 @@ async function search(){
     const data = await filtering()
     
     // 포스트로 보내서
-    const response = await fetch(`/search/?${searchKeyWord}`,{
+    const response = await fetch(`/searchProducts/?${searchKeyWord}`,{
         method: "post",
         body : JSON.stringify(
             {
@@ -86,7 +86,7 @@ async function search(){
     })
 
     if(response.ok){
-        window.location.href = `/search/?${searchKeyWord}`
+        window.location.href = `/searchProducts/?${searchKeyWord}`
     }
 }
 searchProductsButton.addEventListener("click",search)

@@ -55,14 +55,13 @@ async function searchProducts(req,res){
 }
 
 //  req.session 처리된 항목들을 렌더
-function getsearchProducts(req,res){
+async function getsearchProducts(req,res){
 
-    const allProducts =  req.session.searchData
-    console.log(allProducts)
+    const searchedProducts = req.session.searchData
+    req.session.searchData= null
 
-    res.render("customer/nonauth/products" , {allProducts:allProducts})
-
-}
+    res.render("customer/nonauth/search" , {searchedProducts : searchedProducts})
+} 
 
 
 async function getProductDetail(req,res,next){

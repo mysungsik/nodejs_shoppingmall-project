@@ -10,9 +10,9 @@ route.get("/welcome", function(req,res){
 route.get("/", clientProductsController.getAllProducts)
 
 // 검색 라우트
-route.get("/search", clientProductsController.getsearchProducts)
+route.get("/searchProducts", clientProductsController.getsearchProducts)
 
-route.post("/search" , clientProductsController.searchProducts)
+route.post("/searchProducts" , clientProductsController.searchProducts)
 
 
 route.get("/get-all-products",clientProductsController.getAllProductsForJs )

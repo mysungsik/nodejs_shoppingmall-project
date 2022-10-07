@@ -109,7 +109,6 @@ async function paySuccess(req,res){
 
     // pay가 성공하여, 올바르게 success 페이지에 진입했다면, adminOrder에 넣고, 세션초기화
 
-    console.log(req.session.ADMINORDER)
     await PayOrder.saveInAdminOrder(req.session.ADMINORDER)
 
     req.session.ADMINORDER = null

@@ -80,7 +80,11 @@ h1{
 }
 
 .pagenumber{
-    margin: 1rem;
+    margin: 0.25rem 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--base-background-color);
 }
 
 #search-product-section{
