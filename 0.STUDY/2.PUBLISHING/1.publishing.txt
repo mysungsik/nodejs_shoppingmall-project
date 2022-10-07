@@ -1,0 +1,158 @@
+퍼블리싱
+
+1. hosting
+
+    내 컴퓨터에는 (local machine) 웹사이트 코드를 가지고있다.
+      [local machine 은 외부 HTTP 요청을 받아들이지 않는다]. 당연하게도 보안상의 이유로 ( 그러므로, 이곳에서 작동시키고, 테스트하고, 하기 좋다.)
+
+    외부 VISITOR 들은, 그로인해 나의 코드에 접속 할 수 없고(외부 HTTP 요청은 차단되므로, 열릴 수 없다.)
+-   [ 이제, local machine 과 네트워크를 구성하여], [외부요쳥을 허용하게 만들어야한다.]
+
+-   보안상의 이유로, 내가 무얼 하는 것인지 모른다면, [절대로! 네크워크를 쭈물러서, 외부요청을 허용하게 만들면 안된다!!]
+
+    배포 : REMOTE machine 에 윌의 웹사이트코드를 넣는것.
+        => VISITOR 들이 나의 웹사이트코드에 접속가능함
+
+-   ==>> 배포를 하려면, 무시무시한 네트워크를 거쳐, 리모트머신으로 만들어서 외부요청을 허용하게 만들어야한다
+    ==>> 굳이?!
+    굳이 내 컴퓨터를 REMOTE machine 으로 만들 필요가 잇나!
+
+-   [Hosting 제공자(hosting provider)로부터] [미리 설계된 remote machine]에 나의 [웹사이트 코드를] 업로드하면 모든게 해결된다.
+    (고맙게도, 무료로 해주는 곳도 있다.)
+
+
+2. Choose hosting provider
+
+    1. 나의 웹사이트는 정적? or 동적(Dynamic)?
+        정적 : only HTML, CSS, BROWSER JS
+            ==> static hositing provider
+
+        동적 : FrontEnd +  NODE (server side code), DB 등을 사용하는 사이트
+-           ==> nodejs hosting provider
+
+3. 동적 웹사이트의 경우
+
+    : 나의 [웹사이트 코드]는 [로컬서버에 연결된다.]
+        <app 에서>
+        listen(3000) 을 생각해보자
+
+-   그런데, 나의 [ 데이터베이스는?] [mongodb 서버에 저장된다.]
+        <database 에서>
+-       const client = mongoClient.connect("mongodb://127.0.0.1:27017")
+
+    그렇다. [데이터베이스 서버]는 [독립형 서버로] [웹사이트 서버와 코드로부터 분리되어있다.]
+        * 웹사이트코드와 데이터베이스가 "상호작용"은 하지만 그럼에도 불구하고.
+
+    ==>> 당연하게도, "DB Hosting"도  "따로" 필요하다
+
+    그러나 문제는, DB Hosting 서비스 업체는, [웹사이트 코드를 올릴 REMOTE machine 을 제공하지 않는다.]
+-     ==> 그러므로, ??/ 어떻게???
+
+4. 배포준비
+
+    1. [ TEST my Website ]
+        코드를 다시 완벽하게 정리, 버그확인, 오류점검, 등등... "완벽하게" 확인
+
+        [방법1: 수동 테스트]
+            직접, 사용자처럼 이것저것 전부 눌러보는 테스트 
+
+        [방법2 : 자동검사] 
+            어려움. 지금안함
+
+    2. [ Prepare code for Deployment]
+
+        1) 테스팅 데이터와 키를 [실제 키로 변경]
+            texting mode의 sprite key를 실제 사용한다던가
+            mongodb Database URL을 실제 원격 서버의 URL로 변경한다던가
+
+-       그렇다면, 서버에 올릴때, 로컬에서 작업할때, 계속 바꿔가면서 URL을 조정하고, 키를 조정할것이냐?
+-       [환경변수] 를 사용하면 그럴 필요없다.
+            * 환경변수 : local 환경, REMOTE 환경처럼, 환경이 변할때, 바뀌어야 하는 값을 변수로 저장 
+
+            NODEJS 에서는 환경변수의 정립을 
+        [ process.env.변수 ]
+
+        ===========================
+            코드로보면
+
+            let mongoURL = "mongodb://127.0.0.1:27017"
+
+-           if(process.env.MONGDO_URL){
+                mongoURL = process.env.MONGDO_URL
+            }
+            ...
+            const client = await MongoClient.connect(mongoURL) 
+
+        ===========================
+                
+    3.모든 브라우저에서 실행이 되나(어쩔수 없는 것은 제외하고) 확인.
+        나의 CSS, JAVASCRIPT CODE는 실행이 되지않는 브라우저도 있다.
+        (HTML은 표준화가 잘 되어있고, 서버사이드 코드는 알바가 아니다!(브라우저랑 관계없으니))
+
+        https://caniuse.com/
+
+        에 가서, CSS (ex flexbox, transform ) 등을 검색하면, 어느 브라우저에서는 불가능 한지 잘 알려준다.
+
+    4. 나의 웹사이트 혹은 컨텐츠가 검색 사이트에서 검색이 되게 "메타데이터를 추가"
+        
+    <SEO : Search Engine Optimize>
+
+        1. HTML의 <TITLE>
+        2. HTML의 내부 컨텐츠
+        3. HTML의 각 페이지마다의 짧은 설명
+            <meta name="description" content = " 2~300 자 이내의 설명">
+            * include 된 head에 적으면 안되겠지?( 페이지마다 전부 공유되면 안되니까)
+
+    5. IMAGE나, CSS, JAVASCRIPT 에서, 너무 큰 용량의 것들은 줄이거나 제외(사용자가 너무 많은 양의 데이터를 사용해 다운받아야함)
+            
+        1. JAVASCRIPT : minify js 를 검색하여, 내 자바스크립트 코드를 입력하면 짧게 줄여주고, 간단하게 만들어줌
+        2. IMAGE : 최대한 2~3MB 안쪽으로 파일을 줄여(물론 크게 뽑을 이미지라면 그럴 필요 없지만 대부분 작은 IMAGE를 표현하기 때문에)
+                    * 포토샵, 그림판 등을 활용하여, IMAGE 품질을 내리거나 하는 방식으로
+
+        ==> cloudinary 같은 클라우드 서비스에 도움을 받아, 이미지와 같은 파일들을 관리 할 수도 있음 (물론 유료임)
+
+    6. 파비콘 추가
+    
+
+5. 배포
+        
+    정적 웹사이트 코드 : 넷플리파이드랍 등...
+        * 올릴때는 사이트 전부 한폴더로 묶인 것을 한번에 올릴것 (당연하게도)
+            => 링크가 나오고 그걸 퍼뜨리면된다!
+        * 로그인하고 도메인을 구입하면, 이상한 URL도 바꾸고, 평생사용가능 (당연히 유료)
+
+    
+-   동적 웹사이트코드 배포 : HEROKU 등... (장점 : 공짜로도 가능함)
+        사용법 : HEROKU 사이트의 [DOCUMENTATION] 참조...
+        기본 : https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+
+        ** 하란대로 하다보면, 이미 app 있으면 눌러라 페이지 : https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment
+
+        중간에 잠깐 heroku repo 만들어라 페이지:  https://devcenter.heroku.com/articles/git#create-a-heroku-remote
+
+        ...
+        
+
+-       4단계는, 미리 Database 에서 해본대로
+            let port = 3000
+            if(process.env.PORT){
+                port = process.env.PORT
+            }
+        
+        로 지정하면 [환경변수] 를 잘 생성하는것이다.
+
+
+    -   HEROKU 는 데이터베이스 호스팅을 
+            A managed database service (such as Heroku Postgres) - 관리형 데이터베이스 서비스
+            A managed object storage service (such as Amazon S3) - 관리형 객체 저장 서비스
+
+        (배포 4단계를 마치고) (4. Listen on the correct port)
+        둘중 한 종류의 DB 호스팅 시스템을 사용하라한다. (배포 단계 5번)
+        5. Use a database or object storage instead of writing to your local filesystem
+        
+        여기서 유명한 "MONGODB HOSTING SEVER"인 "ATLAS" 를 사용해보려한다.
+            * 그래야만 HEROKU를 통해 배포된 나의 웹사이트에서 DB를 사용할 수 있게 될것이다.
+
+-   MONGODB DASBASE 배포 : mongodb ATLAS 등... (장점 : 공짜로도 가능함)
+
+

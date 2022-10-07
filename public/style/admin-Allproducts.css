@@ -65,6 +65,25 @@ h1{
     font-size: 1rem;
 }
 
+#page-nation-section{
+    width: 70%;
+    margin: 0 auto;
+}
+
+#page-nation-list{
+    padding: 0;
+    width: 70%;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.pagenumber{
+    margin: 1rem;
+}
+
+
 @media (max-width:50rem){
     #main-parts{
         width: 100%;

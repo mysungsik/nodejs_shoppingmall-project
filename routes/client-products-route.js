@@ -9,6 +9,8 @@ route.get("/home", function(req,res){
 })
 route.get("/", clientProductsController.getAllProducts )
 
+route.get("/get-all-products",clientProductsController.getAllProductsForJs )
+
 route.get("/product/detail/:id", clientProductsController.getProductDetail)
 
 route.post("/product/detail/:userid", clientProductsController.saveToCart)

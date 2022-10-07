@@ -1,5 +1,6 @@
 <%- include("../../includes/head", {pageTitle : "All Products"})%>
 <link rel="stylesheet" href="/style/admin-Allproducts.css">
+<script src="/scripts/all-product-page.js" defer></script>
 </head>
 
 <body>
@@ -9,7 +10,6 @@
     <section id="header-parts">
         <h1> ALL PRODUCTS</h1>
         <section id="main-parts">
-
             <ul id="product-section">
                 <% for( const products of allProducts){%>
                     <li>
@@ -22,6 +22,11 @@
                         </div>
                     </li>
                 <% }%>
+            </ul>
+        </section>
+        <section id="page-nation-section">
+            <ul id="page-nation-list">
+
             </ul>
         </section>
     </section>

@@ -1,12 +1,36 @@
 const Product = require("../models/product-model")
 const Cart = require("../models/cart-model")
 
-// refacoring 하는것이 더 복잡해서 일단 두었음. (코드 줄이 짧아서)
-
 async function getAllProducts(req,res,next){
+    const pageNumber = req.query.pagenumber
+
+    try{
+        const Datas = await Product.AllProducts()
+
+        const allProducts = []
+        const start= pageNumber*8 - 8
+        let last;
+        last = pageNumber*8
+    
+        if(last>Datas.length){
+            last = pageNumber*8 - (8-Datas.length%8)
+        }
+        
+        for(i=start; i <last; i++){
+            const newData = Datas[i]
+            allProducts.push(newData)
+        }
+        res.render("customer/nonauth/products" , {allProducts:allProducts})
+
+    }catch(error){
+        next(error)
+    }
+}
+
+async function getAllProductsForJs(req,res,next){
     try{
         const allProducts = await Product.AllProducts()
-        res.render("customer/nonauth/products" , {allProducts:allProducts})
+        res.json(allProducts)
 
     }catch(error){
         next(error)
@@ -102,7 +126,8 @@ async function cartToOrderToSave(req,res){
 
 
 module.exports = {
-    getAllProducts : getAllProducts
+    getAllProducts : getAllProducts,
+    getAllProductsForJs:getAllProductsForJs
     ,getProductDetail:getProductDetail,
     getCart:getCart,
     saveToCart:saveToCart,
