@@ -57,15 +57,13 @@ app.use(notFound)
 // 잡히지 않은 모든 에러에 관하여, 처리하는 미들웨어
 app.use(errorHandler)
 
+let port = 3000;
+
+if(process.env.PORT){
+    port = process.env.PORT
+}
 
 db.connectToDatabse().then(function(){
-    
-    let port = process.env.PORT;
-
-    if (port == null || port == "") {
-    port = 3000;
-    }
-    
     app.listen(port)
 }).catch(function(error){
     console.log(error)

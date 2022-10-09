@@ -4,7 +4,7 @@
   "description": "shoping site",
   "main": "app.js",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,5 +28,14 @@
     "nodemon": "^2.0.20",
     "stripe": "^10.12.0",
     "uuid": "^9.0.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mysungsik/ShopingmallProject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mysungsik/ShopingmallProject/issues"
+  },
+  "homepage": "https://github.com/mysungsik/ShopingmallProject#readme"
 }
