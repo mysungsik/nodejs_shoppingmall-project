@@ -20,8 +20,7 @@ h1{
 }
 
 #main-parts{
-    margin: 2rem;
-    margin-top: 5rem;
+    margin-top: 4rem;
     overflow: scroll;
 }
 
@@ -73,7 +72,7 @@ h1{
 #page-nation-list{
     padding: 0;
     width: 70%;
-    margin: 0 auto;
+    margin: 0 5rem 0 0;
     list-style: none;
     display: flex;
     justify-content: center;
@@ -108,4 +107,12 @@ h1{
         grid-column-gap: 1rem;
         
     }
+    #search-product-section{
+        margin: 1rem 0.5rem 1rem 0;
+        width: 100%;
+    }
+    #search-products{
+        width: 10rem;
+    }
+
 }

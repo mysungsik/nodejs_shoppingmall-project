@@ -20,17 +20,33 @@ let pricetext ="";
 
 // [수량 및 가격 값을 바꾸기 위한 FUNCTION] =============================================================================================================
 
+
 // 초기값
 if(allName.length==1){
     allTotalPrice[0].textContent =  allQuantity[0].value * allPrice[0].textContent;
     sumTotalPrice.textContent = allTotalPrice[0].textContent + "원"
 }else{
-    for(i=0;i<allName.length;i++){
+    for(i=0; i<allName.length; i++){
         allTotalPrice[i].textContent =  allQuantity[i].value * allPrice[i].textContent;
-        TotalPrices.textContent =  allTotalPrice[i].textContent + "원 + " +TotalPrices.textContent;
+
+        if(i==0){
+            TotalPrices.textContent =  allTotalPrice[i].textContent + TotalPrices.textContent
+        }
+        else if(i< allName.length-1){
+            TotalPrices.textContent = allTotalPrice[i].textContent + "원 + "  +  TotalPrices.textContent  
+        }
+        else{
+            TotalPrices.textContent = allTotalPrice[i].textContent + "원 + "  +  TotalPrices.textContent + "원"
+        }
         sumTotalPrice.textContent = +allTotalPrice[i].textContent +  +sumTotalPrice.textContent;
+        
     }
-    sumTotalPrice.textContent = "="+ sumTotalPrice.textContent
+
+    // korea 원으로 바꿔주는 format
+    sumTotalPrice.textContent = new Intl.NumberFormat('ko-KR').format(sumTotalPrice.textContent)
+
+    sumTotalPrice.textContent = "="+ sumTotalPrice.textContent + "원"
+    
 }
 
 if(!allName[0]){
@@ -127,17 +143,7 @@ async function submitItem(){
             return
         }
     }
-
-
-
-    // const responseDelete = await fetch(`/cart/${userId}?_csrf=${csrf}`,{
-    //     method:"delete",
-    // })
-
-    // if(!responseDelete.ok){
-    //     alert("order is not succeeded")
-    // }
-
+    
     const response = await fetch(`/cart/${userId}?_csrf=${csrf}`,{  // 값 넘기기
         method:"post",
         body : JSON.stringify(data),

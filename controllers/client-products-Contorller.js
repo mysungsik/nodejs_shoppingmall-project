@@ -28,6 +28,8 @@ async function getAllProducts(req,res,next){
         }catch(error){
             next(error)
         }
+    }else if(!pageNumber){
+        res.redirect("/?pagenumber=1")
     }
 }
 

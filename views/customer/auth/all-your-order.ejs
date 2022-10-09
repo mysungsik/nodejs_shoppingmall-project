@@ -9,10 +9,10 @@
     <section id="header-parts">
         <h1> YOUR ORDER </h1>
         <section id="main-parts">
-            <% if(!basicOrderData[0].paidProductData){%>
-                <p> you have no order! </p>
-                <p> you have no order! </p>
-                <p> you have no order! </p>
+            <% if(!basicOrderData[0]){%>
+                <h1> you have no order! </h1>
+                <p> please, take some products and ORDER! </p>
+
             <%} else{ %>
                     <ul id="all-order-list">
                     <% for(const data of basicOrderData){%>

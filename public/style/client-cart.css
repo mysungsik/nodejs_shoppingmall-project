@@ -67,6 +67,7 @@ input{
 #btn-control{
     display: flex;
     justify-content: end;
+    margin-bottom: 3rem;
 }
 .totalPrice{
     width: 100%;
@@ -130,6 +131,9 @@ input{
         align-items: center;
         width: 80%;
         justify-content: center;
+    }
+    #btn-control{
+        margin-right: 3rem;
     }
 
 }

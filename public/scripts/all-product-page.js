@@ -67,6 +67,15 @@ async function filtering(){
 
 async function search(){
     const searchKeyWord = searchProducts.value;
+    
+    if(searchKeyWord.includes("=")
+        || searchKeyWord.includes("?")
+        || searchKeyWord.includes(".")
+        || searchKeyWord.length < 1
+        ){
+        alert("enter right word!")
+        return
+    }
     const csrf = searchProductsButton.dataset.csrf
     const data = await filtering()
     

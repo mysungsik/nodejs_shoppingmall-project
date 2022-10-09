@@ -42,7 +42,6 @@ async function manageProducts(req,res){
 
 async function deleteProduct(req,res){
 
-    // 찾아서 삭제
     const productId = req.params.id
 
     const deleteId = new Product(null,null,null,null,null,null,productId)

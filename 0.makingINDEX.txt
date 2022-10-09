@@ -651,6 +651,19 @@
 -   js = js.replace(/[^0-9]/g, "''");       [ / : 조건시작 ], [[^0-9] : 모든 숫자들], [g : 매치되는것들 전부(global))] , 들을 " " empty로
     console.log(js)
 
+17. (1) 자바스크립트 3자리수마다 콤마 넣어주는 함수 표현 (통화 포맷)
+
+    MDN URL : https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+
+    <통화단위까지>
+    new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(number)
+
+    <숫자만>
+    new Intl.NumberFormat('ko-KR').format(sumTotalPrice.textContent)
+    
+    <유효숫자 제한 (내림 정도로 생각)>
+    new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number);
+
 
 18. 배열에 추가,삭제 를 담당하는 array.splice(x,y,z) 에 관하여
     array.splice(x,y,z) 
@@ -793,6 +806,107 @@
             return
         }
 }
+
+27. AJAX 이후, REDIRECT 안될때, 강제 redirect
+
+    window.location.href = "URL"
+
+28. 검색기능 만들어보기 ( feat.  filter())
+    내꺼 : https://dive-into-frontend.tistory.com/39
+
+    1. INPUT으로 값을 받아
+    2. JAVASCRIPT 에서 그 값을 가지고 모든 PRODUCT DATA에 관하여 FILTER처리
+        (NODE에서 하고싶지만 그런 방법은 못찾았다)
+    3. FILTER  처리된 값을, 서버로 넘겨서, SESSION 으로 저장한 후,
+    4. SESSION에 저장된 값을 통해, 새로운 데이터로 VIEW를 RENDER
+
+    <VIEW>
+
+        ...
+        <section id="header-parts">
+        <h1> ALL PRODUCTS</h1>
+        <section id ="search-product-section">
+            <input type="text" id="search-products" name="searchProducts">
+            <button id="search-products-button" class="btn" data-csrf=<%= locals.csrfToken%> > search</button>
+        ...
+
+    <JS : all-product-page>
+
+        const searchProducts = document.getElementById("search-products")
+        const searchProductsButton = document.getElementById("search-products-button")
+
+-       걸러내기
+        async function filtering(){
+            const searchKeyWord = searchProducts.value;
+            const data = await getAllProducts()
+
+            return data.filter(function(item){
+                return item.name.indexOf(searchKeyWord) >-1
+            })
+        }
+
+        async function search(){
+            const searchKeyWord = searchProducts.value;
+            const csrf = searchProductsButton.dataset.csrf
+            const data = await filtering()
+            
+-       포스트로 서버에 보내서
+            const response = await fetch(`/searchProducts/?${searchKeyWord}`,{
+                method: "post",
+                body : JSON.stringify(
+                    {
+                    data:data,
+                    searchKeyWord:searchKeyWord,
+                    _csrf:csrf
+                }),
+                
+                headers : {
+                    "Content-Type" : "application/json"
+                }
+            })
+
+            if(response.ok){
+                window.location.href = `/searchProducts/?${searchKeyWord}`
+            }
+        }
+        searchProductsButton.addEventListener("click",search)
+
+    <CONTORLLER : client-products-Contorller>
+
+-       받아서, req.session 처리, redirect 안먹혀서 JS에서 강제이동
+
+        async function searchProducts(req,res){
+            const data = req.body.data
+            const searchKeyWord = req.body.searchKeyWord
+        
+            req.session.searchData = data
+        
+            res.redirect(`/search/?${searchKeyWord}`)
+        }
+        
+-       req.session 처리된 항목들을 렌더, 플래싱
+
+        async function getsearchProducts(req,res){
+        
+            const searchedProducts = req.session.searchData
+            req.session.searchData= null
+        
+            res.render("customer/nonauth/search" , {searchedProducts : searchedProducts})
+        } 
+
+29. 자바스크립트 include 를 사용한 input text validation
+
+    async function search(){
+        const searchKeyWord = searchProducts.value;
+        
+        if(searchKeyWord.includes("=")
+            || searchKeyWord.includes("?")
+            || searchKeyWord.includes(".")
+            || searchKeyWord.length < 1
+            ){
+            alert("enter right word!")
+            return
+        }
 
 
 [추가연습] =============================================================================================================

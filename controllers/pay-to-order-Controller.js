@@ -34,8 +34,6 @@ async function saveInAdminOrder(req,res){
         })
     }
 
-
-
     const userData = {
         email : bd.email,
         name: bd.username,
@@ -105,15 +103,19 @@ async function getOrderDetail(req,res){
     res.render("customer/auth/order-detail",{detailProductData:detailProductData} )
 }
 
-async function paySuccess(req,res){
+async function paySuccess(req,res,next){
 
     // pay가 성공하여, 올바르게 success 페이지에 진입했다면, adminOrder에 넣고, 세션초기화
 
-    await PayOrder.saveInAdminOrder(req.session.ADMINORDER)
-
-    req.session.ADMINORDER = null
-
-    res.render("customer/auth/stripe-success")
+    try{
+        await PayOrder.saveInAdminOrder(req.session.ADMINORDER)
+    
+        req.session.ADMINORDER = null
+    
+        res.render("customer/auth/stripe-success")
+    }catch(error){
+        next(error)
+    }
 }
 
 function payCancel(req,res){

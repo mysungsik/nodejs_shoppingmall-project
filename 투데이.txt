@@ -166,6 +166,47 @@ class PayOrder{
   유저 input 을 받는 곳에 validation을 확실하게!
   try catch 등 오류 작업 확실하게
   테스팅작업 다시한번!
+  
+  product page 미디어쿼리 다시 만들기
+
+  <배포준비1. 코드. 고칠것 발견한거 전부>
+
+  0. "/" 누르면 강제로 pagenumber 1 로 리디렉트하기 
+    //OK
+
+  1. product page 미디어쿼리 다시 만들기 
+    //OK
+  2. success 페이지 CSS 만들기 
+    //OK
+
+  2-1. success 페이지, 오류 처리만들기 
+    //OK
+
+  3. 자꾸 CART페이지 + 더 뜨는거 고치기 
+    : 카트에 담긴 프로덕트 갯수 맞춰서 마지막 인덱스일경우 + 제외시키기
+    //OK
+
+  3-1. 카트 CSS 재점검 
+    //OK
+    
+  4. all-your-order 페이지 ORDER 없을때 글귀, CSS 다시 손보기
+    //OK
+
+  5. serach 에 validation 추가
+    //OK
+
+  6. home으로 자꾸 이상한데 URL 걸린곳 제거하기
+    //OK
+
+  7. CSS 작업 다시잘하기(페이지네이션도 이상하고...)
+    //OK
+
+  8. ERROR 페이지 손보기 
+    // OK
+
+
+  <2. 테스팅 완료. 배포준비2 : 환경변수 준비 및 호스트 제공자(HOST PROVIDER) 찾고, 시작>
+
 
 
 

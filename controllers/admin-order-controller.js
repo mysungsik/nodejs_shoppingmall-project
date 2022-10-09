@@ -1,9 +1,14 @@
 const adminOrderModel = require("../models/admin-order-model")
 
-async function getManageOrder(req,res){
+async function getManageOrder(req,res,next){
 
-    const allOrderDatas =  await adminOrderModel.getAllOrdersLists()
-    res.render("admin/manage-orders" ,{allOrderDatas:allOrderDatas})
+    try{
+        const allOrderDatas =  await adminOrderModel.getAllOrdersLists()
+        res.render("admin/manage-orders" ,{allOrderDatas:allOrderDatas})
+    }catch(error){
+        console.log(error)
+        next()
+    }
 }
 
 async function updatingOrderStatus(req,res){

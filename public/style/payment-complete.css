@@ -1,0 +1,11 @@
+h1{
+    margin-left: 3rem;
+    font-size: 2.5rem;
+    color: var(--base-background-color);
+}
+
+p{
+    margin-left: 5rem;
+    font-size: 2rem;
+    color: var(--base-background-color);
+}
