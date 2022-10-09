@@ -64,7 +64,7 @@ if(process.env.PORT){
 }
 
 db.connectToDatabse().then(function(){
-    app.listen(process.env.PORT, '0.0.0.0')
+    app.listen(port)
 }).catch(function(error){
     console.log(error)
 })
