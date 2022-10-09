@@ -1,7 +1,6 @@
 {
   "name": "shoppingmall",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "engines": {
     "node": "18.x"
@@ -31,5 +30,6 @@
     "nodemon": "^2.0.20",
     "stripe": "^10.13.0",
     "uuid": "^9.0.0"
-  }
+  },
+  "description": ""
 }
