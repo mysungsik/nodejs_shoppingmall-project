@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "shoping site",
   "main": "app.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "MS",
   "license": "MIT",
