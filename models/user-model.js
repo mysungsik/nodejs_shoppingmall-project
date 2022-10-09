@@ -1,5 +1,5 @@
 const db= require("../database/database")
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
 
 class User {
@@ -23,11 +23,11 @@ class User {
 
     async insertUserInfo(){
 
-        // const hashedPassword = await bcrypt.hash(this.password,12)
+        const hashedPassword = await bcrypt.hash(this.password,12)
 
         await db.getDb().collection("userInfo").insertOne({
             email : this.email,
-            // password : hashedPassword,
+            password : hashedPassword,
             name : this.name,
             address : this.address
         })
@@ -37,10 +37,10 @@ class User {
         return db.getDb().collection("userInfo").findOne({email:this.email})
     }
 
-    // async hashedPassword(existUserPassword){
-        // return bcrypt.compare(this.password,existUserPassword)
+    async hashedPassword(existUserPassword){
+        return bcrypt.compare(this.password,existUserPassword)
        
-    // }
+    }
     static async getUserInfoWithoutPassword(userid){
         const userInfo = db.getDb().collection("userInfo").findOne({_id: ObjectId(userid)},{ projection:{password:0} })
         return userInfo
