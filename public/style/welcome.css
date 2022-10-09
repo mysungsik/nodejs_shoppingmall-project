@@ -1,0 +1,13 @@
+h1{
+    margin-left: 3rem;
+}
+h2, p{
+    margin-left: 5rem;
+}
+
+#goHome{
+    margin-top: 3rem;
+}
+#goHome a{
+    text-decoration: none;
+}

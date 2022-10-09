@@ -60,19 +60,27 @@ if(!allName[0]){
 }
 
 // 총총값 function
-function add(allTotalPrice){
-    let price = 0;
-    let pricetext ="";
-    
-    for(const pricestext of allTotalPrice){
-        pricetext = pricestext.textContent +  "원 + " +pricetext
-    }
+function add(){
+    let eachPrice;
+    let sumPrice =0;
 
-    for(const prices of allTotalPrice){
-       price = +prices.textContent + +price
+    for(i=0; i<allTotalPrice.length ; i++){
+        if(i == 0){
+            eachPrice = allTotalPrice[i]
+        }
+        else if(i < allTotalPrice.length-1){
+            eachPrice = eachPrice.textContent + "원 + "  + allTotalPrice[i].textContent
+        }
+        else{
+            eachPrice =  eachPrice.textContent  + "원 + "  +  allTotalPrice[i].textContent + "원"
+        }
+        sumPrice = +allTotalPrice[i].textContent + +sumPrice
     }
-    TotalPrices.textContent = pricetext + "="
-    sumTotalPrice.textContent = price + "원 "
+    TotalPrices.textContent = eachPrice
+    sumPrice = new Intl.NumberFormat('ko-KR').format(sumPrice)
+
+    sumTotalPrice.textContent = "="+ sumPrice +  "원"
+    
 }
 
 // 각각 총값 function
@@ -80,8 +88,9 @@ function change(){
     for(i=0; i<allTotalPrice.length; i++){
         data[i] = allPrice[i].textContent*allQuantity[i].value;
         allTotalPrice[i].textContent = data[i]
-}
-    add(allTotalPrice)
+    }
+
+    add()
 }
 
 // 리스너는 quantity에

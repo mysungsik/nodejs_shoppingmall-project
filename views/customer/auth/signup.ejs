@@ -29,7 +29,7 @@
         <label for="street"> street</label>
         <input type="text" id="street" name="street" value="<%= userInfo.street%>" required>
         <label for="postal"> postal code</label>
-        <input type="text" id="postal" name="postal" value="<%= userInfo.postal%>" min="5" max="5" required>
+        <input type="text" id="postal" name="postal" value="<%= userInfo.postal%>" maxlength="5" required>
         <label for="country"> country</label>
         <input type="text" id="country" name="country" value="<%= userInfo.country%>" required>
         <button class="btn"> confirm </button>
