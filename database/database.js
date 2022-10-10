@@ -6,6 +6,7 @@ let database;
 
 
 let mongodbUrl = process.env.MONGODB_URI;
+
 if (mongodbUrl == null || mongodbUrl == "") {
     mongodbUrl = "mongodb://127.0.0.1:27017";
 }
