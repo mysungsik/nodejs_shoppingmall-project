@@ -1,6 +1,6 @@
 function sessionStore(){
     return {
-        uri : "mongodb://127.0.0.1:27017",
+        uri : "mongodb+srv://audtlr:MS6zcXpZ1RfqQSDo@cluster0.mzdaqy1.mongodb.net/?retryWrites=true&w=majority",
         databaseName:"shopping-project",
         collection : "session"
     }
