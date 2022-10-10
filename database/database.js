@@ -8,7 +8,7 @@ let database;
 let mongodbUrl = process.env.MONGODB_URI;
 
 if (mongodbUrl == null || mongodbUrl == "") {
-    mongodbUrl = "mongodb+srv://audtlr:MS6zcXpZ1RfqQSDo@cluster0.mzdaqy1.mongodb.net/?retryWrites=true&w=majority";
+    mongodbUrl = "mongodb://127.0.0.1:27017";
 }
 
 async function connectToDatabse(){

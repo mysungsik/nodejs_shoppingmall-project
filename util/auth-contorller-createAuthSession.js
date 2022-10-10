@@ -5,11 +5,9 @@ function createSession(req, user, action){
         req.session.admin = true
     }
     req.session.isAuthenticated = true;
-    
 
     req.session.save(action)
 }
-
 
 
 module.exports = 
