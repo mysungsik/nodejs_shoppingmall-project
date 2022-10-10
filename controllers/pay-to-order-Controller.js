@@ -1,6 +1,6 @@
 const PayOrder = require("../models/pay-to-order-model")
 const CartModel = require("../models/cart-model")
-const stripe = require('stripe')('sk_test_51LpNaFKewLSBpof5bSklhnQxWtZdAABciZHwH6JlPatHR7h4XNIj7Oi7g2Eldc2xX6Z9zLzCyK3P1BvzYEXVzTg600RRSGJq8M');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 async function getOrder(req,res){
 
@@ -79,8 +79,8 @@ async function saveInAdminOrder(req,res){
               }
         }),
         mode: 'payment',
-        success_url: `http://localhost:3000/success`,
-        cancel_url: `http://localhost:3000/cancel`,
+        success_url: `/success`,
+        cancel_url: `/cancel`,
     });
 
     res.redirect(303, session.url)
