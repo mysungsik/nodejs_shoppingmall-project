@@ -4,10 +4,10 @@ const MongoClient = mongodb.MongoClient;
 
 let database;
 
-let mongodbUrl = "mongodb://127.0.0.1:27017"
 
-if(process.env.MONGODB_URI){
-    mongodbUrl = process.env.MONGODB_URI
+let mongodbUrl = process.env.MONGODB_URI;
+if (mongodbUrl == null || mongodbUrl == "") {
+    mongodbUrl = "mongodb://127.0.0.1:27017";
 }
 
 async function connectToDatabse(){
