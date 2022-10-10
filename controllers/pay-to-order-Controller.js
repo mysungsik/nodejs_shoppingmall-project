@@ -1,6 +1,6 @@
 const PayOrder = require("../models/pay-to-order-model")
 const CartModel = require("../models/cart-model")
-// const stripe = require('stripe')('sk_test_51LpNaFKewLSBpof5bSklhnQxWtZdAABciZHwH6JlPatHR7h4XNIj7Oi7g2Eldc2xX6Z9zLzCyK3P1BvzYEXVzTg600RRSGJq8M');
+const stripe = require('stripe')('sk_test_51LpNaFKewLSBpof5bSklhnQxWtZdAABciZHwH6JlPatHR7h4XNIj7Oi7g2Eldc2xX6Z9zLzCyK3P1BvzYEXVzTg600RRSGJq8M');
 
 async function getOrder(req,res){
 
@@ -58,33 +58,33 @@ async function saveInAdminOrder(req,res){
     //      ==> 그렇다면 값을 [order collection이 아니라 ] [ Cart collection 에서 각각 있는 값을 가져오면 되겠다]
     //          단, 내 Cart collection에는 "수량" 이 없으니까 추가하도록하자!
 
-    // const pay = new PayOrder(productData,userData,"pending","now")
-    // req.session.ADMINORDER = pay
+    const pay = new PayOrder(productData,userData,"pending","now")
+    req.session.ADMINORDER = pay
 
-    // await PayOrder.makeEmptyOrder(res.locals.uid)
-    // await CartModel.makeEmptyCart(res.locals.uid)
+    await PayOrder.makeEmptyOrder(res.locals.uid)
+    await CartModel.makeEmptyCart(res.locals.uid)
     
-    // const session = await stripe.checkout.sessions.create({
-    //     line_items: newData.map(function(item){
-    //         return{
-    //             price_data : {
-    //               currency : "usd",
-    //               product_data : {
-    //                   name : item.productName
-    //               },
-    //               unit_amount : +item.productPrice
-  
-    //             },
-    //             quantity: +item.productQuantity,
-    //           }
-    //     }),
-    //     mode: 'payment',
-    //     success_url: `http://localhost:3000/success`,
-    //     cancel_url: `http://localhost:3000/cancel`,
-    // });
 
-    // res.redirect(303, session.url)
-    res.redirect("/")
+    const session = await stripe.checkout.sessions.create({
+        line_items: newData.map(function(item){
+            return{
+                price_data : {
+                  currency : "usd",
+                  product_data : {
+                      name : item.productName
+                  },
+                  unit_amount : +item.productPrice
+  
+                },
+                quantity: +item.productQuantity,
+              }
+        }),
+        mode: 'payment',
+        success_url: `http://localhost:3000/success`,
+        cancel_url: `http://localhost:3000/cancel`,
+    });
+
+    res.redirect(303, session.url)
 }
 
 
