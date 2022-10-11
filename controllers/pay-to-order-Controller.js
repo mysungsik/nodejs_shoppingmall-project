@@ -65,6 +65,18 @@ async function saveInAdminOrder(req,res){
     await CartModel.makeEmptyCart(res.locals.uid)
     
 
+    // 배포용 스프라이트 주소
+
+    let successURL = process.env.SPRITE_SUCCESS
+    let cancelURL = process.env.SPRITE_CANCEL
+
+    if (successURL == null || successURL == "") {
+        successURL == `http://localhost:3000/success`
+    }
+    if (cancelURL == null || successURL == "") {
+        cancelURL == `http://localhost:3000/cancel`
+    }
+
     const session = await stripe.checkout.sessions.create({
         line_items: newData.map(function(item){
             return{
@@ -80,8 +92,8 @@ async function saveInAdminOrder(req,res){
               }
         }),
         mode: 'payment',
-        success_url: `http://localhost:3000/success`,
-        cancel_url: `http://localhost:3000/cancel`,
+        success_url: successURL,
+        cancel_url: cancelURL,
     });
 
     res.redirect(303, session.url)
