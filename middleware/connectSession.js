@@ -1,6 +1,12 @@
+let sessionStoreURI = process.env.MONGODB_URI
+
+if(sessionStoreURI==null || sessionStoreURI==""){
+    sessionStoreURI ="mongodb://127.0.0.1:27017"
+}
+
 function sessionStore(){
     return {
-        uri : "mongodb+srv://audtlr:MS6zcXpZ1RfqQSDo@cluster0.mzdaqy1.mongodb.net/?retryWrites=true&w=majority",
+        uri : sessionStoreURI,
         databaseName:"shopping-project",
         collection : "session"
     }
