@@ -1,9 +1,10 @@
 function createSession(req, user, action){
+
+    if(user.admin){
+        req.session.admin = true;
+    }
     req.session.authUserId = user._id.toString()
     
-    if(user.admin == true){
-        req.session.admin = true
-    }
     req.session.isAuthenticated = true;
 
     req.session.save(action)
